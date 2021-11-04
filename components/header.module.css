@@ -6,6 +6,7 @@
 .menu {
     list-style-type: none;
     margin: 0;
+    max-width: 80rem;
 }
 
 .menu li a {
@@ -36,8 +37,9 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-
     padding-inline-start: 0px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .menu li a {
     display: block;
