@@ -43,7 +43,7 @@
 }
 .menu li a {
     display: block;
-    padding: 15px 5px;
+    padding: 15px 0px;
 }
 
 .toggle {
