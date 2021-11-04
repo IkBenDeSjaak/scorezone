@@ -2,9 +2,11 @@ import Script from 'next/script'
 import Link from 'next/link'
 import styles from './header.module.css'
 import { useState } from 'react'
+import useUser from '../lib/useUser'
 
 export default function Header () {
   const [menuActive, setMenuActive] = useState(false)
+  const { user, mutateUser } = useUser()
 
   const toggleMenu = () => {
     if (menuActive) {
