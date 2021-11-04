@@ -1,9 +1,9 @@
 .container {
+    background-color: #def2f1;
+}
+
+.main {
     max-width: 80rem;
     margin-left: auto;
     margin-right: auto;
-}
-
-.backToHome {
-    margin: 3rem 0 0;
 }

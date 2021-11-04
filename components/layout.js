@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import styles from './layout.module.css'
-import Link from 'next/link'
 import Header from './header'
+import Footer from './footer'
 
 export default function Layout ({ children }) {
   return (
@@ -12,12 +12,8 @@ export default function Layout ({ children }) {
         <meta name='description' content='ScoreZone maakt het mogelijk voetbalwedstrijden te voorspellen.' />
       </Head>
       <Header />
-      <main>{children}</main>
-      <footer className={styles.backToHome}>
-        <Link href='/'>
-          <a>← Back to home</a>
-        </Link>
-      </footer>
+      <main className={styles.main}>{children}</main>
+      <Footer />
     </div>
   )
 }
