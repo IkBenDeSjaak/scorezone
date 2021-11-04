@@ -25,8 +25,8 @@ export default function Header () {
             <li className={styles.item}><Link href='/'><a>Rules</a></Link></li>
             <li className={styles.item}><Link href='/'><a>Contact</a></Link>
             </li>
-            <li className={`${styles.item} ${styles.button}`}><Link href='/'><a>Log In</a></Link></li>
-            <li className={`${styles.item} ${styles.button} ${styles.secondary}`}><Link href='/'><a>Sign Up</a></Link></li>
+            <li className={`${styles.item} ${styles.button}`}><Link href='/login'><a>Log In</a></Link></li>
+            <li className={`${styles.item} ${styles.button} ${styles.secondary}`}><Link href='/signup'><a>Sign Up</a></Link></li>
             <li className={styles.toggle} onClick={toggleMenu}>
               <span style={{ color: 'white' }}>
                 {menuActive ? <i class='fas fa-times' /> : <i className='fas fa-bars' />}
