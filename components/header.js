@@ -1,4 +1,5 @@
 import Script from 'next/script'
+import Link from 'next/link'
 import styles from './header.module.css'
 import { useState } from 'react'
 
@@ -18,14 +19,14 @@ export default function Header () {
       <header>
         <nav className={styles.nav}>
           <ul className={`${styles.menu} ${menuActive ? styles.active : ''}`}>
-            <li className={styles.logo}><a href='#'>ScoreZone</a></li>
-            <li className={styles.item}><a href='#'>Predict</a></li>
-            <li className={styles.item}><a href='#'>Poules</a></li>
-            <li className={styles.item}><a href='#'>Rules</a></li>
-            <li className={styles.item}><a href='#'>Contact</a>
+            <li className={styles.logo}><Link href='/'><a>ScoreZone</a></Link></li>
+            <li className={styles.item}><Link href='/'><a>Predict</a></Link></li>
+            <li className={styles.item}><Link href='/'><a>Poules</a></Link></li>
+            <li className={styles.item}><Link href='/'><a>Rules</a></Link></li>
+            <li className={styles.item}><Link href='/'><a>Contact</a></Link>
             </li>
-            <li className={`${styles.item} ${styles.button}`}><a href='#'>Log In</a></li>
-            <li className={`${styles.item} ${styles.button} ${styles.secondary}`}><a href='#'>Sign Up</a></li>
+            <li className={`${styles.item} ${styles.button}`}><Link href='/'><a>Log In</a></Link></li>
+            <li className={`${styles.item} ${styles.button} ${styles.secondary}`}><Link href='/'><a>Sign Up</a></Link></li>
             <li className={styles.toggle} onClick={toggleMenu}>
               <span style={{ color: 'white' }}>
                 {menuActive ? <i class='fas fa-times' /> : <i className='fas fa-bars' />}
