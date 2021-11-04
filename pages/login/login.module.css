@@ -1,0 +1,41 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+.form .label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    width: fit-content;
+}
+
+.form .input {
+    width: 15rem;
+    height: 1.8rem;
+    margin-top: 0.3rem;
+}
+
+.form .submitbutton {
+    background-color: #42cfbe;
+    color: black;
+    border-color: #5dc8d6;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+}
+
+.form .submitbutton:hover {
+    border-color: black;
+    cursor: pointer;
+}
+
+.form .labelrememberme {
+    align-content: center;
+}
+
+.form .inputrememberme {
+    margin: 0 0.3rem 0 0;
+}
