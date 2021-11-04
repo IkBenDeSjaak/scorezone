@@ -1,0 +1,14 @@
+.footer {
+    height: 5rem;
+    background: #2a8378;
+    padding: 1rem;
+}
+
+.content {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
