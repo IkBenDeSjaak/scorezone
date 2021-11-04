@@ -1,5 +1,5 @@
 .nav {
-    background: #2a8378;
+    background-color: #2a8378;
     padding: 0 15px;
 }
 
@@ -111,7 +111,7 @@
     }
 
     .button.secondary a {
-        background: white;
+        background-color: white;
         border: 2px white solid;
         color: black;
     }
@@ -133,7 +133,6 @@
     .menu {
         align-items: flex-start;
         flex-wrap: nowrap;
-        background: none;
     }
 
     .logo {
