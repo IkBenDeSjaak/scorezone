@@ -12,7 +12,11 @@ export default function Layout ({ children }) {
         <meta name='description' content='ScoreZone maakt het mogelijk voetbalwedstrijden te voorspellen.' />
       </Head>
       <Header />
-      <main className={styles.main}>{children}</main>
+      <main className={styles.main}>
+        <div className={styles.content}>
+          {children}
+        </div>
+      </main>
       <Footer />
     </div>
   )
