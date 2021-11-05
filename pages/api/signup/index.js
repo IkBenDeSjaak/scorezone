@@ -1,19 +1,17 @@
-export default function handler (req, res) {
+export default  function handler (req, res) {
   switch (req.method) {
     case 'POST': {
-      // const { username, password, email } = await req.body
+      const { email, username, password } = req.body
 
-      const username = 'TESTPERSOONTJE'
-      const password = 'PAASWOORD'
-
-      // get user from database then:
+      // const username = 'TESTPERSOONTJE'
+      // const password = 'PAASWOORD'
 
       const user = {
         id: 230,
         username: username
       }
 
-      res.status(200).json({ name: `${username} Signed up` })
+      res.status(200).json({ name: `${email} ${username} ${password} Signed up` })
     }
   }
 }
