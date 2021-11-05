@@ -13,6 +13,10 @@
     color: white;
 }
 
+.menu li.logo a {
+    width: fit-content;
+}
+
 .logo {
     font-size: 20px;
     padding: 7.5px 10px 7.5px 0;
