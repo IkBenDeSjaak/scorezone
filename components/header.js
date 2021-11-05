@@ -31,7 +31,7 @@ export default function Header () {
             <li className={`${styles.item} ${styles.button} ${styles.secondary}`}><Link href='/signup'><a>Sign Up</a></Link></li>
             <li className={styles.toggle} onClick={toggleMenu}>
               <span style={{ color: 'white' }}>
-                {menuActive ? <i class='fas fa-times' /> : <i className='fas fa-bars' />}
+                {menuActive ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
               </span>
             </li>
           </ul>
