@@ -4,7 +4,7 @@ export default withSessionRoute(handler)
 
 async function handler (req, res) {
   switch (req.method) {
-    case 'POST':
+    case 'POST': {
       // const { username } = await req.body
       // const { password } = await req.body
       const username = 'TESTPERSOON'
@@ -21,5 +21,6 @@ async function handler (req, res) {
       await req.session.save()
 
       res.status(200).json({ name: `${username} is logged in` })
+    }
   }
 }
