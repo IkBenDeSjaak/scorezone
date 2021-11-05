@@ -9,6 +9,7 @@
     "style": "standard --fix"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "iron-session": "^2.0.0",
     "next": "12.0.2",
     "react": "17.0.2",
