@@ -1,9 +1,12 @@
 .footer {
     background: #2a8378;
     padding: 1rem;
+    width: 100%;
+    display: flex;
 }
 
 .content {
+    width: inherit;
     max-width: 70rem;
     margin-left: auto;
     margin-right: auto;
