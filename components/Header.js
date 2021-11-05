@@ -1,6 +1,7 @@
+import styles from './Header.module.css'
+
 import Script from 'next/script'
 import Link from 'next/link'
-import styles from './header.module.css'
 import { useState } from 'react'
 import useUser from '../lib/useUser'
 

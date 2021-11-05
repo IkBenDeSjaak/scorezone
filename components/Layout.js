@@ -1,7 +1,8 @@
+import styles from './Layout.module.css'
+
 import Head from 'next/head'
-import styles from './layout.module.css'
-import Header from './header'
-import Footer from './footer'
+import Header from './Header'
+import Footer from './Footer'
 
 export default function Layout ({ children }) {
   return (

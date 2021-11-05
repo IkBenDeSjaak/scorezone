@@ -1,5 +1,6 @@
-import styles from './signup.module.css'
-import Layout from '../../components/layout'
+import styles from './SignUp.module.css'
+
+import Layout from '../../components/Layout'
 import { useState } from 'react'
 
 export default function SignUp () {

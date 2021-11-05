@@ -1,5 +1,6 @@
-import styles from './login.module.css'
-import Layout from '../../components/layout'
+import styles from './Login.module.css'
+
+import Layout from '../../components/Layout'
 
 export default function Login () {
   return (
