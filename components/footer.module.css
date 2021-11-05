@@ -3,6 +3,8 @@
     padding: 1rem;
     width: 100%;
     display: flex;
+    min-height: 6rem;
+    margin-top: auto;
 }
 
 .content {
