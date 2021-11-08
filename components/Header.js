@@ -2,6 +2,8 @@ import styles from './Header.module.css'
 
 import Script from 'next/script'
 import Link from 'next/link'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import useUser from '../lib/useUser'
 
@@ -33,13 +35,12 @@ export default function Header () {
             <li className={`${styles.item} ${styles.button} ${styles.secondary}`}><Link href='/signup'><a>Sign Up</a></Link></li>
             <li className={styles.toggle} onClick={toggleMenu}>
               <span style={{ color: 'white' }}>
-                {menuActive ? <i className='fas fa-times' /> : <i className='fas fa-bars' />}
+                {menuActive ? <FontAwesomeIcon icon={faTimes} /> : <FontAwesomeIcon icon={faBars} />}
               </span>
             </li>
           </ul>
         </nav>
       </header>
-      <Script src='https://kit.fontawesome.com/d10d8015fa.js' crossorigin='anonymous' />
     </>
   )
 }
