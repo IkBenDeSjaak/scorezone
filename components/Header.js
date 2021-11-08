@@ -23,10 +23,11 @@ export default function Header () {
         <nav className={styles.nav}>
           <ul className={`${styles.menu} ${menuActive ? styles.active : ''}`}>
             <li className={styles.logo}><Link href='/'><a>ScoreZone</a></Link></li>
-            <li className={styles.item}><Link href='/'><a>Predict</a></Link></li>
-            <li className={styles.item}><Link href='/'><a>Poules</a></Link></li>
-            <li className={styles.item}><Link href='/'><a>Rules</a></Link></li>
-            <li className={styles.item}><Link href='/'><a>Contact</a></Link>
+            <li className={styles.item}><Link href='/predict'><a>Predict</a></Link></li>
+            <li className={styles.item}><Link href='/poules'><a>Poules</a></Link></li>
+            <li className={styles.item}><Link href='/leagues'><a>Leagues</a></Link></li>
+            <li className={styles.item}><Link href='/rules'><a>Rules</a></Link></li>
+            <li className={styles.item}><Link href='/contact'><a>Contact</a></Link>
             </li>
             <li className={`${styles.item} ${styles.button}`}><Link href='/login'><a>Log In</a></Link></li>
             <li className={`${styles.item} ${styles.button} ${styles.secondary}`}><Link href='/signup'><a>Sign Up</a></Link></li>
