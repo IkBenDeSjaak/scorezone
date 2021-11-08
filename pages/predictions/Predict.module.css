@@ -1,0 +1,136 @@
+.selectWeek {
+    display: flex;
+}
+
+.selectWeekLabel {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.selectWeekSelect {
+    margin-left: 1rem;
+}
+
+.leagueContainer {
+    margin-top: 1rem;
+    border: 0.2rem solid #2a8378;
+    border-radius: 0.4rem;
+}
+
+.leagueName {
+    background-color: #2a8378;
+    color: white;
+    padding: 0.1rem 0.5rem;
+    border-bottom: 0.2rem solid #2a8378;
+}
+
+.gamerow {
+    display: flex;
+    align-items: center;
+    height: 2.7rem; /* 2.2*/
+    display: flex;
+}
+
+.dateTime {
+    display: inline-block;
+    margin-left: 0.5rem;
+    width: 3.8rem;
+}
+
+.day {
+    display: inline-block;
+    width: 1rem;
+    font-size: 0.8rem;
+}
+
+.time {
+    display: inline-block;
+    margin-left: 0.1rem;
+    font-size: 0.8rem;
+}
+
+.teams {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.teamAndImage {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.teamImage {
+    height: 1.3rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.teamLabel {
+    display: inline-block;
+    max-width: 5rem;
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 0.8rem;
+}
+
+.teamDivider {
+    display: inline;
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
+}
+
+.scoreInput {
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 0.3rem;
+    border-width: 1px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+    margin-top: 0.1rem;
+}
+
+/* Tablet menu */
+@media all and (min-width: 700px) {
+    .dateTime {
+        width: 5rem;
+    }
+
+    .day {
+        font-size: 1rem;
+    }
+
+    .time {
+        margin-left: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .teamLabel {
+        font-size: 1rem;
+        max-width: none;
+    }
+
+    .teamAndImage {
+        display: inline;
+        width: 100%;
+        text-align: center;
+    }
+
+    .teamDivider {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .scoreInput {
+        width: 1.7rem;
+        height: 1.7rem;
+        font-size: 0.9rem;
+    }
+}
