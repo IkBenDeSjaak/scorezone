@@ -35,6 +35,10 @@
     color: rgb(204, 204, 204);
 }
 
+.icon {
+    height: 1.2rem;
+}
+
 /* Mobile menu */
 .menu {
     display: flex;
@@ -53,6 +57,7 @@
 .toggle {
     order: 1;
     font-size: 20px;
+    width: 1rem;
 }
 
 .item.button {
