@@ -16,3 +16,19 @@
     align-items: center;
     justify-content: space-between;
 }
+
+.clickableText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.hideText {
+    display: none;
+}
+
+.icon {
+    width: 1.2rem;
+    color: black;
+}

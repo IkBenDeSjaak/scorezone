@@ -1,12 +1,13 @@
 import styles from './Footer.module.css'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons' 
+
 export default function Footer () {
-  const getDateTime = () => {
+  const getDate = () => {
     const date = new Date()
     const currentDate = date.toLocaleDateString()
-    const currentTime = date.toLocaleTimeString()
-    const currentDateTime = `${currentDate} ${currentTime}`
-    return currentDateTime
+    return currentDate
   }
 
   return (
@@ -14,7 +15,13 @@ export default function Footer () {
       <footer className={styles.footer}>
         <div className={styles.content}>
           <p>&copy; ScoreZone</p>
-          <p>{getDateTime()}</p>
+          <p>
+            <a className={styles.clickableText} href='mailto:info@scorezone.nl'>
+              <span className={styles.hideText}>Send me an email</span>
+              <FontAwesomeIcon className={styles.icon} icon={faEnvelope}/>
+            </a>
+          </p>
+          <p>{getDate()} </p>
         </div>
       </footer>
     </>
