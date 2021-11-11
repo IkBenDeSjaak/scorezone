@@ -6,7 +6,7 @@ export default function Predict () {
   return (
     <>
       <Layout>
-        <div className={styles.container}>
+        <div>
           <div className={styles.selectWeek}>
             <label className={styles.selectWeekLabel} htmlFor="week">
               Selecteer een datum:
