@@ -2,7 +2,7 @@ import styles from './Leagues.module.css'
 
 import Layout from '../../components/Layout'
 
-export default function Predict () {
+export default function Leagues () {
   return (
     <>
       <Layout>
