@@ -24,11 +24,19 @@
     border-bottom: 0.2rem solid #2a8378;
 }
 
-.gamerow {
+.gameRow {
     display: flex;
     align-items: center;
-    height: 2.7rem; /* 2.2*/
+    height: 2.7rem;
     display: flex;
+}
+
+.gameRowBackground1 {
+    background-color: #b4cfcc;
+}
+
+.gameRowBackground2 {
+    background-color: #d1e7e5;
 }
 
 .dateTime {

@@ -21,7 +21,7 @@ export default function Predict () {
 
           <div className={styles.leagueContainer}>
             <div className={styles.leagueName}>Eredivisie</div>
-            <div className={styles.gamerow}>
+            <div className={`${styles.gameRow} ${styles.gameRowBackground1}`}>
               <div className={styles.dateTime}>
                 <p className={styles.day}>Fr</p>
                 <p className={styles.time}>20:00</p>
@@ -40,7 +40,7 @@ export default function Predict () {
                 </div>
               </div>
             </div>
-            <div className={styles.gamerow}>
+            <div className={`${styles.gameRow} ${styles.gameRowBackground2}`}>
               <div className={styles.dateTime}>
                 <p className={styles.day}>Su</p>
                 <p className={styles.time}>17:00</p>
