@@ -1,6 +1,5 @@
 import styles from './Header.module.css'
 
-import Script from 'next/script'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
