@@ -1,0 +1,64 @@
+.fontWeightNormal {
+    font-weight: normal;
+}
+
+.leaguesContainer {
+    border: 0.15rem solid #2a8378;
+    border-radius: 0.4rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.leagueRows {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.leagueRow {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0.3rem;
+}
+
+.leagueRow label {
+    text-align: center;
+    width: 60%;
+}
+
+.divInput {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+}
+
+.leagueRow input {
+    cursor: pointer;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin: 0;
+}
+
+/* Tablet menu */
+@media all and (min-width: 700px) {
+    .leagueRow label {
+        text-align: right;
+        font-size: 1.2rem;
+        width: 50%;
+        padding-right: 5rem;
+    }
+
+    .divInput {
+        display: block;
+        padding-left: 5rem;
+    }
+
+    .leagueRow input {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
