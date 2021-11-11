@@ -13,7 +13,7 @@
 
 .leagueContainer {
     margin-top: 1rem;
-    border: 0.2rem solid #2a8378;
+    border: 0.15rem solid #2a8378;
     border-radius: 0.4rem;
 }
 
@@ -21,7 +21,7 @@
     background-color: #2a8378;
     color: white;
     padding: 0.1rem 0.5rem;
-    border-bottom: 0.2rem solid #2a8378;
+    border-bottom: 0.15rem solid #2a8378;
 }
 
 .gameRow {
