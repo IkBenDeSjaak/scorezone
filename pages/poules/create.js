@@ -6,7 +6,7 @@ export default function CreatePoule () {
   return (
     <>
       <Layout>
-      <h2>Create a new poule!</h2>
+      <h1>Create a new poule!</h1>
         <form className={styles.form} onSubmit={console.log('submit')}>
           <label className={styles.label} htmlFor='poulename'>Name of the poule
             <input className={styles.input} id='poulename' type='text' />
