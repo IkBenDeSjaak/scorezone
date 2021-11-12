@@ -125,10 +125,40 @@
         max-width: none;
     }
 
+    /* .teamLabelLeft {
+        order: 1;
+    }
+    .teamLabelRight {
+        order: 2;
+    } */
+
     .teamAndImage {
-        display: inline;
+        display: inline-flex;
+        flex-direction: row;
         width: 100%;
-        text-align: center;
+    }
+
+    .teamImage {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* .teamImageLeft {
+        order: 2;
+    }
+
+    .teamImageRight {
+        order: 1;
+    } */
+
+    .teamAndImageAlignLeft {
+        justify-content: start;
+        margin-left: 1rem;
+    }
+
+    .teamAndImageAlignRight {
+        justify-content: end;
+        margin-right: 1rem;
     }
 
     .teamDivider {

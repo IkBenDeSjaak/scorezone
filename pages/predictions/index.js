@@ -27,16 +27,16 @@ export default function Predict () {
                 <p className={styles.time}>20:00</p>
               </div>
               <div className={styles.teams}>
-                <div className={styles.teamAndImage}>
-                  <img className={styles.teamImage} src="https://via.placeholder.com/150"/>
-                  <label className={styles.teamLabel}>Ajax</label>
+                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
+                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src="https://via.placeholder.com/150"/>
+                  <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>Ajax</label>
                 </div>
                   <input className={styles.scoreInput} type="number"></input>
                   <p className={styles.teamDivider}>-</p>
                   <input className={styles.scoreInput} type="number"></input>
-                <div className={styles.teamAndImage}>
-                  <img className={styles.teamImage} src="https://via.placeholder.com/150"/>
-                  <label className={styles.teamLabel}>Heracles</label>
+                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
+                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src="https://via.placeholder.com/150"/>
+                  <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>Heracles</label>
                 </div>
               </div>
             </div>
@@ -46,16 +46,16 @@ export default function Predict () {
                 <p className={styles.time}>17:00</p>
               </div>
               <div className={styles.teams}>
-                <div className={styles.teamAndImage}>
-                  <img className={styles.teamImage} src="https://via.placeholder.com/150"/>
-                  <label className={styles.teamLabel}>FC Twente</label>
+                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
+                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src="https://via.placeholder.com/150"/>
+                  <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>FC Twente</label>
                 </div>
                   <input className={styles.scoreInput} type="number"></input>
                   <p className={styles.teamDivider}>-</p>
                   <input className={styles.scoreInput} type="number"></input>
-                <div className={styles.teamAndImage}>
-                  <img className={styles.teamImage} src="https://via.placeholder.com/150"/>
-                  <label className={styles.teamLabel}>FC Gronsdasssdingen</label>
+                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
+                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src="https://via.placeholder.com/150"/>
+                  <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>FC Gronsdasssdingen</label>
                 </div>
               </div>
             </div>
