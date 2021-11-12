@@ -5,7 +5,6 @@
 .leaguesContainer {
     border: 0.15rem solid #2a8378;
     border-radius: 0.4rem;
-    padding: 0.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,6 +22,14 @@
     width: 100%;
     align-items: center;
     padding: 0.3rem;
+}
+
+.leagueRowBackground1 {
+    background-color: #b4cfcc;
+}
+
+.leagueRowBackground2 {
+    background-color: #d1e7e5;
 }
 
 .leagueRow label {
