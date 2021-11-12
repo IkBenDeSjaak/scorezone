@@ -27,8 +27,7 @@
 .gameRow {
     display: flex;
     align-items: center;
-    height: 2.7rem;
-    display: flex;
+    height: 3rem;
 }
 
 .gameRowBackground1 {
@@ -40,7 +39,7 @@
 }
 
 .dateTime {
-    display: inline-block;
+    display: none;
     margin-left: 0.5rem;
     width: 3.8rem;
 }
@@ -88,10 +87,30 @@
     font-size: 0.8rem;
 }
 
+.scoreBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.actualScoreText {
+    margin: 0;
+    font-size: 0.8rem;
+}
+
+.scoreInputs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
 .teamDivider {
     display: inline;
     margin-left: 0.3rem;
     margin-right: 0.3rem;
+    margin-top: 0;
+    margin-bottom: 0.2rem;
 }
 
 .scoreInput {
@@ -103,6 +122,21 @@
     font-weight: bold;
     font-size: 0.8rem;
     margin-top: 0.1rem;
+    color: black;
+}
+
+.score {
+    margin-right: 0.3rem;
+    font-weight: bold;
+    width: 1.5rem;
+    text-align: center;
+}
+
+/* Mobile menu */
+@media all and (min-width: 400px) {
+    .dateTime {
+        display: inline-block;
+    }
 }
 
 /* Tablet menu */
@@ -164,6 +198,10 @@
     .teamDivider {
         margin-left: 1rem;
         margin-right: 1rem;
+    }
+
+    .actualScoreText {
+        height: 0.8rem;
     }
 
     .scoreInput {

@@ -39,6 +39,9 @@ export default function Predict () {
                   <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>Heracles</label>
                 </div>
               </div>
+              <div className={styles.score}>
+                <p>10</p>
+              </div>
             </div>
             <div className={`${styles.gameRow} ${styles.gameRowBackground2}`}>
               <div className={styles.dateTime}>
@@ -57,6 +60,60 @@ export default function Predict () {
                   <img className={`${styles.teamImage} ${styles.teamImageRight}`} src="https://via.placeholder.com/150"/>
                   <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>FC Gronsdasssdingen</label>
                 </div>
+              </div>
+              <div className={styles.score}>
+                <p></p>
+              </div>
+            </div>
+            <div className={`${styles.gameRow} ${styles.gameRowBackground1}`}>
+              <div className={styles.dateTime}>
+                <p className={styles.day}>Su</p>
+                <p className={styles.time}>17:00</p>
+              </div>
+              <div className={styles.teams}>
+                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
+                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src="https://via.placeholder.com/150"/>
+                  <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>FC Team</label>
+                </div>
+                  <input className={styles.scoreInput} disabled type="number" value="1"></input>
+                  <p className={styles.teamDivider}>-</p>
+                  <input className={styles.scoreInput} disabled type="number" value="3"></input>
+                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
+                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src="https://via.placeholder.com/150"/>
+                  <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>Manchester United</label>
+                </div>
+              </div>
+              <div className={styles.score}>
+                <p>7</p>
+              </div>
+            </div>
+            <div className={`${styles.gameRow} ${styles.gameRowBackground2}`}>
+              <div className={styles.dateTime}>
+                <p className={styles.day}>Su</p>
+                <p className={styles.time}>17:00</p>
+              </div>
+              <div className={styles.teams}>
+                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
+                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src="https://via.placeholder.com/150"/>
+                  <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>FC Meer Team</label>
+                </div>
+                <div className={styles.scoreBlock}>
+                  <div>
+                    <p className={styles.actualScoreText}>1 - 1</p>
+                  </div>
+                  <div className={styles.scoreInputs}>
+                    <input className={styles.scoreInput} type="number"></input>
+                    <p className={styles.teamDivider}>-</p>
+                    <input className={styles.scoreInput} type="number"></input>
+                  </div>
+                </div>
+                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
+                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src="https://via.placeholder.com/150"/>
+                  <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>Manchester City</label>
+                </div>
+              </div>
+              <div className={styles.score}>
+                <p>1</p>
               </div>
             </div>
           </div>
