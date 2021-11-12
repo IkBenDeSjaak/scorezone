@@ -51,6 +51,7 @@
     border-width: 1px;
     border-radius: 3px;
     font-size: 1em;
+    height: 2.2rem;
 }
 
 .form .submitbutton:hover {
