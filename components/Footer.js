@@ -1,7 +1,7 @@
 import styles from './Footer.module.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons' 
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 export default function Footer () {
   const getDateLocal = () => {
@@ -24,7 +24,7 @@ export default function Footer () {
           <p>
             <a className={styles.clickableText} href='mailto:info@scorezone.nl'>
               <span className={styles.hideText}>Send me an email</span>
-              <FontAwesomeIcon className={styles.icon} icon={faEnvelope}/>
+              <FontAwesomeIcon className={styles.icon} icon={faEnvelope} />
             </a>
           </p>
           <p><time dateTime={getDate()}>{getDateLocal()}</time></p>

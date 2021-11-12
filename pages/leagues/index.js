@@ -14,13 +14,13 @@ export default function Leagues () {
               <div className={`${styles.leagueRow} ${styles.leagueRowBackground1}`}>
                 <label>Eredivisie</label>
                 <div className={styles.divInput}>
-                  <input type="checkbox" name="1" checked></input>
+                  <input type='checkbox' name='1' checked />
                 </div>
               </div>
               <div className={`${styles.leagueRow} ${styles.leagueRowBackground2}`}>
                 <label>Conference League</label>
                 <div className={styles.divInput}>
-                  <input type="checkbox" name="2"></input>
+                  <input type='checkbox' name='2' />
                 </div>
               </div>
             </div>

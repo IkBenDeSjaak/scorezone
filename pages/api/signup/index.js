@@ -1,4 +1,4 @@
-export default  function handler (req, res) {
+export default function handler (req, res) {
   switch (req.method) {
     case 'POST': {
       const { email, username, password } = req.body

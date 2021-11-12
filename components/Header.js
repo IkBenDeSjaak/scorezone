@@ -33,7 +33,7 @@ export default function Header () {
             <li className={`${styles.item} ${styles.button} ${styles.secondary}`}><Link href='/signup'><a>Sign Up</a></Link></li>
             <li className={styles.toggle} onClick={toggleMenu}>
               <span style={{ color: 'white' }}>
-                {menuActive ? <FontAwesomeIcon icon={faTimes} className={styles.icon} /> : <FontAwesomeIcon icon={faBars} className={styles.icon}/>}
+                {menuActive ? <FontAwesomeIcon icon={faTimes} className={styles.icon} /> : <FontAwesomeIcon icon={faBars} className={styles.icon} />}
               </span>
             </li>
           </ul>
