@@ -14,14 +14,14 @@ export default function Poule ({ test }) {
   return (
     <>
       <Layout>
-        <h1>Collegapouleasdasda</h1>
+        <h1 className={styles.pouleName}>baRENDDRECCHT</h1>
         <h2>Positions</h2>
         <div class={styles.standings}>
           <table>
             <thead>
               <tr>
                 <th className={styles.standingsPos} scope='col'>Pos</th>
-                <th className={styles.standingsUser} scope='col'>Username</th>
+                <th className={styles.standingsUser} scope='col'>User</th>
                 <th className={styles.standingsName} scope='col'>Name</th>
                 <th className={styles.standingsPoints} scope='col'>Points</th>
               </tr>
@@ -40,10 +40,10 @@ export default function Poule ({ test }) {
                 <td>244</td>
               </tr>
               <tr>
-                <td>3</td>
+                <td>333</td>
                 <td>AAaART</td>
                 <td className={styles.standingsName}>AArt stoktatat</td>
-                <td>244</td>
+                <td>2444</td>
               </tr>
             </tbody>
           </table>

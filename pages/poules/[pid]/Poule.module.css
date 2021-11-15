@@ -1,3 +1,7 @@
+.pouleName {
+    word-wrap: break-word;
+}
+
 .standings table,
 .standings th,
 .standings td {
@@ -11,7 +15,7 @@
 }
 
 .standings th {
-    background-color: #15423d;
+    background-color: #2a8378;
     color: white;
     padding: 0.4rem;
     text-align: left;
