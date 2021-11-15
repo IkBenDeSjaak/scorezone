@@ -27,7 +27,7 @@ export default function Header () {
             <li className={styles.item}><Link href='/predictions'><a>Predict</a></Link></li>
             <li className={styles.item}><Link href='/poules'><a>Poules</a></Link></li>
             <li className={styles.item}><Link href='/leagues'><a>Leagues</a></Link></li>
-            <li className={styles.item}><Link href='/positions'><a>Positions</a></Link></li>
+            <li className={styles.item}><Link href='/rankings'><a>Rankings</a></Link></li>
             <li className={styles.item}><Link href='/rules'><a>Rules</a></Link></li>
             {user?.isLoggedIn === true && (
               <>
