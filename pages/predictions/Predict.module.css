@@ -125,6 +125,12 @@
     color: black;
 }
 
+.scoreInputDisabled {
+    margin: 0;
+    height: auto;
+    font-size: 1rem;
+}
+
 .score {
     margin-right: 0.3rem;
     font-weight: bold;
@@ -207,6 +213,5 @@
     .scoreInput {
         width: 1.7rem;
         height: 1.7rem;
-        font-size: 0.9rem;
     }
 }

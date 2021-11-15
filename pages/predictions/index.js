@@ -91,12 +91,12 @@ export default function Predict () {
                 </div>
                 <div className={styles.scoreBlock}>
                   <div>
-                    {/* <p className={styles.actualScoreText}>1 - 1</p> */}
+                    <p className={styles.actualScoreText}>1 - 1</p>
                   </div>
                   <div className={styles.scoreInputs}>
-                    <input className={styles.scoreInput} disabled type='number' value="1"/>
+                    <p className={`${styles.scoreInput} ${styles.scoreInputDisabled}`}>1</p>
                     <p className={styles.teamDivider}>-</p>
-                    <input className={styles.scoreInput} disabled type='number' value='3'/>
+                    <p className={`${styles.scoreInput} ${styles.scoreInputDisabled}`}>1</p>
                   </div>
                 </div>
                 <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
