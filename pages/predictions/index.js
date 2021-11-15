@@ -31,9 +31,16 @@ export default function Predict () {
                   <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' />
                   <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>Ajax</label>
                 </div>
-                <input className={styles.scoreInput} type='number' />
-                <p className={styles.teamDivider}>-</p>
-                <input className={styles.scoreInput} type='number' />
+                <div className={styles.scoreBlock}>
+                  <div>
+                    {/* <p className={styles.actualScoreText}>1 - 1</p> */}
+                  </div>
+                  <div className={styles.scoreInputs}>
+                    <input className={styles.scoreInput} type='number' />
+                    <p className={styles.teamDivider}>-</p>
+                    <input className={styles.scoreInput} type='number' />
+                  </div>
+                </div>
                 <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
                   <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' />
                   <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>Heracles</label>
@@ -53,9 +60,16 @@ export default function Predict () {
                   <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' />
                   <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>FC Twente</label>
                 </div>
-                <input className={styles.scoreInput} type='number' />
-                <p className={styles.teamDivider}>-</p>
-                <input className={styles.scoreInput} type='number' />
+                <div className={styles.scoreBlock}>
+                  <div>
+                    {/* <p className={styles.actualScoreText}>1 - 1</p> */}
+                  </div>
+                  <div className={styles.scoreInputs}>
+                    <input className={styles.scoreInput} type='number' />
+                    <p className={styles.teamDivider}>-</p>
+                    <input className={styles.scoreInput} type='number' />
+                  </div>
+                </div>
                 <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
                   <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' />
                   <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>FC Gronsdasssdingen</label>
@@ -75,9 +89,16 @@ export default function Predict () {
                   <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' />
                   <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>FC Team</label>
                 </div>
-                <input className={styles.scoreInput} disabled type='number' value='1' />
-                <p className={styles.teamDivider}>-</p>
-                <input className={styles.scoreInput} disabled type='number' value='3' />
+                <div className={styles.scoreBlock}>
+                  <div>
+                    {/* <p className={styles.actualScoreText}>1 - 1</p> */}
+                  </div>
+                  <div className={styles.scoreInputs}>
+                    <input className={styles.scoreInput} disabled type='number' value="1"/>
+                    <p className={styles.teamDivider}>-</p>
+                    <input className={styles.scoreInput} disabled type='number' value='3'/>
+                  </div>
+                </div>
                 <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
                   <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' />
                   <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>Manchester United</label>
