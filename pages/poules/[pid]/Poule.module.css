@@ -2,6 +2,15 @@
     word-wrap: break-word;
 }
 
+.inviteText {
+    padding: 0.3rem 0.3rem 0.3rem 0;
+    width: fit-content;
+}
+
+.inviteText span {
+    font-weight: bold;
+}
+
 .standings table,
 .standings th,
 .standings td {
