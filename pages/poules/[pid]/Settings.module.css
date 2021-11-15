@@ -1,8 +1,141 @@
+.backButton {
+    font-weight: bold;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+.form .label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    width: fit-content;
+}
+
+.form .input {
+    width: 15rem;
+    height: 1.8rem;
+    margin-top: 0.3rem;
+}
+
+.form .input:-webkit-autofill {
+    color: black;
+    -webkit-text-fill-color: rgb(2, 2, 2);
+    box-shadow: 0 0 0px 1000px white inset;
+    transition: background-color 5000s ease-in-out 0s;
+    border: 1px solid black;
+}
+
+.form .labelapprove {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    width: fit-content;
+}
+
+.form .inputapprove {
+    margin: 0;
+    margin-right: 0.4rem;
+}
+
+.form .submitbutton {
+    background-color: #2a8378;
+    color: white;
+    border-color: #5dc8d6;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    font-size: 1em;
+    height: 2.2rem;
+}
+
+.form .submitbutton:hover {
+    border-color: black;
+    cursor: pointer;
+}
+
+.approveTable table,
+.approveTable th,
+.approveTable td {
+    border: 0.05rem solid black;
+    border-collapse: collapse;
+}
+
+.approveTable table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.approveTable th {
+    background-color: #2a8378;
+    color: white;
+    padding: 0.4rem;
+    text-align: left;
+}
+
+.approveTable tr {
+    background-color: #d1e7e5;
+}
+
+.approveTable td {
+    padding: 0.4rem;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.approveTableName {
+    display: none;
+}
+
+.icon {
+    width: 1rem;
+}
+
+.icon:hover {
+    cursor: pointer;
+}
+
+.iconCheck {
+    color: #008000;
+}
+
+.iconCross {
+    color: #ff0000;
+}
+
+.tableDataCentered {
+    text-align: center;
+}
+
+.inlineClickable {
+    text-decoration: underline;
+}
+
+.pointsTable th {
+    text-align: left;
+    padding-right: 2rem;
+}
+
+.pointsTable input {
+    width: 2.5rem;
+    height: 1.5rem;
+}
+
 .deleteButton {
-    background-color: rgb(236, 19, 19);
+    background-color: rgb(250, 57, 57);
     padding: 0.4rem;
     color: black;
     border-radius: 0.2rem;
     border: 0.1rem solid black;
     cursor: pointer;
+}
+
+/* Tablet menu */
+@media all and (min-width: 700px) {
+    .approveTableName {
+        display: table-cell;
+    }
 }
