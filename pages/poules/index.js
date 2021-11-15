@@ -14,18 +14,22 @@ export default function Poules () {
           <div className={styles.poulesContainer}>
             <div className={`${styles.pouleRow} ${styles.poulesInfo}`}>
               <p>Poule name</p>
+              <p>League</p>
               <p>Creation date</p>
             </div>
             <div className={`${styles.pouleRow} ${styles.pouleRowBackground1}`}>
               <p className={styles.pouleName}><Link href='poules/1234'><a className={styles.pouleText}>Gekke poule</a></Link></p>
+              <p>Eredivisie</p>
               <p>19-11-1999</p>
             </div>
             <div className={`${styles.pouleRow} ${styles.pouleRowBackground2}`}>
-              <p className={styles.pouleName}><Link href='poules/12345'><a className={styles.pouleText}>Poule voor collegaasadassdasd's</a></Link></p>
+              <p className={styles.pouleName}><Link href='poules/12345'><a className={styles.pouleText}>Poule voor collegaasadassdaasdasdasdasdsasdsd's</a></Link></p>
+              <p>Bundesliga</p>
               <p>19-11-1999</p>
             </div>
             <div className={`${styles.pouleRow} ${styles.pouleRowBackground1}`}>
-              <p className={styles.pouleName}><Link href='poules/456'><a className={styles.pouleText}>Hele andere poule</a></Link></p>
+              <p className={styles.pouleName}><Link href='poules/456'><a className={styles.pouleText}>Hele andere pouleeeee</a></Link></p>
+              <p>Champions League</p>
               <p>19-11-1999</p>
             </div>
           </div>

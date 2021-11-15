@@ -33,12 +33,23 @@
 
 .pouleRow {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     height: 2.5rem;
     padding: 1rem;
     white-space: nowrap;
-    max-width: 100%;
+    width: 100%;
+}
+
+.pouleRow p:nth-child(1) {
+    width: 100%;
+}
+
+.pouleRow p:nth-child(2) {
+    display: none;
+}
+
+.pouleRow p:nth-child(3) {
+    display: none;
 }
 
 .pouleRowBackground1 {
@@ -51,7 +62,6 @@
 
 .pouleName {
     overflow: hidden;
-    margin-right: 0.5rem;
 }
 
 .pouleText {
@@ -61,4 +71,18 @@
 
 .pouleText:hover {
     color: #2a8378;
+}
+
+/* Tablet menu */
+@media all and (min-width: 700px) {
+    .pouleRow p:nth-child(2) {
+        display: block;
+        width: 40%;
+    }
+
+    .pouleRow p:nth-child(3) {
+        display: block;
+        width: 30%;
+        text-align: right;
+    }
 }
