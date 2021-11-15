@@ -1,3 +1,7 @@
+.backButton {
+    font-weight: bold;
+}
+
 .pouleName {
     word-wrap: break-word;
 }

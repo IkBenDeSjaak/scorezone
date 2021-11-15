@@ -14,6 +14,11 @@ export default function Poule ({ test }) {
   return (
     <>
       <Layout>
+        <p className={styles.backButton}>
+          <Link href='/poules'>
+            <a>← Back to poules</a>
+          </Link>
+        </p>
         <h1 className={styles.pouleName}>baRENDDRECCHT</h1>
         <p className={styles.inviteText}>Invite people for this poule with the following link: <span>https://scorezone.nl/poules/{pid}?joincode=aiduch6732cnjsfcts7</span></p>
         <h2>Positions</h2>
