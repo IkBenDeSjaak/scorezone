@@ -1,0 +1,9 @@
+.pointsTable th {
+    text-align: left;
+    padding-right: 2rem;
+}
+
+.pointsTable input {
+    width: 2.5rem;
+    height: 1.5rem;
+}
