@@ -40,6 +40,21 @@
     color: white;
 }
 
+.userName {
+    margin: 0;
+    padding: 15px 0;
+    font-weight: bold;
+    color: rgb(24, 20, 20);
+}
+
+.userName:hover {
+    cursor: pointer;
+}
+
+.logout {
+    font-size: 1rem;
+}
+
 /* Mobile menu */
 .menu {
     display: flex;
@@ -92,6 +107,12 @@
     }
 
     .item.button {
+        width: auto;
+        order: 1;
+        display: block;
+    }
+
+    .item.userNameItem {
         width: auto;
         order: 1;
         display: block;

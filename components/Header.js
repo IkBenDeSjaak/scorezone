@@ -29,8 +29,18 @@ export default function Header () {
             <li className={styles.item}><Link href='/leagues'><a>Leagues</a></Link></li>
             <li className={styles.item}><Link href='/positions'><a>Positions</a></Link></li>
             <li className={styles.item}><Link href='/rules'><a>Rules</a></Link></li>
-            <li className={`${styles.item} ${styles.button}`}><Link href='/login'><a>Log In</a></Link></li>
-            <li className={`${styles.item} ${styles.button} ${styles.secondary}`}><Link href='/signup'><a>Sign Up</a></Link></li>
+            {user?.isLoggedIn === true && (
+              <>
+              <li className={`${styles.item} ${styles.userNameItem}`}><p className={styles.userName}>IkBenDeSjaak</p></li>
+              <li className={`${styles.item} ${styles.logout}`}><Link href='/logout'><a>Logout</a></Link></li>
+              </>
+            )}
+            {user?.isLoggedIn === false && (
+              <>
+                <li className={`${styles.item} ${styles.button}`}><Link href='/login'><a>Log In</a></Link></li>
+                <li className={`${styles.item} ${styles.button} ${styles.secondary}`}><Link href='/signup'><a>Sign Up</a></Link></li>
+              </>
+            )}
             <li className={styles.toggle} onClick={toggleMenu}>
                 {menuActive ? <FontAwesomeIcon icon={faTimes} className={styles.icon} /> : <FontAwesomeIcon icon={faBars} className={styles.icon} />}
             </li>
