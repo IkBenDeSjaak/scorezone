@@ -22,7 +22,7 @@ export default function Settings ({ test }) {
         </p>
         <h1>Settings</h1>
         <h2>General</h2>
-        <form className={styles.form}>
+        <form className={styles.pouleInfoForm}>
           <label className={styles.label} htmlFor='pouleName'>
             Poule name
             <input className={styles.input} id='pouleName' type='text' defaultValue="Jantje's poule" />
@@ -31,7 +31,7 @@ export default function Settings ({ test }) {
             <input className={styles.inputapprove} name='approve' id='approve' defaultChecked type='checkbox' />
             Approve or disapprove new participants
           </label>
-          <label className={styles.label}><input className={`${styles.submitbutton} ${styles.input}`} id='submitbutton' type='submit' value='Save settings' /></label>
+          <label className={styles.label}><input className={`${styles.submitbutton} ${styles.input}`} id='submitButtonPouleInfo' type='submit' value='Save settings' /></label>
         </form>
         <h2>Approve participants</h2>
         {/* <p>There are no participants to approve or disapprove.</p> */}
@@ -72,54 +72,35 @@ export default function Settings ({ test }) {
         </div>
         <h2>Custom points</h2>
         <p>By default your poule uses ScoreZone's points system that can be found in the <Link href='/rules'><a className={styles.inlineClickable}>rules</a></Link> section.
-          You can customize points that will be awarded after every match by changing the values below.
+          You can customize points that will be awarded after every match by changing and saving the values below.
         </p>
-        <div class={styles.pointsTable}>
-          <table>
-            <tbody>
-              <tr>
-                <th scope='row'>
-                  <label htmlFor='totalscore'>Total score correct</label>
-                </th>
-                <td>
-                  <input type='number' name='totalscore' id='totalscore' defaultValue='10' />
-                </td>
-              </tr>
-              <tr>
-                <th scope='row'>
-                  <label htmlFor='drawcorrect'>Draw correct</label>
-                </th>
-                <td>
-                  <input type='number' name='drawcorrect' id='drawcorrect' defaultValue='10' />
-                </td>
-              </tr>
-              <tr>
-                <th scope='row'>
-                  <label htmlFor='winnercorrect'>Winner correct</label>
-                </th>
-                <td>
-                  <input type='number' name='winnercorrect' id='winnercorrect' defaultValue='10' />
-                </td>
-              </tr>
-              <tr>
-                <th scope='row'>
-                  <label htmlFor='homegoals'>Number of home goals correct</label>
-                </th>
-                <td>
-                  <input type='number' name='homegoals' id='homegoals' defaultValue='10' />
-                </td>
-              </tr>
-              <tr>
-                <th scope='row'>
-                  <label htmlFor='awaygoals'>Number of away goals correct</label>
-                </th>
-                <td>
-                  <input type='number' name='away goals' id='awaygoals' defaultValue='10' />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <form className={styles.pointsStrategyForm}>
+
+          <div>
+            <label htmlFor='totalscore'>Total score correct</label>
+            <input type='number' name='totalscore' id='totalscore' defaultValue='10' />
+          </div>
+
+          <div>
+            <label htmlFor='drawcorrect'>Draw correct</label>
+            <input type='number' name='drawcorrect' id='drawcorrect' defaultValue='10' />
+          </div>
+          <div>
+            <label htmlFor='winnercorrect'>Winner correct</label>
+            <input type='number' name='winnercorrect' id='winnercorrect' defaultValue='10' />
+          </div>
+          <div>
+            <label htmlFor='homegoals'>Number of home goals correct</label>
+            <input type='number' name='homegoals' id='homegoals' defaultValue='10' />
+          </div>
+          <div>
+            <label htmlFor='awaygoals'>Number of away goals correct</label>
+            <input type='number' name='away goals' id='awaygoals' defaultValue='10' />
+          </div>
+          <div>
+            <label><input className={`${styles.submitbutton}`} id='submitButtonPoints' type='submit' value='Save points' /></label>
+          </div>
+        </form>
         <h2>Delete poule</h2>
         <p>If you wish to delete the poule you created press the button below.</p>
         <button className={styles.deleteButton}>Delete poule</button>
