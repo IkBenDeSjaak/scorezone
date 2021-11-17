@@ -10,7 +10,6 @@ export default function Poule ({ test }) {
   const { pid } = router.query
   console.log(test)
 
-
   return (
     <>
       <Layout>

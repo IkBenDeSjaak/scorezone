@@ -28,7 +28,7 @@ export default function Predict () {
               </div>
               <div className={styles.teams}>
                 <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' alt={`Ajax logo`}/>
+                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' alt='Ajax logo' />
                   <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>Ajax</label>
                 </div>
                 <div className={styles.scoreBlock}>
@@ -42,7 +42,7 @@ export default function Predict () {
                   </div>
                 </div>
                 <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' alt={`Heracles logo`}/>
+                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' alt='Heracles logo' />
                   <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>Heracles</label>
                 </div>
               </div>
@@ -57,7 +57,7 @@ export default function Predict () {
               </div>
               <div className={styles.teams}>
                 <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' alt={`Fc Twente logo`}/>
+                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' alt='Fc Twente logo' />
                   <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>FC Twente</label>
                 </div>
                 <div className={styles.scoreBlock}>
@@ -71,7 +71,7 @@ export default function Predict () {
                   </div>
                 </div>
                 <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' alt={`Fc Groningen logo`}/>
+                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' alt='Fc Groningen logo' />
                   <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>FC Gronsdasssdingen</label>
                 </div>
               </div>
@@ -86,7 +86,7 @@ export default function Predict () {
               </div>
               <div className={styles.teams}>
                 <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' alt={`FC Team logo`}/>
+                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' alt='FC Team logo' />
                   <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>FC Team</label>
                 </div>
                 <div className={styles.scoreBlock}>
@@ -100,7 +100,7 @@ export default function Predict () {
                   </div>
                 </div>
                 <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' alt={`Manchester United logo`}/>
+                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' alt='Manchester United logo' />
                   <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>Manchester United</label>
                 </div>
               </div>
@@ -115,7 +115,7 @@ export default function Predict () {
               </div>
               <div className={styles.teams}>
                 <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' alt={`Fc Meer logo`}/>
+                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' alt='Fc Meer logo' />
                   <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>FC Meer Team</label>
                 </div>
                 <div className={styles.scoreBlock}>
@@ -129,7 +129,7 @@ export default function Predict () {
                   </div>
                 </div>
                 <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' alt={`Manchester City logo`}/>
+                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' alt='Manchester City logo' />
                   <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>Manchester City</label>
                 </div>
               </div>

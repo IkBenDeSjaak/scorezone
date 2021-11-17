@@ -31,8 +31,8 @@ export default function Header () {
             <li className={styles.item}><Link href='/rules'><a>Rules</a></Link></li>
             {user?.isLoggedIn === true && (
               <>
-              <li className={`${styles.item} ${styles.userNameItem}`}><p className={styles.userName}>IkBenDeSjaak</p></li>
-              <li className={`${styles.item} ${styles.logout}`}><Link href='/logout'><a>Logout</a></Link></li>
+                <li className={`${styles.item} ${styles.userNameItem}`}><p className={styles.userName}>IkBenDeSjaak</p></li>
+                <li className={`${styles.item} ${styles.logout}`}><Link href='/logout'><a>Logout</a></Link></li>
               </>
             )}
             {user?.isLoggedIn === false && (
@@ -42,7 +42,7 @@ export default function Header () {
               </>
             )}
             <li className={styles.toggle} onClick={toggleMenu}>
-                {menuActive ? <FontAwesomeIcon icon={faTimes} className={styles.icon} /> : <FontAwesomeIcon icon={faBars} className={styles.icon} />}
+              {menuActive ? <FontAwesomeIcon icon={faTimes} className={styles.icon} /> : <FontAwesomeIcon icon={faBars} className={styles.icon} />}
             </li>
           </ul>
         </nav>

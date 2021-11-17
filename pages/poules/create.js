@@ -20,7 +20,7 @@ export default function CreatePoule () {
               <option value='mango'>Nog een league</option>
             </select>
           </label>
-          <label className={styles.labelapprove} htmlFor="approve">
+          <label className={styles.labelapprove} htmlFor='approve'>
             <input className={styles.inputapprove} defaultChecked name='approve' id='approve' type='checkbox' />
             I want to be able to approve/disapprove new members
           </label>

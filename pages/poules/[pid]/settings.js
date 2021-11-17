@@ -25,10 +25,10 @@ export default function Settings ({ test }) {
         <form className={styles.form}>
           <label className={styles.label} htmlFor='pouleName'>
             Poule name
-            <input className={styles.input} id='pouleName' type='text' defaultValue="Jantje's poule"/>
+            <input className={styles.input} id='pouleName' type='text' defaultValue="Jantje's poule" />
           </label>
-          <label className={styles.labelApprove} htmlFor="approve">
-            <input className={styles.inputapprove} name='approve' id='approve' defaultChecked={true} type='checkbox' />
+          <label className={styles.labelApprove} htmlFor='approve'>
+            <input className={styles.inputapprove} name='approve' id='approve' defaultChecked type='checkbox' />
             Approve or disapprove new participants
           </label>
           <label className={styles.label}><input className={`${styles.submitbutton} ${styles.input}`} id='submitbutton' type='submit' value='Save settings' /></label>
@@ -49,71 +49,72 @@ export default function Settings ({ test }) {
             <tbody>
               <tr>
                 <td>Sjaakieeeeeeeee</td>
-                <td className={styles.approveTableName} >Sjaak Kok</td>
-                <td className={styles.tableDataCentered}>
-                  <FontAwesomeIcon className={`${styles.icon} ${styles.iconCheck}`} icon={faCheck}/>
-                </td>
-                <td className={styles.tableDataCentered}>
-                  <FontAwesomeIcon className={`${styles.icon} ${styles.iconCross}`} icon={faTimes}/>
-                </td>
-              </tr>
-              <tr>
-                <td>Bertassssdklaasasdasdasdasdasdasddasdasdsjd</td>
-                <td className={styles.approveTableName} >Bert de Knaap</td>
+                <td className={styles.approveTableName}>Sjaak Kok</td>
                 <td className={styles.tableDataCentered}>
                   <FontAwesomeIcon className={`${styles.icon} ${styles.iconCheck}`} icon={faCheck} />
                 </td>
                 <td className={styles.tableDataCentered}>
-                  <FontAwesomeIcon className={`${styles.icon} ${styles.iconCross}`} icon={faTimes}/>
+                  <FontAwesomeIcon className={`${styles.icon} ${styles.iconCross}`} icon={faTimes} />
+                </td>
+              </tr>
+              <tr>
+                <td>Bertassssdklaasasdasdasdasdasdasddasdasdsjd</td>
+                <td className={styles.approveTableName}>Bert de Knaap</td>
+                <td className={styles.tableDataCentered}>
+                  <FontAwesomeIcon className={`${styles.icon} ${styles.iconCheck}`} icon={faCheck} />
+                </td>
+                <td className={styles.tableDataCentered}>
+                  <FontAwesomeIcon className={`${styles.icon} ${styles.iconCross}`} icon={faTimes} />
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
         <h2>Custom points</h2>
-        <p>By default your poule uses ScoreZone's points system that can be found in the <Link href="/rules"><a className={styles.inlineClickable}>rules</a></Link> section. 
-        You can customize points that will be awarded after every match by changing the values below.</p>
+        <p>By default your poule uses ScoreZone's points system that can be found in the <Link href='/rules'><a className={styles.inlineClickable}>rules</a></Link> section.
+          You can customize points that will be awarded after every match by changing the values below.
+        </p>
         <div class={styles.pointsTable}>
           <table>
             <tbody>
               <tr>
-                <th scope="row">
-                  <label htmlFor="totalscore">Total score correct</label>
+                <th scope='row'>
+                  <label htmlFor='totalscore'>Total score correct</label>
                 </th>
                 <td>
-                  <input type="number" name="totalscore" id="totalscore" defaultValue='10'></input>
+                  <input type='number' name='totalscore' id='totalscore' defaultValue='10' />
                 </td>
               </tr>
               <tr>
-                <th scope="row">
-                  <label htmlFor="drawcorrect">Draw correct</label>
+                <th scope='row'>
+                  <label htmlFor='drawcorrect'>Draw correct</label>
                 </th>
                 <td>
-                  <input type="number" name="drawcorrect" id="drawcorrect" defaultValue='10'></input>
+                  <input type='number' name='drawcorrect' id='drawcorrect' defaultValue='10' />
                 </td>
               </tr>
               <tr>
-                <th scope="row">
-                  <label htmlFor="winnercorrect">Winner correct</label>
+                <th scope='row'>
+                  <label htmlFor='winnercorrect'>Winner correct</label>
                 </th>
                 <td>
-                  <input type="number" name="winnercorrect" id="winnercorrect" defaultValue='10'></input>
+                  <input type='number' name='winnercorrect' id='winnercorrect' defaultValue='10' />
                 </td>
               </tr>
               <tr>
-                <th scope="row">
-                  <label htmlFor="homegoals">Number of home goals correct</label>
+                <th scope='row'>
+                  <label htmlFor='homegoals'>Number of home goals correct</label>
                 </th>
                 <td>
-                  <input type="number" name="homegoals" id="homegoals" defaultValue='10'></input>
+                  <input type='number' name='homegoals' id='homegoals' defaultValue='10' />
                 </td>
               </tr>
               <tr>
-                <th scope="row">
-                  <label htmlFor="awaygoals">Number of away goals correct</label>
+                <th scope='row'>
+                  <label htmlFor='awaygoals'>Number of away goals correct</label>
                 </th>
                 <td>
-                  <input type="number" name="away goals" id="awaygoals" defaultValue='10'></input>
+                  <input type='number' name='away goals' id='awaygoals' defaultValue='10' />
                 </td>
               </tr>
             </tbody>
