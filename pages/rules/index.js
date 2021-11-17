@@ -14,7 +14,7 @@ export default function Rules () {
           Predictions saved or adjusted after the starting time will not be eligible for points. </p>
         <h2>Points system</h2>
         <p>This points system is used by default in poules. However you can customize the points used in your poule in your poule's settings. 
-          The system below is also used to calculate points in the ScoreZone's rankings.</p>
+          The system below is also used to calculate points in the ScoreZone rankings.</p>
         <div class={styles.pointsTable}>
           <table>
             <tbody>
