@@ -10,16 +10,18 @@ export default function Rules () {
         <h2>Predictions</h2>
         <p>You can predict matches till 1 second before a match starts.</p>
         <p>If a match gets a new playing date or time your prediction will not be removed.</p>
-        <p>In case a match starts earlier than expected, the actual starting time counts as the closing time for the predictions. 
-          Predictions saved or adjusted after the starting time will not be eligible for points. </p>
+        <p>In case a match starts earlier than expected, the actual starting time counts as the closing time for the predictions.
+          Predictions saved or adjusted after the starting time will not be eligible for points.
+        </p>
         <h2>Points system</h2>
-        <p>This points system is used by default in poules. However you can customize the points used in your poule in your poule's settings. 
-          The system below is also used to calculate points in the ScoreZone rankings.</p>
+        <p>This points system is used by default in poules. However you can customize the points used in your poule in your poule's settings.
+          The system below is also used to calculate points in the ScoreZone rankings.
+        </p>
         <div class={styles.pointsTable}>
           <table>
             <tbody>
               <tr>
-                <th scope="row">
+                <th scope='row'>
                   Total score correct
                 </th>
                 <td>
@@ -27,7 +29,7 @@ export default function Rules () {
                 </td>
               </tr>
               <tr>
-                <th scope="row">
+                <th scope='row'>
                   Draw correct
                 </th>
                 <td>
@@ -35,7 +37,7 @@ export default function Rules () {
                 </td>
               </tr>
               <tr>
-                <th scope="row">
+                <th scope='row'>
                   Winner correct
                 </th>
                 <td>
@@ -43,7 +45,7 @@ export default function Rules () {
                 </td>
               </tr>
               <tr>
-                <th scope="row">
+                <th scope='row'>
                   Number of home goals correct
                 </th>
                 <td>
@@ -51,7 +53,7 @@ export default function Rules () {
                 </td>
               </tr>
               <tr>
-                <th scope="row">
+                <th scope='row'>
                   Number of away goals correct
                 </th>
                 <td>
