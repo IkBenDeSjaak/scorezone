@@ -1,0 +1,63 @@
+.backButton {
+    font-weight: bold;
+}
+
+.rankings {
+    margin-bottom: 1rem;
+}
+
+.rankings table,
+.rankings th,
+.rankings td {
+    border: 0.05rem solid black;
+    border-collapse: collapse;
+}
+
+.rankings table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.rankings th {
+    background-color: #2a8378;
+    color: white;
+    padding: 0.4rem;
+    text-align: left;
+}
+
+.rankings tr {
+    background-color: #b4cfcc;
+}
+
+.rankings tr:nth-child(even) {
+    background-color: #d1e7e5;
+}
+
+.rankings td {
+    padding: 0.4rem;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.rankingsPosition {
+    width: 4rem;
+}
+
+.rankingsPointsData {
+    font-weight: bold;
+}
+
+.rankingsPointsData span {
+    font-weight: normal;
+    font-size: 0.8rem;
+    display: block;
+}
+
+/* Tablet menu */
+@media all and (min-width: 700px) {
+    .rankingsPointsData span {
+        font-weight: normal;
+        font-size: 0.8rem;
+        display: initial;
+    }
+}
