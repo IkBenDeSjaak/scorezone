@@ -22,7 +22,7 @@ export default function Rankings () {
               <tr>
                 <td><Link href='/rankings/123?page=1'><a className={styles.leagueText}>Eredivisie</a></Link></td>
                 <td className={styles.rankingsParticipants}>1999</td>
-                <td className={styles.rankingsPositionData}>21e <span>(10e)</span></td>
+                <td className={styles.rankingsPositionData}>21 <span>(10)</span></td>
                 <td className={styles.rankingsPointsData}>243</td>
               </tr>
               <tr>
@@ -34,7 +34,7 @@ export default function Rankings () {
               <tr>
                 <td><Link href='/rankings/324?page=1'><a className={styles.leagueText}>Conference League</a></Link></td>
                 <td className={styles.rankingsParticipants}>99</td>
-                <td className={styles.rankingsPositionData}>1e <span>(3e)</span></td>
+                <td className={styles.rankingsPositionData}>1 <span>(3)</span></td>
                 <td className={styles.rankingsPointsData}>243</td>
               </tr>
             </tbody>
