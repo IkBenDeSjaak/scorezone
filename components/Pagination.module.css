@@ -1,0 +1,42 @@
+.list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.item {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    border: 0.05rem solid gray;
+    margin-left: -0.05rem;
+    background-color: white;
+    width: 3rem;
+    text-align: center;
+    user-select: none;
+}
+
+.item:hover {
+    cursor: pointer;
+}
+
+.item p {
+    margin: 0;
+}
+
+.itemSelected {
+    background-color: #2a8378;
+    color: white;
+}
+
+.onePageModifier {
+    display: block;
+}
+
+/* Tablet menu */
+@media all and (min-width: 700px) {
+    .item {
+        padding: 0.6rem;
+        font-size: 1rem;
+    }
+}
