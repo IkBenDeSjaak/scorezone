@@ -165,12 +165,12 @@
         max-width: none;
     }
 
-    /* .teamLabelLeft {
+    .teamLabelLeft {
         order: 1;
     }
     .teamLabelRight {
         order: 2;
-    } */
+    }
 
     .teamAndImage {
         display: inline-flex;
@@ -183,13 +183,13 @@
         margin-right: 0;
     }
 
-    /* .teamImageLeft {
+    .teamImageLeft {
         order: 2;
     }
 
     .teamImageRight {
         order: 1;
-    } */
+    }
 
     .teamAndImageAlignLeft {
         justify-content: start;
