@@ -7,13 +7,11 @@ export default withSessionRoute(handler)
 async function handler (req, res) {
   switch (req.method) {
     case 'POST': {
-      const { username, password, rememberme } = await req.body
+      const { username, password } = await req.body
 
-      if (!username || !password || rememberme === undefined) {
+      if (!username || !password) {
         return res.status(400).json({ message: 'Submit a username and password' })
-      } else if (typeof (rememberme) !== 'boolean') {
-        return res.status(400).json({ message: 'Bad request' })
-      }
+      } 
 
       const results = await query(
         `

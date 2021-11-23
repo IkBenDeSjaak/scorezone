@@ -9,7 +9,7 @@ export default function Login () {
   const [inputFields, setInputFields] = useState({
     username: '',
     password: '',
-    rememberme: false
+    // rememberme: false
   })
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -48,10 +48,10 @@ export default function Login () {
           <label className={styles.label} htmlFor='username'>Username<input className={styles.input} required name='username' id='username' type='text' value={inputFields.username} onChange={inputsHandler} /></label>
           <label className={styles.label} htmlFor='password'>Password<input className={styles.input} required name='password' id='password' type='password' value={inputFields.password} onChange={inputsHandler} /></label>
           <label className={styles.label}><input className={`${styles.submitbutton} ${styles.input}`} id='submitbutton' type='submit' value='Login' /></label>
-          <label className={styles.labelrememberme}>
+          {/* <label className={styles.labelrememberme}>
             <input className={styles.inputrememberme} name='rememberme' id='rememberme' type='checkbox' checked={inputFields.rememberme} onChange={inputsHandler} />
             Remember me
-          </label>
+          </label> */}
         </form>
       </Layout>
     </>
