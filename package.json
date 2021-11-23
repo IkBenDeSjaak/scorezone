@@ -25,5 +25,8 @@
     "eslint-config-next": "12.0.2",
     "eslint-plugin-react": "^7.26.1",
     "standard": "^16.0.4"
+  },
+  "standard": {
+    "globals": ["fetch"]
   }
 }
