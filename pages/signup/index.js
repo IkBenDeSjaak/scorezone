@@ -2,13 +2,16 @@ import styles from './SignUp.module.css'
 
 import Layout from '../../components/Layout'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 export default function SignUp () {
+  const router = useRouter()
   const [inputFields, setInputFields] = useState({
     email: '',
     username: '',
     password: ''
   })
+  const [errorMessage, setErrorMessage] = useState('')
 
   const inputsHandler = (e) => {
     setInputFields({ ...inputFields, [e.target.name]: e.target.value })
@@ -22,8 +25,14 @@ export default function SignUp () {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(inputFields)
-    }).then(res => res.json())
-    console.log(response)
+    })
+
+    if (response.status === 200) {
+      router.push('/login')
+    } else {
+      const responseJson = await response.json()
+      setErrorMessage(responseJson.message)
+    }
   }
 
   return (
@@ -31,10 +40,11 @@ export default function SignUp () {
       <Layout>
         <h2>Sign up</h2>
         <p>Create your own account and start predicting!</p>
+        {errorMessage ? <p className={styles.errorMessage}>{errorMessage}</p> : ''}
         <form className={styles.form} onSubmit={handleSubmit}>
-          <label className={styles.label} htmlFor='email'>Email<input className={styles.input} onChange={inputsHandler} name='email' id='email' type='email' /></label>
-          <label className={styles.label} htmlFor='username'>Username<input className={styles.input} onChange={inputsHandler} name='username' id='username' type='text' /></label>
-          <label className={styles.label} htmlFor='password'>Password<input className={styles.input} onChange={inputsHandler} name='password' id='password' type='password' /></label>
+          <label className={styles.label} htmlFor='email'>Email<input className={styles.input} required maxLength='64' name='email' id='email' type='email' value={inputFields.email} onChange={inputsHandler} /></label>
+          <label className={styles.label} htmlFor='username'>Username<input className={styles.input} required minLength='6' maxLength='20' name='username' id='username' type='text' value={inputFields.username} onChange={inputsHandler} /></label>
+          <label className={styles.label} htmlFor='password'>Password<input className={styles.input} required minLength='8' maxLength='50' name='password' id='password' type='password' value={inputFields.password} onChange={inputsHandler} /></label>
           <label className={styles.label}><input className={`${styles.submitbutton} ${styles.input}`} id='submitbutton' type='submit' value='Signup' /></label>
         </form>
       </Layout>
