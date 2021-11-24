@@ -8,7 +8,7 @@ export default function Login () {
   const router = useRouter()
   const [inputFields, setInputFields] = useState({
     username: '',
-    password: '',
+    password: ''
     // rememberme: false
   })
   const [errorMessage, setErrorMessage] = useState('')
