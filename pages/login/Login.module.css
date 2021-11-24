@@ -1,9 +1,3 @@
-.errorMessage {
-    background-color: #f37e88;
-    padding: 0.6rem;
-    border-radius: 0.2rem;
-}
-
 .form {
     display: flex;
     flex-direction: column;

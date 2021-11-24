@@ -2,6 +2,7 @@ import styles from './Login.module.css'
 
 import { useState } from 'react'
 import Layout from '../../components/Layout'
+import ErrorMessage from '../../components/ErrorMessage'
 import useUser from '../../lib/useUser'
 import fetcher, { FetchError } from '../../lib/fetcher'
 
@@ -49,7 +50,7 @@ export default function Login () {
       <Layout>
         <h2>Login</h2>
         <p>Login with your username and password.</p>
-        {errorMessage ? <p className={styles.errorMessage}>{errorMessage}</p> : ''}
+        {errorMessage ? <ErrorMessage message={errorMessage} /> : ''}
         <form className={styles.form} onSubmit={handleSubmit}>
           <label className={styles.label} htmlFor='username'>Username<input className={styles.input} required name='username' id='username' type='text' value={inputFields.username} onChange={inputsHandler} /></label>
           <label className={styles.label} htmlFor='password'>Password<input className={styles.input} required name='password' id='password' type='password' value={inputFields.password} onChange={inputsHandler} /></label>
