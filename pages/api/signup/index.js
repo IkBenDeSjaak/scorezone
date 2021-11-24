@@ -17,6 +17,24 @@ export default async function handler (req, res) {
           return res.status(400).json({ message: 'Email is too long' })
         }
 
+        const usernameResults = await query(
+          `SELECT Username FROM Users WHERE Username = ?`,
+          username
+        )
+
+        const emailResults = await query(
+          `SELECT Email FROM Users WHERE Email = ?`,
+          email
+        )
+
+        if(usernameResults[0]?.Username && emailResults[0]?.Email) {
+          return res.status(409).json({ message: 'Username and email already exist' })
+        } else if (usernameResults[0]?.Username) {
+          return res.status(409).json({ message: 'Username already exists' })
+        } else if (emailResults[0]?.Email) {
+          return res.status(409).json({ message: 'Email already exists' })
+        }
+
         const hashedPassword = await bcrypt.hash(password, 12)
 
         await query(
