@@ -1,11 +1,15 @@
 import styles from './Login.module.css'
 
-import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Layout from '../../components/Layout'
+import useUser from '../../lib/useUser'
+import fetcher, { FetchError } from '../../lib/fetcher'
 
 export default function Login () {
-  const router = useRouter()
+  const { mutateUser } = useUser({
+    redirectTo: '/predictions',
+    redirectIfFound: true
+  })
   const [inputFields, setInputFields] = useState({
     username: '',
     password: ''
@@ -23,18 +27,20 @@ export default function Login () {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const response = await fetch('/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(inputFields)
-    })
-    if (response.status === 200) {
-      router.push('/predictions')
-    } else {
-      const responseJson = await response.json()
-      setErrorMessage(responseJson.message)
+    try {
+      mutateUser(
+        await fetcher('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(inputFields)
+        })
+      )
+    } catch (error) {
+      if (error instanceof FetchError) {
+        setErrorMessage(error.data.message)
+      } else {
+        setErrorMessage(error)
+      }
     }
   }
 
