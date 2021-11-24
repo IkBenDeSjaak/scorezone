@@ -18,16 +18,16 @@ export default async function handler (req, res) {
         }
 
         const usernameResults = await query(
-          `SELECT Username FROM Users WHERE Username = ?`,
+          'SELECT Username FROM Users WHERE Username = ?',
           username
         )
 
         const emailResults = await query(
-          `SELECT Email FROM Users WHERE Email = ?`,
+          'SELECT Email FROM Users WHERE Email = ?',
           email
         )
 
-        if(usernameResults[0]?.Username && emailResults[0]?.Email) {
+        if (usernameResults[0]?.Username && emailResults[0]?.Email) {
           return res.status(409).json({ message: 'Username and email already exist' })
         } else if (usernameResults[0]?.Username) {
           return res.status(409).json({ message: 'Username already exists' })
