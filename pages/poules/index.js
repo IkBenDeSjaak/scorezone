@@ -17,17 +17,17 @@ export default function Poules () {
               <p>League</p>
               <p>Season</p>
             </div>
-            <div className={`${styles.pouleRow} ${styles.pouleRowBackground1}`}>
+            <div className={`${styles.pouleRow} ${styles.pouleRowData}`}>
               <p className={styles.pouleName}><Link href='poules/1234'><a className={styles.pouleText}>Gekke poule</a></Link></p>
               <p>Eredivisie</p>
               <p>2020-2021</p>
             </div>
-            <div className={`${styles.pouleRow} ${styles.pouleRowBackground2}`}>
+            <div className={`${styles.pouleRow} ${styles.pouleRowData}`}>
               <p className={styles.pouleName}><Link href='poules/12345'><a className={styles.pouleText}>Poule voor collegaasadassdaasdasdasdasdsasdsd's</a></Link></p>
               <p>Bundesliga</p>
               <p>2021-2022</p>
             </div>
-            <div className={`${styles.pouleRow} ${styles.pouleRowBackground1}`}>
+            <div className={`${styles.pouleRow} ${styles.pouleRowData}`}>
               <p className={styles.pouleName}><Link href='poules/456'><a className={styles.pouleText}>Hele andere pouleeeee</a></Link></p>
               <p>Champions League</p>
               <p>2021-2022</p>

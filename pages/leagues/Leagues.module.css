@@ -22,13 +22,10 @@
     width: 100%;
     align-items: center;
     padding: 0.3rem;
-}
-
-.leagueRowBackground1 {
     background-color: #b4cfcc;
 }
 
-.leagueRowBackground2 {
+.leagueRow:nth-child(even) {
     background-color: #d1e7e5;
 }
 

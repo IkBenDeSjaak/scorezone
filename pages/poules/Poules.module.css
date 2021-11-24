@@ -52,11 +52,11 @@
     display: none;
 }
 
-.pouleRowBackground1 {
+.pouleRowData {
     background-color: #b4cfcc;
 }
 
-.pouleRowBackground2 {
+.pouleRowData:nth-child(even) {
     background-color: #d1e7e5;
 }
 

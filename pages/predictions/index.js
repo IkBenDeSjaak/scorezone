@@ -21,7 +21,7 @@ export default function Predict () {
 
           <div className={styles.leagueContainer}>
             <div className={styles.leagueName}>Eredivisie</div>
-            <div className={`${styles.gameRow} ${styles.gameRowBackground1}`}>
+            <div className={`${styles.gameRow}`}>
               <div className={styles.dateTime}>
                 <p className={styles.day}>Fr</p>
                 <p className={styles.time}>20:00</p>
@@ -50,7 +50,7 @@ export default function Predict () {
                 <p>10</p>
               </div>
             </div>
-            <div className={`${styles.gameRow} ${styles.gameRowBackground2}`}>
+            <div className={`${styles.gameRow}`}>
               <div className={styles.dateTime}>
                 <p className={styles.day}>Su</p>
                 <p className={styles.time}>17:00</p>
@@ -79,7 +79,7 @@ export default function Predict () {
                 <p />
               </div>
             </div>
-            <div className={`${styles.gameRow} ${styles.gameRowBackground1}`}>
+            <div className={`${styles.gameRow}`}>
               <div className={styles.dateTime}>
                 <p className={styles.day}>Su</p>
                 <p className={styles.time}>17:00</p>
@@ -108,7 +108,7 @@ export default function Predict () {
                 <p>7</p>
               </div>
             </div>
-            <div className={`${styles.gameRow} ${styles.gameRowBackground2}`}>
+            <div className={`${styles.gameRow}`}>
               <div className={styles.dateTime}>
                 <p className={styles.day}>Su</p>
                 <p className={styles.time}>17:00</p>

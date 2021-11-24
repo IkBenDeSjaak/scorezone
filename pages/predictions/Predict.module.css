@@ -28,13 +28,10 @@
     display: flex;
     align-items: center;
     height: 3rem;
-}
-
-.gameRowBackground1 {
     background-color: #b4cfcc;
 }
 
-.gameRowBackground2 {
+.gameRow:nth-child(even) {
     background-color: #d1e7e5;
 }
 
