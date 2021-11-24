@@ -18,27 +18,12 @@ export const getServerSideProps = withSessionSsr(async function ({
 }) {
   const user = req.session.user
 
-  // if user is logged in, log the user out
-
-  // if (user === undefined) {
-  //   res.setHeader("location", "/login");
-  //   res.statusCode = 302;
-  //   res.end();
-  //   return {
-  //     props: {
-  //       user: { isLoggedIn: false, login: "", avatarUrl: "" },
-  //     },
-  //   };
-  // }
-
-  // return {
-  //   props: { user: req.session.user },
-  // };\
+  if (user) {
+    req.session.destroy()
+  }
 
   return {
-    props: {
-      test: 'testtekst'
-    } // will be passed to the page component as props
+    props: {}
   }
 }
 )
