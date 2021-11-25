@@ -8,6 +8,7 @@ export default async function handler (req, res) {
           `
           SELECT L.LeagueId, L.LeagueName
           FROM Leagues L 
+          ORDER BY L.LeagueName ASC
           `
         )
 
