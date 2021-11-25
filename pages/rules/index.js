@@ -17,7 +17,7 @@ export default function Rules () {
         <p>This points system is used by default in poules. However you can customize the points used in your poule in your poule's settings.
           The system below is also used to calculate points in the ScoreZone rankings.
         </p>
-        <div class={styles.pointsTable}>
+        <div className={styles.pointsTable}>
           <table>
             <tbody>
               <tr>
