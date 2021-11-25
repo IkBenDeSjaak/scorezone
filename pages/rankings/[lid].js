@@ -22,7 +22,7 @@ export default function LeagueRanking ({ test, page, amountOfPages }) {
         </p>
         <h1>Ranking</h1>
         <h2>Champions League</h2>
-        <div class={styles.rankings}>
+        <div className={styles.rankings}>
           <table>
             <thead>
               <tr>

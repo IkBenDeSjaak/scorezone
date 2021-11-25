@@ -8,7 +8,7 @@ export default function Rankings () {
     <>
       <Layout>
         <h1>Rankings</h1>
-        <div class={styles.rankings}>
+        <div className={styles.rankings}>
           <table>
             <thead>
               <tr>
