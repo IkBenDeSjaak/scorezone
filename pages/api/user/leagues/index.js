@@ -1,5 +1,5 @@
 import { withSessionRoute } from '../../../../lib/withSession'
-import { query } from '../../../../lib/db'
+import { querydb } from '../../../../lib/db'
 
 export default withSessionRoute(handler)
 
@@ -13,7 +13,7 @@ async function handler (req, res) {
           return res.status(401)
         }
 
-        const results = await query(
+        const results = await querydb(
           `
           SELECT L.LeagueId 
           FROM Leagues L 
@@ -41,7 +41,7 @@ async function handler (req, res) {
           return res.status(400).json({ message: 'Missing leagueId in request' })
         }
 
-        await query(
+        await querydb(
           `
           INSERT INTO UserLeagues (UserId, LeagueId) 
           VALUES (?, ?)

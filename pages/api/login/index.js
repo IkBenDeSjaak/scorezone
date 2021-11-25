@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import { withSessionRoute } from '../../../lib/withSession'
-import { query } from '../../../lib/db'
+import { querydb } from '../../../lib/db'
 
 export default withSessionRoute(handler)
 
@@ -14,7 +14,7 @@ async function handler (req, res) {
           return res.status(400).json({ message: 'Submit a username and password' })
         }
 
-        const results = await query(
+        const results = await querydb(
           `
           SELECT UserId, Password
           FROM Users

@@ -1,10 +1,10 @@
-import { query } from '../../../lib/db'
+import { querydb } from '../../../lib/db'
 
 export default async function handler (req, res) {
   switch (req.method) {
     case 'GET':
       try {
-        const results = await query(
+        const results = await querydb(
           `
           SELECT L.LeagueId, L.LeagueName
           FROM Leagues L 

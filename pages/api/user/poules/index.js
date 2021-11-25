@@ -1,5 +1,5 @@
 import { withSessionRoute } from '../../../../lib/withSession'
-import { query } from '../../../../lib/db'
+import { querydb } from '../../../../lib/db'
 
 export default withSessionRoute(handler)
 
@@ -13,7 +13,7 @@ async function handler (req, res) {
           return res.status(401)
         }
 
-        const results = await query(
+        const results = await querydb(
           `
           SELECT DISTINCT P.PouleId, P.PouleName, S.SeasonName, L.LeagueName
           FROM Poules P 
@@ -44,7 +44,7 @@ async function handler (req, res) {
           return res.status(400).json({ message: 'The maximum length of the poule name is 25 characters' })
         }
 
-        const season = await query(
+        const season = await querydb(
           `
           SELECT LS.SeasonId 
           FROM LeagueSeasons LS
@@ -58,7 +58,7 @@ async function handler (req, res) {
           return res.status(409).json({ message: 'There is no season available for this league' })
         }
 
-        await query(
+        await querydb(
           `
           INSERT INTO Poules (PouleName, PouleLeague, PouleSeason, Creator, PointsStrategy, ApproveParticipants)
           VALUES (?, ?, ?, ?, ?, ?)

@@ -1,5 +1,5 @@
 import { withSessionRoute } from '../../../../lib/withSession'
-import { query } from '../../../../lib/db'
+import { querydb } from '../../../../lib/db'
 
 export default withSessionRoute(handler)
 
@@ -16,7 +16,7 @@ async function handler (req, res) {
           return res.status(400).json({ message: 'Missing leagueId in request' })
         }
 
-        await query(
+        await querydb(
           `
           DELETE FROM UserLeagues
           WHERE UserId = ? AND LeagueId = ?

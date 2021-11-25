@@ -1,4 +1,4 @@
-import { query } from '../../../lib/db'
+import { querydb } from '../../../lib/db'
 import bcrypt from 'bcrypt'
 
 export default async function handler (req, res) {
@@ -17,12 +17,12 @@ export default async function handler (req, res) {
           return res.status(400).json({ message: 'Email is too long' })
         }
 
-        const usernameResults = await query(
+        const usernameResults = await querydb(
           'SELECT Username FROM Users WHERE Username = ?',
           username
         )
 
-        const emailResults = await query(
+        const emailResults = await querydb(
           'SELECT Email FROM Users WHERE Email = ?',
           email
         )
@@ -37,7 +37,7 @@ export default async function handler (req, res) {
 
         const hashedPassword = await bcrypt.hash(password, 12)
 
-        await query(
+        await querydb(
           `
           INSERT INTO Users (Email, Username, Password, Role, HidePredictions) 
           VALUES (?, ?, ?, ?, ?)
