@@ -59,18 +59,18 @@ export default function CreatePoule () {
         {errorMessage ? <ErrorMessage message={errorMessage} /> : ''}
         <form className={styles.form} onSubmit={handleSubmit}>
           <label className={styles.label} htmlFor='pouleName'>Name of the poule
-            <input className={styles.input} id='pouleName' name='pouleName' type='text' onChange={inputsHandler} />
+            <input className={styles.input} required maxLength='25' id='pouleName' name='pouleName' type='text' onChange={inputsHandler} />
           </label>
           <label className={styles.label} htmlFor='league'>
             League
-            <select className={styles.select} name='leagueId' id='league' value={inputFields.leagueId} onChange={inputsHandler}>
+            <select className={styles.select} required name='leagueId' id='league' value={inputFields.leagueId} onChange={inputsHandler}>
               {leagues?.map((league) => (
                 <option key={league.LeagueId.toString()} value={league.LeagueId}>{league.LeagueName}</option>
               ))}
             </select>
           </label>
           <label className={styles.labelapprove} htmlFor='approveParticipants'>
-            <input className={styles.inputapprove} name='approveParticipants' id='approveParticipants' type='checkbox' checked={inputFields.approveParticipants} onChange={inputsHandler} />
+            <input className={styles.inputapprove} required name='approveParticipants' id='approveParticipants' type='checkbox' checked={inputFields.approveParticipants} onChange={inputsHandler} />
             I want to be able to approve/disapprove new members
           </label>
           <label className={styles.label}>

@@ -40,6 +40,8 @@ async function handler (req, res) {
           return res.status(401).end()
         } else if (!pouleName || !leagueId) {
           return res.status(400).json({ message: 'Missing parameter in request' })
+        } else if (pouleName > 25) {
+          return res.status(400).json({ message: 'The maximum length of the poule name is 25 characters' })
         }
 
         const season = await query(
