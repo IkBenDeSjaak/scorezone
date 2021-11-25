@@ -10,11 +10,11 @@ export default function Leagues ({ user }) {
 
   useEffect(async () => {
     if (user) {
-      const leagues = await fetch('api/leagues', {
+      const leagues = await fetch('/api/leagues', {
         method: 'GET'
       }).then((res) => res.json())
 
-      const userLeagues = await fetch('api/user/leagues', {
+      const userLeagues = await fetch('/api/user/leagues', {
         method: 'GET'
       }).then(res => res.json())
 
