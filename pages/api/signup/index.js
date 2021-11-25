@@ -45,7 +45,7 @@ export default async function handler (req, res) {
           [email, username, hashedPassword, 'User', 0]
         )
 
-        res.status(200).json({ name: `${username} succesfully signed up` })
+        res.status(200).json({ message: `${username} succesfully signed up` })
       } catch (error) {
         res.status(500).json({ message: 'Internal Server Error' })
       }
