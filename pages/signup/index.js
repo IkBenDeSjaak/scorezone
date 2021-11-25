@@ -28,7 +28,7 @@ export default function SignUp () {
       body: JSON.stringify(inputFields)
     })
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       router.push('/login')
     } else {
       const responseJson = await response.json()

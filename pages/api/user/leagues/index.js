@@ -49,7 +49,7 @@ async function handler (req, res) {
           [uid, leagueId]
         )
 
-        res.status(200).end()
+        res.status(201).end()
       } catch (error) {
         res.status(500).json({ message: 'Internal Server Error' })
       }
