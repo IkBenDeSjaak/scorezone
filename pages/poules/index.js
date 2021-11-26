@@ -28,21 +28,26 @@ export default function Poules ({ user }) {
             ? (
               <>
                 <p className={styles.button}><Link href='/poules/create'><a>Create poule</a></Link></p>
-                <div className={styles.poulesContainer}>
-                  <div className={`${styles.pouleRow} ${styles.poulesInfo}`}>
-                    <p>Poule name</p>
-                    <p>League</p>
-                    <p>Season</p>
-                  </div>
-                  {poules?.map((poule) => (
-                    <div key={poule.PouleId.toString()} className={`${styles.pouleRow} ${styles.pouleRowData}`}>
-                      <p className={styles.pouleName}><Link href={`poules/${poule.PouleId}`}><a className={styles.pouleText}>{poule.PouleName}</a></Link></p>
-                      <p>{poule.LeagueName}</p>
-                      <p>{poule.SeasonName}</p>
+                {(poules.length > 0)
+                  ? (
+                    <div className={styles.poulesContainer}>
+                      <div className={`${styles.pouleRow} ${styles.poulesInfo}`}>
+                        <p>Poule name</p>
+                        <p>League</p>
+                        <p>Season</p>
+                      </div>
+                      {poules?.map((poule) => (
+                        <div key={poule.PouleId.toString()} className={`${styles.pouleRow} ${styles.pouleRowData}`}>
+                          <p className={styles.pouleName}><Link href={`poules/${poule.PouleId}`}><a className={styles.pouleText}>{poule.PouleName}</a></Link></p>
+                          <p>{poule.LeagueName}</p>
+                          <p>{poule.SeasonName}</p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </>)
+                    )
+                  : (<p>You didn't join or create any poule yet.</p>)}
+              </>
+              )
             : (<p>You can join and create poules when you are logged in.</p>)}
         </div>
       </Layout>
