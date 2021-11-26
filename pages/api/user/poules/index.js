@@ -63,7 +63,7 @@ async function handler (req, res) {
           INSERT INTO Poules (PouleName, PouleLeague, PouleSeason, Creator, PointsStrategy, ApproveParticipants)
           VALUES (?, ?, ?, ?, ?, ?)
           `,
-          [pouleName, leagueId, season[0].SeasonId, uid, 2, approveParticipants]
+          [pouleName, leagueId, season[0].SeasonId, uid, 5, approveParticipants]
         )
 
         res.status(201).end()
