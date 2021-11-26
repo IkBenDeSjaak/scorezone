@@ -68,7 +68,7 @@ export default function CreatePoule () {
             </select>
           </label>
           <label className={styles.labelapprove} htmlFor='approveParticipants'>
-            <input className={styles.inputapprove} required name='approveParticipants' id='approveParticipants' type='checkbox' checked={inputFields.approveParticipants} onChange={inputsHandler} />
+            <input className={styles.inputapprove} name='approveParticipants' id='approveParticipants' type='checkbox' checked={inputFields.approveParticipants} onChange={inputsHandler} />
             I want to be able to approve/disapprove new members
           </label>
           <label className={styles.label}>
