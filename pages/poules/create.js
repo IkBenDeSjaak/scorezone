@@ -3,7 +3,7 @@ import styles from './CreatePoule.module.css'
 import { withSessionSsr } from '../../lib/withSession'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import ErrorMessage from '../../components/ErrorMessage'
+import Message from '../../components/Message'
 import Layout from '../../components/Layout'
 
 export default function CreatePoule () {
@@ -56,7 +56,7 @@ export default function CreatePoule () {
     <>
       <Layout>
         <h1>Create a new poule!</h1>
-        {errorMessage ? <ErrorMessage message={errorMessage} /> : ''}
+        {errorMessage ? <Message type='danger' message={errorMessage} /> : ''}
         <form className={styles.form} onSubmit={handleSubmit}>
           <label className={styles.label} htmlFor='pouleName'>Name of the poule
             <input className={styles.input} required maxLength='25' id='pouleName' name='pouleName' type='text' onChange={inputsHandler} />

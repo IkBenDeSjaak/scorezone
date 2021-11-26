@@ -1,0 +1,13 @@
+.message {
+    padding: 0.6rem;
+    border-radius: 0.2rem;
+}
+
+.danger {
+    background-color: #f37e88;
+}
+
+.success {
+    background-color: #28a745;
+    color: white;
+}
