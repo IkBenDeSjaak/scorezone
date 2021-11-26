@@ -170,7 +170,7 @@ export const getServerSideProps = withSessionSsr(async function ({
       INNER JOIN PouleParticipants PP ON U.UserId = PP.UserId
       INNER JOIN Poules P ON PP.PouleId = P.PouleId
       WHERE P.PouleId = ? AND PP.Approved = 1
-      ORDER BY Points DESC
+      ORDER BY Points DESC, Username ASC
       `,
       [pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid]
     )
