@@ -39,7 +39,7 @@ export default function Poule ({ pouleInfo, poulePositions, isCreator, message }
             </thead>
             <tbody>
               {
-                poulePositions.map((pos, index, array) => (
+                poulePositions.map((pos, index) => (
                   <tr key={pos.UserId.toString()}>
                     <td>{index + 1}</td>
                     <td>{pos.Username}</td>
@@ -85,7 +85,7 @@ export const getServerSideProps = withSessionSsr(async function ({
   try {
     const pouleInfo = await querydb(
       `
-      SELECT PouleName, JoinCode, Creator 
+      SELECT PouleName, JoinCode, Creator, ApproveParticipants 
       FROM Poules
       WHERE PouleId = ?
       `,
@@ -113,8 +113,11 @@ export const getServerSideProps = withSessionSsr(async function ({
               INSERT INTO PouleParticipants (PouleId, UserId, Approved) 
               VALUES (?, ?, ?)
               `,
-              [pid, uid, 0]
+              [pid, uid, (pouleInfo[0].ApproveParticipants === 1) ? 0 : 1]
             )
+
+            message.type = 'success'
+            message.message = 'You have succesfully joined this poule!'
           } else {
             message.type = 'danger'
             message.message = 'Joincode is not correct for this poule'
@@ -131,14 +134,14 @@ export const getServerSideProps = withSessionSsr(async function ({
 
     const poulePositions = await querydb(
       `
-      SELECT MP.UserId, U.Username, U.FirstName, U.LastName, SUM(CASE
+      SELECT U.UserId, U.Username, U.FirstName, U.LastName, COALESCE(SUM(CASE
         WHEN (MP.GoalsHomeTeam = MR.GoalsHomeTeam AND MP.GoalsAwayTeam = MR.GoalsAwayTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 18 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
         WHEN (MP.GoalsHomeTeam = MP.GoalsAwayTeam AND MR.GoalsHomeTeam = MR.GoalsAwayTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 19 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
         WHEN ((MP.GoalsHomeTeam > MP.GoalsAwayTeam AND MR.GoalsHomeTeam > MR.GoalsAwayTeam) OR (MP.GoalsAwayTeam > MP.GoalsHomeTeam AND MR.GoalsAwayTeam > MR.GoalsHomeTeam)) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 20 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
         WHEN (MP.GoalsHomeTeam = MR.GoalsHomeTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 21 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
         WHEN (MP.GoalsAwayTeam = MR.GoalsAwayTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 22 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
         ELSE 0
-      END) AS Points
+      END), 0) AS Points
       FROM Users U
       INNER JOIN MatchPredictions MP ON U.UserId =  MP.UserId
       INNER JOIN MatchResults MR ON MP.MatchId = MR.MatchId
@@ -146,14 +149,14 @@ export const getServerSideProps = withSessionSsr(async function ({
       INNER JOIN Matches M ON MP.MatchId = M.MatchId
       WHERE P.PouleId = ? AND P.PouleLeague = M.LeagueId AND P.PouleSeason = M.SeasonId
       UNION
-      SELECT MP.UserId, U.Username, U.FirstName, U.LastName, SUM(CASE
+      SELECT U.UserId, U.Username, U.FirstName, U.LastName, COALESCE(SUM(CASE
           WHEN (MP.GoalsHomeTeam = MR.GoalsHomeTeam AND MP.GoalsAwayTeam = MR.GoalsAwayTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 18 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
           WHEN (MP.GoalsHomeTeam = MP.GoalsAwayTeam AND MR.GoalsHomeTeam = MR.GoalsAwayTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 19 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
           WHEN ((MP.GoalsHomeTeam > MP.GoalsAwayTeam AND MR.GoalsHomeTeam > MR.GoalsAwayTeam) OR (MP.GoalsAwayTeam > MP.GoalsHomeTeam AND MR.GoalsAwayTeam > MR.GoalsHomeTeam)) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 20 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
           WHEN (MP.GoalsHomeTeam = MR.GoalsHomeTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 21 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
           WHEN (MP.GoalsAwayTeam = MR.GoalsAwayTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 22 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
           ELSE 0
-      END) AS Points
+      END), 0) AS Points
       FROM Users U
       INNER JOIN MatchPredictions MP ON U.UserId =  MP.UserId
       INNER JOIN MatchResults MR ON MP.MatchId = MR.MatchId
@@ -161,15 +164,23 @@ export const getServerSideProps = withSessionSsr(async function ({
       INNER JOIN Poules P ON PP.PouleId = P.PouleId
       INNER JOIN Matches M ON MP.MatchId = M.MatchId
       WHERE P.PouleId = ? AND P.PouleLeague = M.LeagueId AND P.PouleSeason = M.SeasonId AND PP.Approved = 1
+      UNION
+      SELECT U.UserId, U.Username, U.FirstName, U.LastName, 0 AS Points
+      FROM Users U
+      INNER JOIN PouleParticipants PP ON U.UserId = PP.UserId
+      INNER JOIN Poules P ON PP.PouleId = P.PouleId
+      WHERE P.PouleId = ? AND PP.Approved = 1
       ORDER BY Points DESC
       `,
-      [pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid]
+      [pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid]
     )
+
+    const poulePositionsFiltered = poulePositions.filter(p => p.UserId !== null)
 
     return {
       props: {
         pouleInfo: JSON.parse(JSON.stringify(pouleInfo[0])),
-        poulePositions: JSON.parse(JSON.stringify(poulePositions)),
+        poulePositions: JSON.parse(JSON.stringify(poulePositionsFiltered)),
         isCreator: pouleInfo[0].Creator === uid,
         message: message
       }
