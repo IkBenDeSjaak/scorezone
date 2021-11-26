@@ -30,8 +30,6 @@ export default function CreatePoule () {
     const value = target.type === 'checkbox' ? target.checked : target.value
     const name = target.name
 
-    console.log(name)
-    console.log(value)
     setInputFields({ ...inputFields, [name]: value })
   }
 
