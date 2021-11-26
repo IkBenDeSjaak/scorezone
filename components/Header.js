@@ -49,7 +49,7 @@ export default function Header () {
             {user?.isLoggedIn === false && (
               <>
                 <li className={`${styles.item} ${styles.button}`}><Link href='/login'><a>Log In</a></Link></li>
-                <li className={`${styles.item} ${styles.button} ${styles.secondary}`}><Link href='/signup'><a onClick={handleLogout}>Sign Up</a></Link></li>
+                <li className={`${styles.item} ${styles.button} ${styles.secondary}`}><Link href='/signup'><a>Sign Up</a></Link></li>
               </>
             )}
             <li className={styles.toggle} onClick={toggleMenu}>
