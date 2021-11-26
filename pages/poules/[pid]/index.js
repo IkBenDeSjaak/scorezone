@@ -1,14 +1,15 @@
 import styles from './Poule.module.css'
 
+import { querydb } from '../../../lib/db'
 import Link from 'next/link'
 import { withSessionSsr } from '../../../lib/withSession'
 import { useRouter } from 'next/router'
 import Layout from '../../../components/Layout'
+import Message from '../../../components/Message'
 
-export default function Poule ({ test }) {
+export default function Poule ({ pouleInfo, poulePositions, isCreator, message }) {
   const router = useRouter()
   const { pid } = router.query
-  console.log(test)
 
   return (
     <>
@@ -18,10 +19,15 @@ export default function Poule ({ test }) {
             <a>← Back to poules</a>
           </Link>
         </p>
-        <h1 className={styles.pouleName}>baRENDDRECCHT</h1>
-        <p className={styles.inviteText}>Invite people for this poule with the following link: <span>https://scorezone.nl/poules/{pid}?joincode=aiduch6732cnjsfcts7</span></p>
+        <h1 className={styles.pouleName}>{pouleInfo.PouleName}</h1>
+        {(message.type && message.message) && (
+          <Message type={message.type} message={message.message} />
+        )}
+        {isCreator && (
+          <p className={styles.inviteText}>Invite people for this poule with the following link: <span>https://scorezone.nl/poules/{pid}?joincode={pouleInfo.JoinCode}</span></p>
+        )}
         <h2>Positions</h2>
-        <div class={styles.standings}>
+        <div className={styles.standings}>
           <table>
             <thead>
               <tr>
@@ -32,28 +38,22 @@ export default function Poule ({ test }) {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Sjaakie</td>
-                <td className={styles.standingsName}>Sjaak Kok</td>
-                <td>243</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Bertassssdklaasasdasdasdasdasdasddasdasdsjd</td>
-                <td className={styles.standingsName}>Bert de Knaap</td>
-                <td>244</td>
-              </tr>
-              <tr>
-                <td>333</td>
-                <td>AAaART</td>
-                <td className={styles.standingsName}>AArt stoktatat</td>
-                <td>2444</td>
-              </tr>
+              {
+                poulePositions.map((pos, index, array) => (
+                  <tr key={pos.UserId.toString()}>
+                    <td>{index + 1}</td>
+                    <td>{pos.Username}</td>
+                    <td className={styles.standingsName}>{`${pos.FirstName ? pos.FirstName : ''} ${pos.LastName ? pos.LastName : ''}`}</td>
+                    <td>{pos.Points}</td>
+                  </tr>
+                ))
+              }
             </tbody>
           </table>
         </div>
-        <p className={styles.button}><Link href={`./${pid}/settings`}><a>Settings</a></Link></p>
+        {isCreator && (
+          <p className={styles.button}><Link href={`/poules/${pid}/settings`}><a>Settings</a></Link></p>
+        )}
       </Layout>
     </>
   )
@@ -61,33 +61,128 @@ export default function Poule ({ test }) {
 
 export const getServerSideProps = withSessionSsr(async function ({
   params,
+  query,
   req,
   res
 }) {
+  const uid = req.session.user?.id
   const pid = params.pid
-  const user = req.session.user
+  const joincode = query.joincode
+  const message = {
+    type: '',
+    message: ''
+  }
 
-  console.log(pid)
+  if (isNaN(pid)) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
 
-  // if (user === undefined) {
-  //   res.setHeader("location", "/login");
-  //   res.statusCode = 302;
-  //   res.end();
-  //   return {
-  //     props: {
-  //       user: { isLoggedIn: false, login: "", avatarUrl: "" },
-  //     },
-  //   };
-  // }
+  try {
+    const pouleInfo = await querydb(
+      `
+      SELECT PouleName, JoinCode, Creator 
+      FROM Poules
+      WHERE PouleId = ?
+      `,
+      pid
+    )
 
-  // return {
-  //   props: { user: req.session.user },
-  // };\
+    if (joincode) {
+      const participants = await querydb(
+        `
+        SELECT U.UserId
+        FROM Users U
+        INNER JOIN PouleParticipants PP ON U.UserId = PP.UserId
+        WHERE PP.PouleId = ?
+        `,
+        pid
+      )
 
-  return {
-    props: {
-      test: 'testtekst'
-    } // will be passed to the page component as props
+      const participantIds = participants.map((p) => p.UserId)
+
+      if (uid) {
+        if (!participantIds.includes(uid) && pouleInfo[0].Creator !== uid) {
+          if (joincode === pouleInfo[0].JoinCode) {
+            await querydb(
+              `
+              INSERT INTO PouleParticipants (PouleId, UserId, Approved) 
+              VALUES (?, ?, ?)
+              `,
+              [pid, uid, 0]
+            )
+          } else {
+            message.type = 'danger'
+            message.message = 'Joincode is not correct for this poule'
+          }
+        } else {
+          message.type = 'danger'
+          message.message = 'You have already joined this poule'
+        }
+      } else {
+        message.type = 'danger'
+        message.message = 'You have to be logged in to join this poule'
+      }
+    }
+
+    const poulePositions = await querydb(
+      `
+      SELECT MP.UserId, U.Username, U.FirstName, U.LastName, SUM(CASE
+        WHEN (MP.GoalsHomeTeam = MR.GoalsHomeTeam AND MP.GoalsAwayTeam = MR.GoalsAwayTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 18 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
+        WHEN (MP.GoalsHomeTeam = MP.GoalsAwayTeam AND MR.GoalsHomeTeam = MR.GoalsAwayTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 19 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
+        WHEN ((MP.GoalsHomeTeam > MP.GoalsAwayTeam AND MR.GoalsHomeTeam > MR.GoalsAwayTeam) OR (MP.GoalsAwayTeam > MP.GoalsHomeTeam AND MR.GoalsAwayTeam > MR.GoalsHomeTeam)) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 20 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
+        WHEN (MP.GoalsHomeTeam = MR.GoalsHomeTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 21 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
+        WHEN (MP.GoalsAwayTeam = MR.GoalsAwayTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 22 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
+        ELSE 0
+      END) AS Points
+      FROM Users U
+      INNER JOIN MatchPredictions MP ON U.UserId =  MP.UserId
+      INNER JOIN MatchResults MR ON MP.MatchId = MR.MatchId
+      INNER JOIN Poules P ON U.UserId = P.Creator
+      INNER JOIN Matches M ON MP.MatchId = M.MatchId
+      WHERE P.PouleId = ? AND P.PouleLeague = M.LeagueId AND P.PouleSeason = M.SeasonId
+      UNION
+      SELECT MP.UserId, U.Username, U.FirstName, U.LastName, SUM(CASE
+          WHEN (MP.GoalsHomeTeam = MR.GoalsHomeTeam AND MP.GoalsAwayTeam = MR.GoalsAwayTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 18 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
+          WHEN (MP.GoalsHomeTeam = MP.GoalsAwayTeam AND MR.GoalsHomeTeam = MR.GoalsAwayTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 19 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
+          WHEN ((MP.GoalsHomeTeam > MP.GoalsAwayTeam AND MR.GoalsHomeTeam > MR.GoalsAwayTeam) OR (MP.GoalsAwayTeam > MP.GoalsHomeTeam AND MR.GoalsAwayTeam > MR.GoalsHomeTeam)) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 20 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
+          WHEN (MP.GoalsHomeTeam = MR.GoalsHomeTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 21 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
+          WHEN (MP.GoalsAwayTeam = MR.GoalsAwayTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 22 AND PSOP.StrategyId = P.PointsStrategy AND P.PouleId = ?)
+          ELSE 0
+      END) AS Points
+      FROM Users U
+      INNER JOIN MatchPredictions MP ON U.UserId =  MP.UserId
+      INNER JOIN MatchResults MR ON MP.MatchId = MR.MatchId
+      INNER JOIN PouleParticipants PP ON U.UserId = PP.UserId
+      INNER JOIN Poules P ON PP.PouleId = P.PouleId
+      INNER JOIN Matches M ON MP.MatchId = M.MatchId
+      WHERE P.PouleId = ? AND P.PouleLeague = M.LeagueId AND P.PouleSeason = M.SeasonId AND PP.Approved = 1
+      ORDER BY Points DESC
+      `,
+      [pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid]
+    )
+
+    return {
+      props: {
+        pouleInfo: JSON.parse(JSON.stringify(pouleInfo[0])),
+        poulePositions: JSON.parse(JSON.stringify(poulePositions)),
+        isCreator: pouleInfo[0].Creator === uid,
+        message: message
+      }
+    }
+  } catch (error) {
+    message.type = 'danger'
+    message.message = 'Something went wrong'
+
+    return {
+      props: {
+        message: message
+      }
+    }
   }
 }
 )
