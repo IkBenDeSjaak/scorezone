@@ -164,23 +164,23 @@ export const getServerSideProps = withSessionSsr(async function ({
       INNER JOIN Poules P ON PP.PouleId = P.PouleId
       INNER JOIN Matches M ON MP.MatchId = M.MatchId
       WHERE P.PouleId = ? AND P.PouleLeague = M.LeagueId AND P.PouleSeason = M.SeasonId AND PP.Approved = 1
+      GROUP BY U.UserId
       UNION
       SELECT U.UserId, U.Username, U.FirstName, U.LastName, 0 AS Points
       FROM Users U
       INNER JOIN PouleParticipants PP ON U.UserId = PP.UserId
       INNER JOIN Poules P ON PP.PouleId = P.PouleId
-      WHERE P.PouleId = ? AND PP.Approved = 1
+      WHERE P.PouleId = ? AND PP.Approved = 1 AND PP.UserId NOT IN (SELECT MP.UserId FROM MatchPredictions MP INNER JOIN Matches M ON MP.MatchId = M.MatchId WHERE M.LeagueId = P.PouleLeague AND M.SeasonId = P.PouleSeason)
+      GROUP BY U.UserId
       ORDER BY Points DESC, Username ASC
       `,
       [pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid]
     )
-
-    const poulePositionsFiltered = poulePositions.filter(p => p.UserId !== null)
-
+    
     return {
       props: {
         pouleInfo: JSON.parse(JSON.stringify(pouleInfo[0])),
-        poulePositions: JSON.parse(JSON.stringify(poulePositionsFiltered)),
+        poulePositions: JSON.parse(JSON.stringify(poulePositions)),
         isCreator: pouleInfo[0].Creator === uid,
         message: message
       }
