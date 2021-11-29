@@ -13,7 +13,7 @@ async function handler (req, res) {
         if (!uid) {
           return res.status(401).end()
         } else if (!leagueId) {
-          return res.status(400).json({ message: 'Missing leagueId in request' })
+          return res.status(400).json({ message: 'Missing LeagueId in request' })
         }
 
         await querydb(
