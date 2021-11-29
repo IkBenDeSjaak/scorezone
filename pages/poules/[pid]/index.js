@@ -176,7 +176,7 @@ export const getServerSideProps = withSessionSsr(async function ({
       `,
       [pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid, pid]
     )
-    
+
     return {
       props: {
         pouleInfo: JSON.parse(JSON.stringify(pouleInfo[0])),
