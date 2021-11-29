@@ -36,7 +36,7 @@ export default function CreatePoule () {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const response = await fetch('/api/user/poules', {
+    const response = await fetch('/api/poules', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(inputFields)
