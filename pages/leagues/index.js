@@ -23,26 +23,28 @@ export default function Leagues ({ user }) {
     }
   }, [])
 
-  const handleSubmit = (leagueId) => {
-    let updatedUserLeagues = []
-
+  const handleSubmit = async (leagueId) => {
     if (userLeagues.includes(leagueId)) {
-      updatedUserLeagues = userLeagues.filter(league => league !== leagueId)
-      fetch(`api/user/leagues/${leagueId}`, {
+      await fetch(`api/user/leagues/${leagueId}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(leagueId)
       })
+
+      const updatedUserLeagues = userLeagues.filter(league => league !== leagueId)
+
+      setUserLeagues(updatedUserLeagues)
     } else {
-      updatedUserLeagues = [...userLeagues, leagueId]
-      fetch('api/user/leagues/', {
+      await fetch('api/user/leagues/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(leagueId)
       })
-    }
 
-    setUserLeagues(updatedUserLeagues)
+      const updatedUserLeagues = [...userLeagues, leagueId]
+
+      setUserLeagues(updatedUserLeagues)
+    }
   }
 
   return (
