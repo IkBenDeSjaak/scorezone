@@ -10,11 +10,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 import Message from '../../../components/Message'
 
-export default function Settings ({ inmessage }) {
+export default function Settings ({ reqMessage }) {
   const router = useRouter()
   const { pid } = router.query
 
-  const [message, setMessage] = useState(inmessage)
+  const [message, setMessage] = useState(reqMessage)
   const [generalPouleInfo, setGeneralPouleInfo] = useState({
     PouleName: '',
     ApproveParticipants: true
@@ -294,7 +294,7 @@ export const getServerSideProps = withSessionSsr(async function ({
 
     return {
       props: {
-        inmessage: message
+        reqMessage: message
       }
     }
   } catch (error) {
@@ -303,7 +303,7 @@ export const getServerSideProps = withSessionSsr(async function ({
 
     return {
       props: {
-        message: message
+        reqMessage: message
       }
     }
   }
