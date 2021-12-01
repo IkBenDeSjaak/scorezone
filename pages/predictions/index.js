@@ -1,145 +1,274 @@
 import styles from './Predict.module.css'
 
+import { withSessionSsr } from '../../lib/withSession'
+import { querydb } from '../../lib/db'
+import { convertDateToShortDateString, convertDateToTimeString, convertDateToShortMonthString, convertDateToDayOfMonth, convertDateToYear } from '../../lib/dates'
+import { getUserPredictionsData } from '../api/user/predictions'
 import Layout from '../../components/Layout'
+import { useEffect, useState } from 'react'
+import Message from '../../components/Message'
+import Link from 'next/link'
 
-export default function Predict () {
+export default function Predict ({ weeks, reqSelectedWeek, reqPredictions, reqMessage }) {
+  const [message, setMessage] = useState(reqMessage)
+  const [predictions, setPredictions] = useState(reqPredictions)
+  const [selectedWeek, setSelectedWeek] = useState(reqSelectedWeek)
+
+  useEffect(async () => {
+    const response = await fetch(`/api/user/predictions?fromDate=${selectedWeek}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (response.status !== 200) {
+      const responseJson = await response.json()
+      const newMessage = {
+        type: 'danger',
+        message: responseJson.message
+      }
+
+      setMessage(newMessage)
+    } else {
+      const responseJson = await response.json()
+      setPredictions(responseJson)
+    }
+  }, [selectedWeek])
+
+  const changeSelectedWeek = (e) => {
+    setSelectedWeek(e.target.value)
+  }
+
+  const inputChangeHandler = async (league, matchId, teamIdentifier, goals) => {
+    const leagueMatches = await Promise.all(predictions[league].map(async (p) => {
+      if (p.MatchId === matchId && goals >= 0 && goals <= 20) {
+        p[teamIdentifier] = goals
+      }
+
+      return p
+    }))
+
+    const newPredictions = {
+      ...predictions,
+      [league]: leagueMatches
+
+    }
+
+    setPredictions(newPredictions)
+
+    for (const match of leagueMatches) {
+      if (match.MatchId === matchId) {
+        if ((match.GoalsHomeTeamPrediction !== null && match.GoalsAwayTeamPrediction !== null)) {
+          const body = {
+            goalsHomeTeam: match.GoalsHomeTeamPrediction,
+            goalsAwayTeam: match.GoalsAwayTeamPrediction
+          }
+
+          const response = await fetch(`/api/user/predictions/matches/${matchId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          })
+
+          if (response.status !== 200) {
+            const responseJson = await response.json()
+            const newMessage = {
+              type: 'danger',
+              message: responseJson.message
+            }
+
+            setMessage(newMessage)
+          }
+        }
+      }
+    }
+  }
+
   return (
     <>
       <Layout>
         <div>
-          <div className={styles.selectWeek}>
-            <label className={styles.selectWeekLabel} htmlFor='week'>
-              Selecteer een datum:
-              <select className={styles.selectWeekSelect} id='week' name='week'>
-                <option value='1'>8 nov - 15 nov</option>
-                <option value='2'>16 nov - 23 nov</option>
-                <option value='3'>23 nov - 30 nov</option>
-                <option value='3'>30 nov - 7 dec</option>
-              </select>
-            </label>
-          </div>
-
-          <div className={styles.leagueContainer}>
-            <div className={styles.leagueName}>Eredivisie</div>
-            <div className={`${styles.gameRow}`}>
-              <div className={styles.dateTime}>
-                <p className={styles.day}>Fr</p>
-                <p className={styles.time}>20:00</p>
+          {(message.type && message.message) && (
+            <Message type={message.type} message={message.message} />
+          )}
+          {weeks.length > 0
+            ? (
+              <div className={styles.selectWeek}>
+                <label className={styles.selectWeekLabel} htmlFor='week'>
+                  Select a week:
+                  <select className={styles.selectWeekSelect} id='week' name='week' value={selectedWeek} onChange={changeSelectedWeek}>
+                    {weeks.map((week) => (
+                      <option key={week.fromTime} value={week.fromTime}>{week.optionText}</option>
+                    ))}
+                  </select>
+                </label>
               </div>
-              <div className={styles.teams}>
-                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' alt='Ajax logo' />
-                  <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>Ajax</label>
-                </div>
-                <div className={styles.scoreBlock}>
-                  <div>
-                    {/* <p className={styles.actualScoreText}>1 - 1</p> */}
-                  </div>
-                  <div className={styles.scoreInputs}>
-                    <input className={styles.scoreInput} type='number' />
-                    <p className={styles.teamDivider}>-</p>
-                    <input className={styles.scoreInput} type='number' />
-                  </div>
-                </div>
-                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' alt='Heracles logo' />
-                  <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>Heracles</label>
-                </div>
-              </div>
-              <div className={styles.score}>
-                <p>10</p>
-              </div>
-            </div>
-            <div className={`${styles.gameRow}`}>
-              <div className={styles.dateTime}>
-                <p className={styles.day}>Su</p>
-                <p className={styles.time}>17:00</p>
-              </div>
-              <div className={styles.teams}>
-                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' alt='Fc Twente logo' />
-                  <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>FC Twente</label>
-                </div>
-                <div className={styles.scoreBlock}>
-                  <div>
-                    {/* <p className={styles.actualScoreText}>1 - 1</p> */}
-                  </div>
-                  <div className={styles.scoreInputs}>
-                    <input className={styles.scoreInput} type='number' />
-                    <p className={styles.teamDivider}>-</p>
-                    <input className={styles.scoreInput} type='number' />
-                  </div>
-                </div>
-                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' alt='Fc Groningen logo' />
-                  <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>FC Gronsdasssdingen</label>
-                </div>
-              </div>
-              <div className={styles.score}>
-                <p />
-              </div>
-            </div>
-            <div className={`${styles.gameRow}`}>
-              <div className={styles.dateTime}>
-                <p className={styles.day}>Su</p>
-                <p className={styles.time}>17:00</p>
-              </div>
-              <div className={styles.teams}>
-                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' alt='FC Team logo' />
-                  <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>FC Team</label>
-                </div>
-                <div className={styles.scoreBlock}>
-                  <div>
-                    <p className={styles.actualScoreText}>1 - 1</p>
-                  </div>
-                  <div className={styles.scoreInputs}>
-                    <p className={`${styles.scoreInput} ${styles.scoreInputDisabled}`}>1</p>
-                    <p className={styles.teamDivider}>-</p>
-                    <p className={`${styles.scoreInput} ${styles.scoreInputDisabled}`}>1</p>
-                  </div>
-                </div>
-                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' alt='Manchester United logo' />
-                  <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>Manchester United</label>
-                </div>
-              </div>
-              <div className={styles.score}>
-                <p>7</p>
-              </div>
-            </div>
-            <div className={`${styles.gameRow}`}>
-              <div className={styles.dateTime}>
-                <p className={styles.day}>Su</p>
-                <p className={styles.time}>17:00</p>
-              </div>
-              <div className={styles.teams}>
-                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src='https://via.placeholder.com/150' alt='Fc Meer logo' />
-                  <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>FC Meer Team</label>
-                </div>
-                <div className={styles.scoreBlock}>
-                  <div>
-                    <p className={styles.actualScoreText}>1 - 1</p>
-                  </div>
-                  <div className={styles.scoreInputs}>
-                    <input className={styles.scoreInput} type='number' />
-                    <p className={styles.teamDivider}>-</p>
-                    <input className={styles.scoreInput} type='number' />
-                  </div>
-                </div>
-                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
-                  <img className={`${styles.teamImage} ${styles.teamImageRight}`} src='https://via.placeholder.com/150' alt='Manchester City logo' />
-                  <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>Manchester City</label>
-                </div>
-              </div>
-              <div className={styles.score}>
-                <p>1</p>
-              </div>
-            </div>
-          </div>
+              )
+            : <p>You didn't any leagues to predict yet. Go to <Link href='/leagues'><a className={styles.inlineClickable}>leagues</a></Link> to select leagues you want to predict matches from.</p>}
+          {
+            Object.keys(predictions).length > 0
+              ? (
+                  Object.keys(predictions).map((league) => (
+                    <div key={league}>
+                      {predictions[league].length > 0
+                        ? (
+                          <>
+                            <div className={styles.leagueContainer}>
+                              <div className={styles.leagueName}>{league}</div>
+                              {predictions[league].map((p) => (
+                                <div key={p.MatchId} className={`${styles.gameRow}`}>
+                                  <div className={styles.dateTime}>
+                                    <p className={styles.day}>{convertDateToShortDateString(p.StartDateTime)}</p>
+                                    <p className={styles.time}>{convertDateToTimeString(p.StartDateTime)}</p>
+                                  </div>
+                                  <div className={styles.teams}>
+                                    <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
+                                      <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src={p.HomeTeamImage ? p.HomeTeamImage : 'https://via.placeholder.com/150'} alt={`${p.HomeTeam} logo`} />
+                                      <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>{p.HomeTeam}</label>
+                                    </div>
+                                    <div className={styles.scoreBlock}>
+                                      <div>
+                                        {(p.GoalsHomeTeam && p.GoalsAwayTeam)
+                                          ? <p className={styles.actualScoreText}>{`${p.GoalsHomeTeam} - ${p.GoalsAwayTeam}`}</p>
+                                          : ''}
+                                      </div>
+                                      <div className={styles.scoreInputs}>
+                                        {Date.now() > Date.parse(p.StartDateTime)
+                                          ? (
+                                            <>
+                                              <p className={`${styles.scoreInput} ${styles.scoreInputDisabled}`}>{p.GoalsHomeTeamPrediction}</p>
+                                              <p className={styles.teamDivider}>-</p>
+                                              <p className={`${styles.scoreInput} ${styles.scoreInputDisabled}`}>{p.GoalsAwayTeamPrediction}</p>
+                                            </>
+                                            )
+                                          : (
+                                            <>
+                                              <input className={styles.scoreInput} min='0' max='20' type='number' value={p.GoalsHomeTeamPrediction !== null ? p.GoalsHomeTeamPrediction : ''} onChange={(e) => inputChangeHandler(league, p.MatchId, 'GoalsHomeTeamPrediction', e.target.value)} />
+                                              <p className={styles.teamDivider}>-</p>
+                                              <input className={styles.scoreInput} min='0' max='20' type='number' value={p.GoalsAwayTeamPrediction !== null ? p.GoalsAwayTeamPrediction : ''} onChange={(e) => inputChangeHandler(league, p.MatchId, 'GoalsAwayTeamPrediction', e.target.value)} />
+                                            </>
+                                            )}
+                                      </div>
+                                    </div>
+                                    <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
+                                      <img className={`${styles.teamImage} ${styles.teamImageRight}`} src={p.AwayTeamImage ? p.AwayTeamImage : 'https://via.placeholder.com/150'} alt={`${p.AwayTeam} logo`} />
+                                      <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>{p.AwayTeam}</label>
+                                    </div>
+                                  </div>
+                                  <div className={styles.score}>
+                                    <p>{p.Points}</p>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </>
+                          )
+                        : ''}
+                    </div>
+                  ))
+                )
+              : ''
+          }
         </div>
       </Layout>
     </>
   )
 }
+
+export const getServerSideProps = withSessionSsr(async function ({
+  req,
+  res
+}) {
+  const uid = req.session.user?.id
+  const message = {
+    type: '',
+    message: ''
+  }
+
+  if (!uid) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false
+      }
+    }
+  }
+
+  try {
+    const currentDate = new Date()
+
+    const fromDate = new Date(currentDate)
+    if (currentDate.getDay() >= 2) {
+      fromDate.setDate(fromDate.getDate() - (fromDate.getDay() - 2))
+    } else {
+      fromDate.setDate(fromDate.getDate() - (7 - fromDate.getDay()))
+    }
+
+    const tillDate = new Date(fromDate)
+    tillDate.setDate(tillDate.getDate() + 6)
+
+    const predictions = await getUserPredictionsData(uid, fromDate, tillDate)
+
+    const startTimes = await querydb(
+      `
+      SELECT DISTINCT DATE(M.StartTime) AS StartTime
+      FROM Matches M
+      INNER JOIN UserLeagues UL ON M.LeagueId = UL.LeagueId
+      WHERE UL.UserId = ?
+      ORDER BY StartTime ASC
+      `,
+      uid
+    )
+
+    const times = []
+
+    for (const startTime of startTimes) {
+      const time = new Date(startTime.StartTime)
+
+      const fromTime = new Date(time)
+      if (time.getDay() >= 2) {
+        fromTime.setDate(fromTime.getDate() - (fromTime.getDay() - 2))
+      } else {
+        fromTime.setDate(fromTime.getDate() - (7 - fromTime.getDay()))
+      }
+
+      const tillTime = new Date(fromTime)
+      tillTime.setDate(tillTime.getDate() + 6)
+
+      const timeObject = {
+        fromTime: fromTime,
+        tillTime: tillTime,
+        optionText: `${convertDateToYear(fromTime)} | ${convertDateToDayOfMonth(fromTime)} ${convertDateToShortMonthString(fromTime)} - ${convertDateToDayOfMonth(tillTime)} ${convertDateToShortMonthString(tillTime)}`
+      }
+
+      times.push(timeObject)
+    }
+
+    const newTimes = times.filter((time, index, array) => {
+      return index === array.findIndex((t) => (
+        t.optionText === time.optionText
+      ))
+    })
+
+    return {
+      props: {
+        weeks: JSON.parse(JSON.stringify(newTimes)),
+        reqSelectedWeek: JSON.parse(JSON.stringify(newTimes.length > 0 ? newTimes[newTimes.length - 1].fromTime : new Date())),
+        reqPredictions: JSON.parse(JSON.stringify(predictions)),
+        reqMessage: message
+      }
+    }
+  } catch (error) {
+    message.type = 'danger'
+    message.message = 'Something went wrong'
+
+    return {
+      props: {
+        weeks: [],
+        reqSelectedWeek: '',
+        reqPredictions: {},
+        reqMessage: message
+      }
+    }
+  }
+}
+)

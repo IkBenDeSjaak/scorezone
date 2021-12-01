@@ -1,14 +1,16 @@
 .selectWeek {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .selectWeekLabel {
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    flex-direction: column;
 }
 
-.selectWeekSelect {
-    margin-left: 1rem;
+.inlineClickable {
+    text-decoration: underline;
 }
 
 .leagueContainer {
@@ -138,14 +140,24 @@
 /* Mobile menu */
 @media all and (min-width: 400px) {
     .dateTime {
-        display: inline-block;
+        display: flex;
+        justify-content: space-between;
+        width: 4.3rem;
     }
 }
 
 /* Tablet menu */
 @media all and (min-width: 700px) {
+    .selectWeekLabel {
+        display: block;
+    }
+
+    .selectWeekSelect {
+        margin-left: 1rem;
+    }
+
     .dateTime {
-        width: 5rem;
+        width: 4.6rem;
     }
 
     .day {
