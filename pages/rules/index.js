@@ -13,6 +13,7 @@ export default function Rules () {
         <p>In case a match starts earlier than expected, the actual starting time counts as the closing time for the predictions.
           Predictions saved or adjusted after the starting time will not be eligible for points.
         </p>
+        <p>Match weeks are calculated from Tuesday till Monday, because a lot of leagues play matches on Monday and those matches are usually part of the matches from the whole weekend.</p>
         <h2>Points system</h2>
         <p>This points system is used by default in poules. However you can customize the points used in your poule in your poule's settings.
           The system below is also used to calculate points in the ScoreZone rankings.
