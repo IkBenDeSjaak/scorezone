@@ -41,14 +41,15 @@
     color: var(--white);
 }
 
-.userName {
+.menu li .userName {
     margin: 0;
     padding: 15px 0;
     font-weight: bold;
-    color: rgb(24, 20, 20);
+    color: var(--black);
 }
 
-.userName:hover {
+.menu li .userName:hover {
+    color: var(--white);
     cursor: pointer;
 }
 
@@ -75,11 +76,6 @@
     order: 1;
     font-size: 20px;
     width: 1rem;
-}
-
-.toggle {
-    display: flex;
-    align-items: center;
 }
 
 .item.button {
