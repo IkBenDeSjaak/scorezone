@@ -6,6 +6,7 @@ import { withSessionSsr } from '../../../lib/withSession'
 import { useRouter } from 'next/router'
 import Layout from '../../../components/Layout'
 import Message from '../../../components/Message'
+import { getPouleInfo } from '../../api/poules/[pid]'
 
 export default function Poule ({ pouleInfo, poulePositions, isCreator, message }) {
   const router = useRouter()
@@ -83,14 +84,7 @@ export const getServerSideProps = withSessionSsr(async function ({
   }
 
   try {
-    const pouleInfo = await querydb(
-      `
-      SELECT PouleName, JoinCode, Creator, ApproveParticipants 
-      FROM Poules
-      WHERE PouleId = ?
-      `,
-      pid
-    )
+    const pouleInfo = await getPouleInfo(pid)
 
     if (joincode) {
       const participants = await querydb(
@@ -117,7 +111,7 @@ export const getServerSideProps = withSessionSsr(async function ({
             )
 
             message.type = 'success'
-            message.message = 'You have succesfully joined this poule!'
+            message.message = 'You have succesfully joined this poule! You might have to wait till the owner of the poule approves you.'
           } else {
             message.type = 'danger'
             message.message = 'Joincode is not correct for this poule'

@@ -7,20 +7,20 @@ async function handler (req, res) {
   switch (req.method) {
     case 'GET':
       try {
+        const uid = req.session.user.id
         const { pid } = req.query
 
         if (!pid) {
           return res.status(400).json({ message: 'Missing PouleId in request' })
         }
 
-        const results = await querydb(
-          `
-          SELECT PouleName, ApproveParticipants 
-          FROM Poules
-          WHERE PouleId = ?
-          `,
-          pid
-        )
+        const results = await getPouleInfo(pid)
+
+        if(!results[0]) {
+          return res.status(404).json({ message: 'This poule does not exist' })
+        } else if(results[0].Creator !== uid) {
+          return res.status(403).end()
+        }
 
         res.status(200).json(results[0])
       } catch (error) {
@@ -41,16 +41,10 @@ async function handler (req, res) {
           return res.status(400).json({ message: 'The maximum length of the poule name is 25 characters' })
         }
 
-        const pouleCreator = await querydb(
-          `
-          SELECT Creator
-          FROM Poules
-          WHERE PouleId = ?
-          `,
-          pid
-        )
+        const pouleInfo = await getPouleInfo(pid)
 
-        if (pouleCreator[0].Creator !== uid) {
+        // Check if person who is using this route is the same person who created this poule
+        if (pouleInfo[0].Creator !== uid) {
           return res.status(403).end()
         }
 
@@ -77,16 +71,9 @@ async function handler (req, res) {
           return res.status(401).end()
         }
 
-        const pouleCreator = await querydb(
-          `
-          SELECT Creator
-          FROM Poules
-          WHERE PouleId = ?
-          `,
-          pid
-        )
+        const pouleInfo = await getPouleInfo(pid)
 
-        if (pouleCreator[0].Creator !== uid) {
+        if (pouleInfo[0].Creator !== uid) {
           return res.status(403).end()
         }
 
@@ -104,4 +91,18 @@ async function handler (req, res) {
         res.status(500).json({ message: 'Internal Server Error' })
       }
   }
+}
+
+
+export async function getPouleInfo (pouleId) {
+  const pouleInfo = await querydb(
+    `
+    SELECT PouleName, JoinCode, Creator, ApproveParticipants 
+    FROM Poules
+    WHERE PouleId = ?
+    `,
+    pouleId
+  )
+
+  return pouleInfo
 }

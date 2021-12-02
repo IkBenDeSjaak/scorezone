@@ -1,5 +1,6 @@
 import { withSessionRoute } from '../../../../../lib/withSession'
 import { querydb } from '../../../../../lib/db'
+import { getPouleInfo } from '..'
 
 export default withSessionRoute(handler)
 
@@ -16,16 +17,9 @@ async function handler (req, res) {
           return res.status(400).json({ message: 'Missing parameter in request' })
         }
 
-        const pouleCreator = await querydb(
-          `
-          SELECT Creator
-          FROM Poules
-          WHERE PouleId = ?
-          `,
-          pid
-        )
+        const pouleInfo = await getPouleInfo(pid)
 
-        if (pouleCreator[0].Creator !== uid) {
+        if (pouleInfo[0].Creator !== uid) {
           return res.status(403).end()
         }
 
@@ -54,16 +48,10 @@ async function handler (req, res) {
           return res.status(400).json({ message: 'Missing parameter in request' })
         }
 
-        const pouleCreator = await querydb(
-          `
-          SELECT Creator
-          FROM Poules
-          WHERE PouleId = ?
-          `,
-          pid
-        )
+        const pouleInfo = await getPouleInfo(pid)
 
-        if (pouleCreator[0].Creator !== uid) {
+        // Check if person who is using this route is the same person who created this poule
+        if (pouleInfo[0].Creator !== uid) {
           return res.status(403).end()
         }
 
