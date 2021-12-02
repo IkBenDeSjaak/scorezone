@@ -3,6 +3,7 @@ import { querydb } from '../../../lib/db'
 export default async function handler (req, res) {
   switch (req.method) {
     case 'GET':
+      // Get all available leagues
       try {
         const results = await querydb(
           `

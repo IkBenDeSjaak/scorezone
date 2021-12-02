@@ -55,6 +55,7 @@ async function handler (req, res) {
           pid
         )
 
+        // Check if person who is using this route is the same person who created this poule
         if (pouleInfo[0].Creator !== uid) {
           return res.status(403).end()
         }

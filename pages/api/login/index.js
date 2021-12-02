@@ -7,6 +7,7 @@ export default withSessionRoute(handler)
 async function handler (req, res) {
   switch (req.method) {
     case 'POST': {
+      // Log the user in
       try {
         const { username, password } = await req.body
 
