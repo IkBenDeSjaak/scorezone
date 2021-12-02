@@ -14,7 +14,7 @@ async function handler (req, res) {
           return res.status(400).json({ message: 'Missing PouleId in request' })
         }
 
-        const results = await getPouleInfo(pid)
+        const results = await getPouleInfoData(pid)
 
         if(!results[0]) {
           return res.status(404).json({ message: 'This poule does not exist' })
@@ -41,7 +41,7 @@ async function handler (req, res) {
           return res.status(400).json({ message: 'The maximum length of the poule name is 25 characters' })
         }
 
-        const pouleInfo = await getPouleInfo(pid)
+        const pouleInfo = await getPouleInfoData(pid)
 
         // Check if person who is using this route is the same person who created this poule
         if (pouleInfo[0].Creator !== uid) {
@@ -71,7 +71,7 @@ async function handler (req, res) {
           return res.status(401).end()
         }
 
-        const pouleInfo = await getPouleInfo(pid)
+        const pouleInfo = await getPouleInfoData(pid)
 
         if (pouleInfo[0].Creator !== uid) {
           return res.status(403).end()
@@ -94,7 +94,7 @@ async function handler (req, res) {
 }
 
 
-export async function getPouleInfo (pouleId) {
+export async function getPouleInfoData (pouleId) {
   const pouleInfo = await querydb(
     `
     SELECT PouleName, JoinCode, Creator, ApproveParticipants 

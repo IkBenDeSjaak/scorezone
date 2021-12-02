@@ -40,9 +40,12 @@ export async function getUserPredictionsData (userId, fromDate, tillDate) {
     userId
   )
 
+  // 1. User predicted and a match result is available
+  // 2. User didn't predict and there is a match result available
+  // 3. User didn't predict and there is no match result from the match
   const predictions = await querydb(
     `
-    SELECT M.MatchId, M.LeagueId, M.StartTime AS StartDateTime, TIME(M.StartTime) AS StartTime, DAYOFWEEK(M.StartTime) AS DayOfWeek, (SELECT TeamName FROM Teams WHERE TeamId = M.HomeTeam) as HomeTeam, (SELECT TeamImage FROM Teams WHERE TeamId = M.HomeTeam) AS HomeTeamImage, (SELECT TeamName FROM Teams WHERE TeamId = M.AwayTeam) as AwayTeam, (SELECT TeamImage FROM Teams WHERE TeamId = M.AwayTeam) AS AwayTeamImage, MR.GoalsHomeTeam, MR.GoalsAwayTeam, MP.GoalsHomeTeam AS GoalsHomeTeamPrediction, MP.GoalsAwayTeam AS GoalsAwayTeamPrediction, CASE
+    SELECT M.MatchId, M.LeagueId, M.StartTime AS StartDateTime, (SELECT TeamName FROM Teams WHERE TeamId = M.HomeTeam) as HomeTeam, (SELECT TeamImage FROM Teams WHERE TeamId = M.HomeTeam) AS HomeTeamImage, (SELECT TeamName FROM Teams WHERE TeamId = M.AwayTeam) as AwayTeam, (SELECT TeamImage FROM Teams WHERE TeamId = M.AwayTeam) AS AwayTeamImage, MR.GoalsHomeTeam, MR.GoalsAwayTeam, MP.GoalsHomeTeam AS GoalsHomeTeamPrediction, MP.GoalsAwayTeam AS GoalsAwayTeamPrediction, CASE
       WHEN (MR.GoalsHomeTeam IS NULL OR MR.GoalsAwayTeam IS NULL) THEN NULL
       WHEN (MP.GoalsHomeTeam = MR.GoalsHomeTeam AND MP.GoalsAwayTeam = MR.GoalsAwayTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 18 AND PSOP.StrategyId = 5)
       WHEN (MP.GoalsHomeTeam = MP.GoalsAwayTeam AND MR.GoalsHomeTeam = MR.GoalsAwayTeam) THEN (SELECT DISTINCT PSOP.Points FROM PointsStrategiesOptionPoints PSOP INNER JOIN Poules P ON PSOP.StrategyId = P.PointsStrategy WHERE PSOP.OptionId = 19 AND PSOP.StrategyId = 5)
@@ -57,7 +60,7 @@ export async function getUserPredictionsData (userId, fromDate, tillDate) {
     WHERE MP.UserId = ? AND M.StartTime BETWEEN ? AND ?
     GROUP BY M.MatchId
     UNION
-    SELECT M.MatchId, M.LeagueId, M.StartTime AS StartDateTime, TIME(M.StartTime) AS StartTime, DAYOFWEEK(M.StartTime) AS DayOfWeek, (SELECT TeamName FROM Teams WHERE TeamId = M.HomeTeam) as HomeTeam, (SELECT TeamImage FROM Teams WHERE TeamId = M.HomeTeam) AS HomeTeamImage, (SELECT TeamName FROM Teams WHERE TeamId = M.AwayTeam) as AwayTeam, (SELECT TeamImage FROM Teams WHERE TeamId = M.AwayTeam) AS AwayTeamImage, MR.GoalsHomeTeam, MR.GoalsAwayTeam, NULL AS GoalsHomeTeamPrediction, NULL AS GoalsAwayTeamPrediction, 0 AS Points
+    SELECT M.MatchId, M.LeagueId, M.StartTime AS StartDateTime, (SELECT TeamName FROM Teams WHERE TeamId = M.HomeTeam) as HomeTeam, (SELECT TeamImage FROM Teams WHERE TeamId = M.HomeTeam) AS HomeTeamImage, (SELECT TeamName FROM Teams WHERE TeamId = M.AwayTeam) as AwayTeam, (SELECT TeamImage FROM Teams WHERE TeamId = M.AwayTeam) AS AwayTeamImage, MR.GoalsHomeTeam, MR.GoalsAwayTeam, NULL AS GoalsHomeTeamPrediction, NULL AS GoalsAwayTeamPrediction, 0 AS Points
     FROM Matches M
     LEFT JOIN MatchResults MR ON M.MatchId = MR.MatchId
     LEFT JOIN MatchPredictions MP ON M.MatchId = MP.MatchId
@@ -65,14 +68,14 @@ export async function getUserPredictionsData (userId, fromDate, tillDate) {
     WHERE M.MatchId NOT IN (SELECT DISTINCT MatchId FROM MatchPredictions WHERE UserId = ?) AND M.MatchId IN (SELECT DISTINCT MatchId FROM MatchResults) AND M.StartTime BETWEEN ? AND ?
     GROUP BY M.MatchId
     UNION
-    SELECT M.MatchId, M.LeagueId, M.StartTime AS StartDateTime, TIME(M.StartTime) AS StartTime, DAYOFWEEK(M.StartTime) AS DayOfWeek, (SELECT TeamName FROM Teams WHERE TeamId = M.HomeTeam) as HomeTeam, (SELECT TeamImage FROM Teams WHERE TeamId = M.HomeTeam) AS HomeTeamImage, (SELECT TeamName FROM Teams WHERE TeamId = M.AwayTeam) as AwayTeam, (SELECT TeamImage FROM Teams WHERE TeamId = M.AwayTeam) AS AwayTeamImage, NULL AS GoalsHomeTeam, NULL AS GoalsAwayTeam, NULL AS GoalsHomeTeamPrediction, NULL AS GoalsAwayTeamPrediction, NULL AS Points
+    SELECT M.MatchId, M.LeagueId, M.StartTime AS StartDateTime, (SELECT TeamName FROM Teams WHERE TeamId = M.HomeTeam) as HomeTeam, (SELECT TeamImage FROM Teams WHERE TeamId = M.HomeTeam) AS HomeTeamImage, (SELECT TeamName FROM Teams WHERE TeamId = M.AwayTeam) as AwayTeam, (SELECT TeamImage FROM Teams WHERE TeamId = M.AwayTeam) AS AwayTeamImage, NULL AS GoalsHomeTeam, NULL AS GoalsAwayTeam, NULL AS GoalsHomeTeamPrediction, NULL AS GoalsAwayTeamPrediction, NULL AS Points
     FROM Matches M
     LEFT JOIN MatchResults MR ON M.MatchId = MR.MatchId
     LEFT JOIN MatchPredictions MP ON M.MatchId = MP.MatchId
     INNER JOIN UserLeagues UL ON M.LeagueId = UL.LeagueId
     WHERE M.MatchId NOT IN (SELECT DISTINCT MatchId FROM MatchPredictions WHERE UserId = ?) AND M.MatchId NOT IN (SELECT DISTINCT MatchId FROM MatchResults) AND M.StartTime BETWEEN ? AND ?
     GROUP BY M.MatchId
-    ORDER BY LeagueId, StartDateTime ASC, StartTime ASC
+    ORDER BY LeagueId, StartDateTime ASC
     `,
     [userId, fromDate.toISOString(), tillDate.toISOString(), userId, fromDate.toISOString(), tillDate.toISOString(), userId, fromDate.toISOString(), tillDate.toISOString()]
   )

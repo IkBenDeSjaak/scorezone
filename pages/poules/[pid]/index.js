@@ -6,7 +6,7 @@ import { withSessionSsr } from '../../../lib/withSession'
 import { useRouter } from 'next/router'
 import Layout from '../../../components/Layout'
 import Message from '../../../components/Message'
-import { getPouleInfo } from '../../api/poules/[pid]'
+import { getPouleInfoData } from '../../api/poules/[pid]'
 
 export default function Poule ({ pouleInfo, poulePositions, isCreator, message }) {
   const router = useRouter()
@@ -84,7 +84,7 @@ export const getServerSideProps = withSessionSsr(async function ({
   }
 
   try {
-    const pouleInfo = await getPouleInfo(pid)
+    const pouleInfo = await getPouleInfoData(pid)
 
     if (joincode) {
       const participants = await querydb(
@@ -126,6 +126,9 @@ export const getServerSideProps = withSessionSsr(async function ({
       }
     }
 
+    // 1. User is creator
+    // 2. All poule participants
+    // 3. User didn't fill in predictions yet
     const poulePositions = await querydb(
       `
       SELECT U.UserId, U.Username, U.FirstName, U.LastName, COALESCE(SUM(CASE

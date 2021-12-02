@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 import Layout from '../../../components/Layout'
 import { FaCheck, FaTimes } from 'react-icons/fa'
 import Message from '../../../components/Message'
-import { getPouleInfo } from '../../api/poules/[pid]'
+import { getPouleInfoData } from '../../api/poules/[pid]'
 
 export default function Settings ({ reqMessage }) {
   const router = useRouter()
@@ -274,7 +274,7 @@ export const getServerSideProps = withSessionSsr(async function ({
   }
 
   try {
-    const pouleInfo = await getPouleInfo(pid)
+    const pouleInfo = await getPouleInfoData(pid)
 
     if (pouleInfo[0].Creator !== uid) {
       return {

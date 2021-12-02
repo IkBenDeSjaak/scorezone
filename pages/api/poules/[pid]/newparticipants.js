@@ -1,6 +1,6 @@
 import { withSessionRoute } from '../../../../lib/withSession'
 import { querydb } from '../../../../lib/db'
-import { getPouleInfo } from '.'
+import { getPouleInfoData } from '.'
 
 export default withSessionRoute(handler)
 
@@ -17,7 +17,7 @@ async function handler (req, res) {
           return res.status(400).json({ message: 'Missing PouleId in request' })
         }
 
-        const pouleInfo = await getPouleInfo(pid)
+        const pouleInfo = await getPouleInfoData(pid)
 
         // Check if person who is using this route is the same person who created this poule
         if (pouleInfo[0].Creator !== uid) {
