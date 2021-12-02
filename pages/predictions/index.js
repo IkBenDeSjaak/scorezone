@@ -2,16 +2,15 @@ import styles from './Predict.module.css'
 
 import { withSessionSsr } from '../../lib/withSession'
 import { querydb } from '../../lib/db'
-import { convertDateToShortDateString, convertDateToTimeString, convertDateToShortMonthString, convertDateToDayOfMonth, convertDateToYear } from '../../lib/dates'
-import { getUserPredictionsData } from '../api/user/predictions'
+import { convertDateToShortDateString, convertDateToTimeString, convertDateToShortMonthString, convertDateToDayOfMonth, convertDateToYear, calculateFromDate, calculateTillDate } from '../../lib/dates'
 import Layout from '../../components/Layout'
 import { useEffect, useState } from 'react'
 import Message from '../../components/Message'
 import Link from 'next/link'
 
-export default function Predict ({ weeks, reqSelectedWeek, reqPredictions, reqMessage }) {
+export default function Predictions ({ weeks, reqSelectedWeek, reqMessage }) {
   const [message, setMessage] = useState(reqMessage)
-  const [predictions, setPredictions] = useState(reqPredictions)
+  const [predictions, setPredictions] = useState({})
   const [selectedWeek, setSelectedWeek] = useState(reqSelectedWeek)
 
   useEffect(async () => {
@@ -97,7 +96,7 @@ export default function Predict ({ weeks, reqSelectedWeek, reqPredictions, reqMe
                   Select a week:
                   <select className={styles.selectWeekSelect} id='week' name='week' value={selectedWeek} onChange={changeSelectedWeek}>
                     {weeks.map((week) => (
-                      <option key={week.fromTime} value={week.fromTime}>{week.optionText}</option>
+                      <option key={week.fromDate} value={week.fromDate}>{week.optionText}</option>
                     ))}
                   </select>
                 </label>
@@ -194,21 +193,8 @@ export const getServerSideProps = withSessionSsr(async function ({
   }
 
   try {
-    const currentDate = new Date()
-
-    const fromDate = new Date(currentDate)
-    if (currentDate.getDay() >= 2) {
-      fromDate.setDate(fromDate.getDate() - (fromDate.getDay() - 2))
-    } else {
-      fromDate.setDate(fromDate.getDate() - (7 - fromDate.getDay()))
-    }
-
-    const tillDate = new Date(fromDate)
-    tillDate.setDate(tillDate.getDate() + 6)
-
-    const predictions = await getUserPredictionsData(uid, fromDate, tillDate)
-
-    const startTimes = await querydb(
+    // Select all unique dates on which matches start
+    const matchStartTimes = await querydb(
       `
       SELECT DISTINCT DATE(M.StartTime) AS StartTime
       FROM Matches M
@@ -219,41 +205,34 @@ export const getServerSideProps = withSessionSsr(async function ({
       uid
     )
 
-    const times = []
+    const weeks = []
 
-    for (const startTime of startTimes) {
-      const time = new Date(startTime.StartTime)
+    // Create week option for every match starting date
+    for (const startTime of matchStartTimes) {
+      const fromDate = calculateFromDate(startTime.StartTime)
 
-      const fromTime = new Date(time)
-      if (time.getDay() >= 2) {
-        fromTime.setDate(fromTime.getDate() - (fromTime.getDay() - 2))
-      } else {
-        fromTime.setDate(fromTime.getDate() - (7 - fromTime.getDay()))
+      const tillDate = calculateTillDate(fromDate)
+
+      const weekOption = {
+        fromDate: fromDate,
+        tillDate: tillDate,
+        optionText: `${convertDateToYear(fromDate)} | ${convertDateToDayOfMonth(fromDate)} ${convertDateToShortMonthString(fromDate)} - ${convertDateToDayOfMonth(tillDate)} ${convertDateToShortMonthString(tillDate)}`
       }
 
-      const tillTime = new Date(fromTime)
-      tillTime.setDate(tillTime.getDate() + 6)
-
-      const timeObject = {
-        fromTime: fromTime,
-        tillTime: tillTime,
-        optionText: `${convertDateToYear(fromTime)} | ${convertDateToDayOfMonth(fromTime)} ${convertDateToShortMonthString(fromTime)} - ${convertDateToDayOfMonth(tillTime)} ${convertDateToShortMonthString(tillTime)}`
-      }
-
-      times.push(timeObject)
+      weeks.push(weekOption)
     }
 
-    const newTimes = times.filter((time, index, array) => {
+    // Remove duplicate weeks from array
+    const filteredWeeks = weeks.filter((week, index, array) => {
       return index === array.findIndex((t) => (
-        t.optionText === time.optionText
+        t.optionText === week.optionText
       ))
     })
 
     return {
       props: {
-        weeks: JSON.parse(JSON.stringify(newTimes)),
-        reqSelectedWeek: JSON.parse(JSON.stringify(newTimes.length > 0 ? newTimes[newTimes.length - 1].fromTime : new Date())),
-        reqPredictions: JSON.parse(JSON.stringify(predictions)),
+        weeks: JSON.parse(JSON.stringify(filteredWeeks)),
+        reqSelectedWeek: JSON.parse(JSON.stringify(filteredWeeks.length > 0 ? filteredWeeks[filteredWeeks.length - 1].fromDate : calculateFromDate(new Date()))),
         reqMessage: message
       }
     }
@@ -264,8 +243,7 @@ export const getServerSideProps = withSessionSsr(async function ({
     return {
       props: {
         weeks: [],
-        reqSelectedWeek: '',
-        reqPredictions: {},
+        reqSelectedWeek: calculateFromDate(new Date()),
         reqMessage: message
       }
     }
