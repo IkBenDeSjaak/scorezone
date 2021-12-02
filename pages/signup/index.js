@@ -1,5 +1,6 @@
 import styles from './SignUp.module.css'
 
+import { withSessionSsr } from '../../lib/withSession'
 import Layout from '../../components/Layout'
 import Message from '../../components/Message'
 import { useState } from 'react'
@@ -52,3 +53,24 @@ export default function SignUp () {
     </>
   )
 }
+
+export const getServerSideProps = withSessionSsr(async function ({
+  req,
+  res
+}) {
+  const user = req.session.user
+
+  if (user) {
+    return {
+      redirect: {
+        destination: '/predictions',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
+}
+)
