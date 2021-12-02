@@ -40,12 +40,12 @@ export default function Poule ({ pouleInfo, poulePositions, isCreator, message }
             </thead>
             <tbody>
               {
-                poulePositions.map((pos, index) => (
-                  <tr key={pos.UserId.toString()}>
-                    <td>{index + 1}</td>
-                    <td>{pos.Username}</td>
-                    <td className={styles.standingsName}>{`${pos.FirstName ? pos.FirstName : ''} ${pos.LastName ? pos.LastName : ''}`}</td>
-                    <td>{pos.Points}</td>
+                poulePositions.map((user, index) => (
+                  <tr key={user.UserId.toString()}>
+                    <td>{user.Points === poulePositions[index - 1]?.Points ? '' : index + 1}</td>
+                    <td>{user.Username}</td>
+                    <td className={styles.standingsName}>{`${user.FirstName ? user.FirstName : ''} ${user.LastName ? user.LastName : ''}`}</td>
+                    <td>{user.Points}</td>
                   </tr>
                 ))
               }
