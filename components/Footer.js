@@ -2,20 +2,9 @@ import styles from './Footer.module.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { convertDateTimeToDate } from '../lib/dates'
 
 export default function Footer () {
-  const getDateLocal = () => {
-    const date = new Date()
-    const currentDate = date.toLocaleDateString()
-    return currentDate
-  }
-
-  const getDate = () => {
-    const date = new Date()
-    const currentDate = date.toISOString()
-    return currentDate
-  }
-
   return (
     <>
       <footer className={styles.footer}>
@@ -27,7 +16,7 @@ export default function Footer () {
               <FontAwesomeIcon className={styles.icon} icon={faEnvelope} />
             </a>
           </p>
-          <p><time dateTime={getDate()}>{getDateLocal()}</time></p>
+          <p><time dateTime={convertDateTimeToDate(new Date())}>{convertDateTimeToDate(new Date())}</time></p>
         </div>
       </footer>
     </>
