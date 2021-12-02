@@ -16,9 +16,9 @@ async function handler (req, res) {
 
         const results = await getPouleInfoData(pid)
 
-        if(!results[0]) {
+        if (!results[0]) {
           return res.status(404).json({ message: 'This poule does not exist' })
-        } else if(results[0].Creator !== uid) {
+        } else if (results[0].Creator !== uid) {
           return res.status(403).end()
         }
 
@@ -92,7 +92,6 @@ async function handler (req, res) {
       }
   }
 }
-
 
 export async function getPouleInfoData (pouleId) {
   const pouleInfo = await querydb(

@@ -1,7 +1,7 @@
 import styles from './Header.module.css'
 
 import Link from 'next/link'
-import { FaBars , FaTimes} from 'react-icons/fa'
+import { FaBars, FaTimes } from 'react-icons/fa'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import useUser from '../lib/useUser'
@@ -41,7 +41,7 @@ export default function Header () {
             <li className={styles.item}><Link href='/rules'><a>Rules</a></Link></li>
             {user?.isLoggedIn === true && (
               <>
-                <li className={`${styles.item} ${styles.userNameItem}`}><p className={styles.userName}>{user.username}</p></li>
+                <li className={`${styles.item} ${styles.userNameItem}`}><Link href='/profile'><a className={styles.userName}>{user.username}</a></Link></li>
                 <li className={`${styles.item} ${styles.logout}`}><Link href='/logout'><a onClick={handleLogout}>Logout</a></Link></li>
               </>
             )}
@@ -52,7 +52,7 @@ export default function Header () {
               </>
             )}
             <li className={styles.toggle} onClick={toggleMenu}>
-              {menuActive ? <FaTimes className={styles.icon}/> : <FaBars className={styles.icon}/>}
+              {menuActive ? <FaTimes className={styles.icon} /> : <FaBars className={styles.icon} />}
             </li>
           </ul>
         </nav>

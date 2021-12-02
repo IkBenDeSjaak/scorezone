@@ -1,6 +1,5 @@
 import styles from './Settings.module.css'
 
-import { querydb } from '../../../lib/db'
 import { withSessionSsr } from '../../../lib/withSession'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -225,10 +224,10 @@ export default function Settings ({ reqMessage }) {
                         <td>{p.Username}</td>
                         <td className={styles.approveTableName}>{`${p.FirstName ? p.FirstName : ''} ${p.LastName ? p.LastName : ''}`}</td>
                         <td className={styles.tableDataCentered}>
-                          <FaCheck className={`${styles.icon} ${styles.iconCheck}`} onClick={() => onApproveNewParticipant(p.UserId)}/>
+                          <FaCheck className={`${styles.icon} ${styles.iconCheck}`} onClick={() => onApproveNewParticipant(p.UserId)} />
                         </td>
                         <td className={styles.tableDataCentered}>
-                          <FaTimes className={`${styles.icon} ${styles.iconCross}`} onClick={() => onDisapproveNewParticipant(p.UserId)}/>
+                          <FaTimes className={`${styles.icon} ${styles.iconCross}`} onClick={() => onDisapproveNewParticipant(p.UserId)} />
                         </td>
                       </tr>
                     ))}
