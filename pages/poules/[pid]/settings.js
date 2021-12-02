@@ -6,9 +6,9 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Layout from '../../../components/Layout'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { FaCheck, FaTimes } from 'react-icons/fa'
 import Message from '../../../components/Message'
+import { getPouleInfo } from '../../api/poules/[pid]'
 
 export default function Settings ({ reqMessage }) {
   const router = useRouter()
@@ -225,10 +225,10 @@ export default function Settings ({ reqMessage }) {
                         <td>{p.Username}</td>
                         <td className={styles.approveTableName}>{`${p.FirstName ? p.FirstName : ''} ${p.LastName ? p.LastName : ''}`}</td>
                         <td className={styles.tableDataCentered}>
-                          <FontAwesomeIcon className={`${styles.icon} ${styles.iconCheck}`} icon={faCheck} onClick={() => onApproveNewParticipant(p.UserId)} />
+                          <FaCheck className={`${styles.icon} ${styles.iconCheck}`} onClick={() => onApproveNewParticipant(p.UserId)}/>
                         </td>
                         <td className={styles.tableDataCentered}>
-                          <FontAwesomeIcon className={`${styles.icon} ${styles.iconCross}`} icon={faTimes} onClick={() => onDisapproveNewParticipant(p.UserId)} />
+                          <FaTimes className={`${styles.icon} ${styles.iconCross}`} onClick={() => onDisapproveNewParticipant(p.UserId)}/>
                         </td>
                       </tr>
                     ))}
@@ -274,14 +274,7 @@ export const getServerSideProps = withSessionSsr(async function ({
   }
 
   try {
-    const pouleInfo = await querydb(
-      `
-      SELECT Creator 
-      FROM Poules
-      WHERE PouleId = ?
-      `,
-      pid
-    )
+    const pouleInfo = await getPouleInfo(pid)
 
     if (pouleInfo[0].Creator !== uid) {
       return {

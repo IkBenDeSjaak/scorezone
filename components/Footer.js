@@ -1,7 +1,6 @@
 import styles from './Footer.module.css'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { FaEnvelope } from 'react-icons/fa';
 import { convertDateTimeToDate } from '../lib/dates'
 
 export default function Footer () {
@@ -13,7 +12,7 @@ export default function Footer () {
           <p>
             <a className={styles.clickableText} href='mailto:info@scorezone.nl'>
               <span className={styles.hideText}>Send me an email</span>
-              <FontAwesomeIcon className={styles.icon} icon={faEnvelope} />
+              <FaEnvelope className={styles.icon}/>
             </a>
           </p>
           <p><time dateTime={convertDateTimeToDate(new Date())}>{convertDateTimeToDate(new Date())}</time></p>

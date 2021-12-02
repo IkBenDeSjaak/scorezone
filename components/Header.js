@@ -1,8 +1,7 @@
 import styles from './Header.module.css'
 
 import Link from 'next/link'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { FaBars , FaTimes} from 'react-icons/fa'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import useUser from '../lib/useUser'
@@ -53,7 +52,7 @@ export default function Header () {
               </>
             )}
             <li className={styles.toggle} onClick={toggleMenu}>
-              {menuActive ? <FontAwesomeIcon icon={faTimes} className={styles.icon} /> : <FontAwesomeIcon icon={faBars} className={styles.icon} />}
+              {menuActive ? <FaTimes className={styles.icon}/> : <FaBars className={styles.icon}/>}
             </li>
           </ul>
         </nav>
