@@ -1,0 +1,75 @@
+.backButton {
+    font-weight: bold;
+}
+
+.backButton:hover {
+    cursor: pointer;
+}
+
+.userInfoForm {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+.userInfoForm .label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+    width: fit-content;
+}
+
+.userInfoForm .labelSubmitUserInfo {
+    margin-top: 0.5rem;
+}
+
+.userInfoForm .input {
+    width: 15rem;
+    height: 1.8rem;
+    margin-top: 0.3rem;
+}
+
+.userInfoForm .input:-webkit-autofill {
+    color: black;
+    -webkit-text-fill-color: rgb(2, 2, 2);
+    box-shadow: 0 0 0px 1000px var(--white) inset;
+    transition: background-color 5000s ease-in-out 0s;
+    border: 1px solid var(--black);
+}
+
+.userInfoForm .labelHidePredictions {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    width: fit-content;
+}
+
+.userInfoForm .inputHidePredictions {
+    margin: 0;
+    margin-right: 0.4rem;
+}
+
+.userInfoForm .submitbutton {
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-color: var(--primary-color);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    font-size: 1em;
+    height: 2.2rem;
+}
+
+.userInfoForm .submitbutton:hover {
+    border-color: var(--black);
+    cursor: pointer;
+}
+
+.editButton {
+    background-color: var(--primary-color);
+    padding: 0.4rem;
+    color: var(--white);
+    border-radius: 0.2rem;
+    border: 0.05rem solid var(--black);
+    cursor: pointer;
+    width: 5rem;
+}
