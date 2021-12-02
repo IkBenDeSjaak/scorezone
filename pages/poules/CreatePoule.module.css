@@ -19,11 +19,11 @@
 }
 
 .form .input:-webkit-autofill {
-    color: black;
+    color: var(--black);
     -webkit-text-fill-color: rgb(2, 2, 2);
-    box-shadow: 0 0 0px 1000px white inset;
+    box-shadow: 0 0 0px 1000px var(--white) inset;
     transition: background-color 5000s ease-in-out 0s;
-    border: 1px solid black;
+    border: 1px solid var(--black);
 }
 
 .form .select {
@@ -44,9 +44,9 @@
 }
 
 .form .submitbutton {
-    background-color: #42cfbe;
-    color: black;
-    border-color: #5dc8d6;
+    background-color: var(--tertiary-color);
+    color: var(--black);
+    border-color: var(--tertiary-color);
     border-style: solid;
     border-width: 1px;
     border-radius: 3px;
@@ -55,6 +55,6 @@
 }
 
 .form .submitbutton:hover {
-    border-color: black;
+    border-color: var(--black);
     cursor: pointer;
 }

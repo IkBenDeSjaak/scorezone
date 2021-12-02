@@ -8,27 +8,27 @@
 }
 
 .button a {
-    background-color: #2a8378;
-    border: 2px solid #2a8378;
+    background-color: var(--primary-color);
+    border: 2px solid var(--primary-color);
     border-radius: 5px;
     transition: border 0.1s;
     padding: 5px 15px;
-    color: white;
+    color: var(--white);
 }
 
 .button a:hover {
-    border: 2px solid black;
+    border: 2px solid var(--black);
 }
 
 .poulesContainer {
-    border: 0.15rem solid #2a8378;
+    border: 0.15rem solid var(--primary-color);
     border-radius: 0.4rem;
 }
 
 .poulesInfo {
-    background-color: #2a8378;
+    background-color: var(--primary-color);
     color: white;
-    border-bottom: 0.15rem solid #2a8378;
+    border-bottom: 0.15rem solid var(--primary-color);
 }
 
 .pouleRow {
@@ -53,11 +53,11 @@
 }
 
 .pouleRowData {
-    background-color: #b4cfcc;
+    background-color: var(--table-row-uneven-color);
 }
 
 .pouleRowData:nth-child(even) {
-    background-color: #d1e7e5;
+    background-color: var(--table-row-even-color);
 }
 
 .pouleName {
@@ -70,7 +70,7 @@
 }
 
 .pouleText:hover {
-    color: #2a8378;
+    color: var(--primary-color);
 }
 
 /* Tablet menu */

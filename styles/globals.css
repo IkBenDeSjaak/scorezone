@@ -1,3 +1,19 @@
+:root {
+    --primary-color: #2a8378;
+    --secondary-color: #def2f1;
+    --tertiary-color: #42cfbe;
+    --table-row-even-color: #d1e7e5;
+    --table-row-uneven-color: #b4cfcc;
+    --danger-color: #f37e88;
+    --success-color: #28a745;
+    --warning-color: #f3de7e;
+    --white: #ffffff;
+    --black: #000000;
+    --green-dark: #15423d;
+    --green-positive: #008000;
+    --red-positive: #ff0000;
+}
+
 html,
 body {
     padding: 0;

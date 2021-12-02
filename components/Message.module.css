@@ -4,10 +4,14 @@
 }
 
 .danger {
-    background-color: #f37e88;
+    background-color: var(--danger-color);
 }
 
 .success {
-    background-color: #28a745;
-    color: white;
+    background-color: var(--success-color);
+    color: var(--white);
+}
+
+.warning {
+    background-color: var(--warning-color);
 }

@@ -28,9 +28,9 @@
 .pouleInfoForm .input:-webkit-autofill {
     color: black;
     -webkit-text-fill-color: rgb(2, 2, 2);
-    box-shadow: 0 0 0px 1000px white inset;
+    box-shadow: 0 0 0px 1000px var(--white) inset;
     transition: background-color 5000s ease-in-out 0s;
-    border: 1px solid black;
+    border: 1px solid var(--black);
 }
 
 .pouleInfoForm .labelapprove {
@@ -45,9 +45,9 @@
 }
 
 .pouleInfoForm .submitbutton {
-    background-color: #2a8378;
-    color: white;
-    border-color: #5dc8d6;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-color: var(--primary-color);
     border-style: solid;
     border-width: 1px;
     border-radius: 3px;
@@ -56,14 +56,14 @@
 }
 
 .pouleInfoForm .submitbutton:hover {
-    border-color: black;
+    border-color: var(--black);
     cursor: pointer;
 }
 
 .approveTable table,
 .approveTable th,
 .approveTable td {
-    border: 0.05rem solid black;
+    border: 0.05rem solid var(--black);
     border-collapse: collapse;
 }
 
@@ -73,14 +73,14 @@
 }
 
 .approveTable th {
-    background-color: #2a8378;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white);
     padding: 0.4rem;
     text-align: left;
 }
 
 .approveTable tr {
-    background-color: #d1e7e5;
+    background-color: var(--table-row-even-color);
 }
 
 .approveTable td {
@@ -94,7 +94,8 @@
 }
 
 .icon {
-    width: 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .icon:hover {
@@ -102,11 +103,11 @@
 }
 
 .iconCheck {
-    color: #008000;
+    color: var(--green-positive);
 }
 
 .iconCross {
-    color: #ff0000;
+    color: var(--red-positive);
 }
 
 .tableDataCentered {
@@ -141,9 +142,9 @@
 
 .pointsStrategyForm .submitbutton {
     margin-top: 0.5rem;
-    background-color: #2a8378;
-    color: white;
-    border-color: #5dc8d6;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-color: var(--primary-color);
     border-style: solid;
     border-width: 1px;
     border-radius: 3px;
@@ -153,16 +154,16 @@
 }
 
 .pointsStrategyForm .submitbutton:hover {
-    border-color: black;
+    border-color: var(--black);
     cursor: pointer;
 }
 
 .deleteButton {
-    background-color: rgb(250, 57, 57);
+    background-color: var(--red-positive);
     padding: 0.4rem;
-    color: black;
+    color: var(--black);
     border-radius: 0.2rem;
-    border: 0.1rem solid black;
+    border: 0.1rem solid var(--black);
     cursor: pointer;
 }
 

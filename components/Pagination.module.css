@@ -9,7 +9,7 @@
     font-size: 0.8rem;
     border: 0.05rem solid gray;
     margin-left: -0.05rem;
-    background-color: white;
+    background-color: var(--white);
     width: 3rem;
     text-align: center;
     user-select: none;
@@ -22,8 +22,8 @@
 }
 
 .itemSelected {
-    background-color: #2a8378;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--white);
 }
 
 .onePageModifier {

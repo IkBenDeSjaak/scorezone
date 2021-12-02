@@ -27,9 +27,9 @@
 }
 
 .form .submitbutton {
-    background-color: #42cfbe;
+    background-color: var(--tertiary-color);
     color: black;
-    border-color: #5dc8d6;
+    border-color: var(--tertiary-color);
     border-style: solid;
     border-width: 1px;
     border-radius: 3px;
@@ -38,6 +38,6 @@
 }
 
 .form .submitbutton:hover {
-    border-color: black;
+    border-color: var(--black);
     cursor: pointer;
 }

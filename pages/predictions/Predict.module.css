@@ -19,26 +19,26 @@
 
 .leagueContainer {
     margin-top: 1rem;
-    border: 0.15rem solid #2a8378;
+    border: 0.15rem solid var(--primary-color);
     border-radius: 0.4rem;
 }
 
 .leagueName {
     background-color: #2a8378;
-    color: white;
+    color: var(--white);
     padding: 0.1rem 0.5rem;
-    border-bottom: 0.15rem solid #2a8378;
+    border-bottom: 0.15rem solid var(--primary-color);
 }
 
 .gameRow {
     display: flex;
     align-items: center;
     height: 3rem;
-    background-color: #b4cfcc;
+    background-color: var(--table-row-uneven-color);
 }
 
 .gameRow:nth-child(even) {
-    background-color: #d1e7e5;
+    background-color: var(--table-row-even-color);
 }
 
 .dateTime {
@@ -125,7 +125,7 @@
     font-weight: bold;
     font-size: 0.8rem;
     margin-top: 0.1rem;
-    color: black;
+    color: var(--black);
 }
 
 .scoreInputDisabled {

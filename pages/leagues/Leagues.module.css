@@ -3,7 +3,7 @@
 }
 
 .leaguesContainer {
-    border: 0.15rem solid #2a8378;
+    border: 0.15rem solid var(--primary-color);
     border-radius: 0.4rem;
     display: flex;
     flex-direction: column;
@@ -22,11 +22,11 @@
     width: 100%;
     align-items: center;
     padding: 0.3rem;
-    background-color: #b4cfcc;
+    background-color: var(--table-row-uneven-color);
 }
 
 .leagueRow:nth-child(even) {
-    background-color: #d1e7e5;
+    background-color: var(--table-row-even-color);
 }
 
 .leagueRow label {
