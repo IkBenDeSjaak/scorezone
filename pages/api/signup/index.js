@@ -11,7 +11,7 @@ export default async function handler (req, res) {
           return res.status(400).json({ message: 'Fill in all required fields' })
         } else if (password.length < 8 || password.length > 50) {
           return res.status(400).json({ message: 'Password does not meet the required length' })
-        } else if (username.length < 6) {
+        } else if (username.length < 6 || username.length > 20) {
           return res.status(400).json({ message: 'Username does not meet the required length' })
         } else if (email.length > 64) {
           return res.status(400).json({ message: 'Email is too long' })
