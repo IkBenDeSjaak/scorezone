@@ -9,6 +9,10 @@
     flex-direction: column;
 }
 
+.alignCenter {
+    text-align: center;
+}
+
 .inlineClickable {
     text-decoration: underline;
 }
