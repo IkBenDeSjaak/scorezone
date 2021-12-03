@@ -7,7 +7,7 @@ export default async function handler (req, res) {
       try {
         const results = await querydb(
           `
-          SELECT L.LeagueId, L.LeagueName
+          SELECT L.LeagueId, L.LeagueName, (SELECT COUNT(UserId) AS UserAmount FROM Users WHERE UserId IN (SELECT UserId FROM UserLeagues WHERE LeagueId = L.LeagueId)) AS Participants
           FROM Leagues L 
           ORDER BY L.LeagueName ASC
           `
