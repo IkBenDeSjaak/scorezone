@@ -1,3 +1,8 @@
+.selectSeason {
+    height: 1.8rem;
+    margin-bottom: 1rem;
+}
+
 .rankings table,
 .rankings th,
 .rankings td {
