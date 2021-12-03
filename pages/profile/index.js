@@ -24,8 +24,6 @@ export default function Profile ({ userId }) {
     setUserInfo(userInfo)
   }, [])
 
-  console.log(userInfo)
-
   const inputsHandlerUserInfo = (e) => {
     const target = e.target
     const value = target.type === 'checkbox' ? target.checked : target.value

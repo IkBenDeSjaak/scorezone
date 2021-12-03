@@ -14,7 +14,7 @@ export default async function handler (req, res) {
   }
 }
 
-export async function getAllSeasonsData() {
+export async function getAllSeasonsData () {
   const results = await querydb(
     `
     SELECT SeasonId, SeasonName
