@@ -35,17 +35,17 @@ export default function Pagination ({ page, amountOfPages }) {
         </li>
         {page <= amountOfPages - 1 && (
           <li className={styles.item}>
-            <Link href={`/rankings/${lid}?page=${page + 1}`}><a>{page + 1}</a></Link>
+            <Link href={`/rankings/${lid}?page=${parseInt(page) + 1}`}><a>{parseInt(page) + 1}</a></Link>
           </li>
         )}
         {page <= amountOfPages - 2 && (
           <li className={styles.item}>
-            <Link href={`/rankings/${lid}?page=${page + 2}`}><a>{page + 2}</a></Link>
+            <Link href={`/rankings/${lid}?page=${parseInt(page) + 2}`}><a>{parseInt(page) + 2}</a></Link>
           </li>
         )}
         {page <= amountOfPages - 1 && (
           <li className={styles.item}>
-            <Link href={`/rankings/${lid}?page=${page + 1}`}><a>{'>'}</a></Link>
+            <Link href={`/rankings/${lid}?page=${parseInt(page) + 1}`}><a>{'>'}</a></Link>
           </li>
         )}
         {page <= amountOfPages - 2 && (
