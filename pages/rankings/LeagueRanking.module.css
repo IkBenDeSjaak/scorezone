@@ -2,6 +2,16 @@
     font-weight: bold;
 }
 
+.rankingInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.selectSeason {
+    height: 1.8rem;
+    margin-bottom: 1rem;
+}
+
 .rankings {
     margin-bottom: 1.5rem;
 }
@@ -55,6 +65,17 @@
 
 /* Tablet menu */
 @media all and (min-width: 700px) {
+    .rankingInfo {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .selectSeason {
+        margin-bottom: 0;
+    }
+
     .rankingsPointsData span {
         font-weight: normal;
         font-size: 0.8rem;

@@ -1,27 +1,76 @@
 import styles from './LeagueRanking.module.css'
 
+import { querydb } from '../../lib/db'
+import { getLeagueSeasonsData } from '../api/leagues/[lid]/seasons'
 import Link from 'next/link'
 import { withSessionSsr } from '../../lib/withSession'
 import { useRouter } from 'next/router'
 import Layout from '../../components/Layout'
 import Pagination from '../../components/Pagination'
+import { useEffect, useState } from 'react'
+import Message from '../../components/Message'
 
-export default function LeagueRanking ({ test, page, amountOfPages }) {
+export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, leagueSeasons }) {
   const router = useRouter()
-  const { lid } = router.query
-  console.log(test)
-  console.log(lid)
+  const { lid, page } = router.query
+
+  const [season, setSeason] = useState(leagueSeasons[0]?.SeasonId ? leagueSeasons[0]?.SeasonId : '')
+  const [message, setMessage] = useState(reqMessage)
+  const [rankings, setRankings] = useState([])
+
+  useEffect(async () => {
+    const response = await fetch(`/api/leagues/${lid}/ranking?page=${page}&season=${season}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (response.status !== 200) {
+      const responseJson = await response.json()
+      const newMessage = {
+        type: 'danger',
+        message: responseJson.message
+      }
+
+      setMessage(newMessage)
+    } else {
+      const responseJson = await response.json()
+      setRankings(responseJson)
+    }
+  }, [page, season])
+
+  const onChangeSeasonHandler = (e) => {
+    const target = e.target
+    const value = target.value
+
+    setSeason(value)
+  }
 
   return (
     <>
       <Layout>
+        {(message.type && message.message) && (
+          <Message type={message.type} message={message.message} />
+        )}
         <p className={styles.backButton}>
-          <Link href='./'>
+          <Link href='/rankings'>
             <a>← Back to ranking overview</a>
           </Link>
         </p>
         <h1>Ranking</h1>
-        <h2>Champions League</h2>
+        <div className={styles.rankingInfo}>
+          <h2>{leagueName}</h2>
+          {
+            leagueSeasons.length > 0
+              ? (
+                <select className={styles.selectSeason} name='SeasonId' id='Season' value={season} onChange={onChangeSeasonHandler}>
+                  {leagueSeasons?.map((season) => (
+                    <option key={season.SeasonId.toString()} value={season.SeasonId}>{season.SeasonName}</option>
+                  ))}
+                </select>
+                )
+              : ('')
+          }
+        </div>
         <div className={styles.rankings}>
           <table>
             <thead>
@@ -32,31 +81,13 @@ export default function LeagueRanking ({ test, page, amountOfPages }) {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className={styles.rankingsPosition}>1</td>
-                <td>IkBenDeSjaak</td>
-                <td className={styles.rankingsPointsData}>301 <span>(+10)</span></td>
-              </tr>
-              <tr>
-                <td className={styles.rankingsPosition}>2</td>
-                <td>DikkePannenkoek</td>
-                <td className={styles.rankingsPointsData}>100 <span>(+3)</span></td>
-              </tr>
-              <tr>
-                <td className={styles.rankingsPosition} />
-                <td>BertDeKnaapie</td>
-                <td className={styles.rankingsPointsData}>100 <span>(+10)</span></td>
-              </tr>
-              <tr>
-                <td className={styles.rankingsPosition}>4</td>
-                <td>Jantje</td>
-                <td className={styles.rankingsPointsData}>180 <span>(+100)</span></td>
-              </tr>
-              <tr>
-                <td className={styles.rankingsPosition}>5</td>
-                <td>BertDeKnaap</td>
-                <td className={styles.rankingsPointsData}>- <span>(-)</span></td>
-              </tr>
+              {rankings.map((user, index) => (
+                <tr key={user.UserId}>
+                  <td className={styles.rankingsPosition}>{user.Points === rankings[index - 1]?.Points ? '' : index + 1}</td>
+                  <td>{user.Username}</td>
+                  <td className={styles.rankingsPointsData}>{user.Points ? user.Points : '-'}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -72,50 +103,81 @@ export const getServerSideProps = withSessionSsr(async function ({
   req,
   res
 }) {
-  const user = req.session.user
   const lid = params.lid
   const page = Number(query.page)
-
-  const itemAmount = 1300
-  const itemsPerPage = 25
-  const amountOfPages = Math.ceil(itemAmount / itemsPerPage)
-
-  if (page > amountOfPages) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: `?page=${amountOfPages}`
-      }
-    }
-  } else if (page < 1 || isNaN(page)) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: `?page=${1}`
-      }
-    }
+  let leagueName = ''
+  const message = {
+    type: '',
+    message: ''
   }
 
-  // if (user === undefined) {
-  //   res.setHeader("location", "/login");
-  //   res.statusCode = 302;
-  //   res.end();
-  //   return {
-  //     props: {
-  //       user: { isLoggedIn: false, login: "", avatarUrl: "" },
-  //     },
-  //   };
-  // }
+  try {
+    const leagueNameResults = await querydb(
+      `
+      SELECT LeagueName
+      FROM Leagues
+      WHERE LeagueId = ?
+      `,
+      lid
+    )
 
-  // return {
-  //   props: { user: req.session.user },
-  // };\
+    const leagueSeasons = await getLeagueSeasonsData(lid)
 
-  return {
-    props: {
-      test: 'testtekst',
-      page: page,
-      amountOfPages: amountOfPages
+    if (!leagueNameResults[0]?.LeagueName) {
+      message.type = 'danger'
+      message.message = 'There is no league with this id'
+    } else {
+      leagueName = leagueNameResults[0].LeagueName
+    }
+
+    const userAmount = await querydb(
+      `
+      SELECT COUNT(UserId) AS UserAmount
+      FROM Users
+      WHERE UserId IN (SELECT UserId FROM UserLeagues WHERE LeagueId = ?)
+      `,
+      lid
+    )
+
+    const itemsPerPage = 25
+    const amountOfPages = Math.ceil(userAmount[0].UserAmount / itemsPerPage)
+
+    if (amountOfPages > 0) {
+      if (page > amountOfPages) {
+        return {
+          redirect: {
+            permanent: false,
+            destination: `?page=${amountOfPages}`
+          }
+        }
+      } else if (page < 1 || isNaN(page)) {
+        return {
+          redirect: {
+            permanent: false,
+            destination: `?page=${1}`
+          }
+        }
+      }
+    }
+
+    return {
+      props: {
+        reqMessage: message,
+        page: page,
+        amountOfPages: amountOfPages,
+        leagueName: leagueName,
+        leagueSeasons: JSON.parse(JSON.stringify(leagueSeasons))
+      }
+    }
+  } catch (error) {
+    return {
+      props: {
+        reqMessage: message,
+        page: 1,
+        amountOfPages: 1,
+        leagueName: leagueName,
+        leagueSeasons: []
+      }
     }
   }
 }
