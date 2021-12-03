@@ -31,6 +31,7 @@ export async function getLeagueSeasonsData (league) {
     FROM Seasons S
     INNER JOIN LeagueSeasons LS ON S.SeasonId = LS.SeasonId
     WHERE LS.LeagueId = ?
+    ORDER BY S.SeasonId DESC
     `,
     league
   )
