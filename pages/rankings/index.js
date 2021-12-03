@@ -76,7 +76,7 @@ export default function Rankings ({ seasons, reqRankings, reqMessage }) {
                       <tr key={league.LeagueId.toString()}>
                         <td><Link href={`/rankings/${league.LeagueId}?page=1`}><a className={styles.leagueText}>{league.LeagueName}</a></Link></td>
                         <td className={styles.rankingsParticipants}>{league.Participants}</td>
-                        <td className={styles.rankingsPositionData} />
+                        <td className={styles.rankingsPositionData}>{'Not calculated'}</td>
                         <td className={styles.rankingsPointsData}>{league.Points}</td>
                       </tr>
                     ))
