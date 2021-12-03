@@ -1,7 +1,7 @@
 import styles from './LeagueRanking.module.css'
 
-import { querydb } from '../../lib/db'
 import { getLeagueSeasonsData } from '../api/leagues/[lid]/seasons'
+import { getLeagueData } from '../api/leagues/[lid]'
 import Link from 'next/link'
 import { withSessionSsr } from '../../lib/withSession'
 import { useRouter } from 'next/router'
@@ -112,35 +112,19 @@ export const getServerSideProps = withSessionSsr(async function ({
   }
 
   try {
-    const leagueNameResults = await querydb(
-      `
-      SELECT LeagueName
-      FROM Leagues
-      WHERE LeagueId = ?
-      `,
-      lid
-    )
-
     const leagueSeasons = await getLeagueSeasonsData(lid)
 
-    if (!leagueNameResults[0]?.LeagueName) {
+    const leagueInfo = await getLeagueData(lid)
+
+    if (!leagueInfo) {
       message.type = 'danger'
       message.message = 'There is no league with this id'
     } else {
-      leagueName = leagueNameResults[0].LeagueName
+      leagueName = leagueInfo.LeagueName
     }
 
-    const userAmount = await querydb(
-      `
-      SELECT COUNT(UserId) AS UserAmount
-      FROM Users
-      WHERE UserId IN (SELECT UserId FROM UserLeagues WHERE LeagueId = ?)
-      `,
-      lid
-    )
-
     const itemsPerPage = 25
-    const amountOfPages = Math.ceil(userAmount[0].UserAmount / itemsPerPage)
+    const amountOfPages = Math.ceil(leagueInfo.Participants / itemsPerPage)
 
     if (amountOfPages > 0) {
       if (page > amountOfPages) {
