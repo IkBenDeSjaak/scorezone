@@ -45,7 +45,7 @@ async function handler (req, res) {
           WHERE U.UserId NOT IN (SELECT MP.UserId FROM MatchPredictions MP INNER JOIN Matches M ON MP.MatchId = M.MatchId WHERE M.LeagueId = ? AND M.SeasonId = ?) AND U.UserId IN (SELECT UserId FROM UserLeagues WHERE LeagueId = ?)
           GROUP BY U.UserId
           UNION
-          SELECT U.UserId, U.Username, NULL AS Points
+          SELECT U.UserId, U.Username, 0 AS Points
           FROM Users U
           INNER JOIN MatchPredictions MP ON U.UserId = MP.UserId
           INNER JOIN Matches M ON MP.MatchId = M.MatchId
