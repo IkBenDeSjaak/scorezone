@@ -17,12 +17,29 @@ export default function CreatePoule () {
   const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(async () => {
-    const leagues = await fetch('/api/leagues', {
-      method: 'GET'
-    }).then((res) => res.json())
+    const abortController = new AbortController()
 
-    setInputFields({ ...inputFields, leagueId: leagues[0].LeagueId })
-    setLeagues(leagues)
+    const response = await fetch('/api/leagues', {
+      method: 'GET',
+      signal: abortController.signal
+    })
+
+    if (response.status === 200) {
+      const responseJson = await response.json()
+
+      setInputFields({ ...inputFields, leagueId: responseJson[0].LeagueId })
+      setLeagues(responseJson)
+    } else {
+      const responseJson = await response.json()
+      const newMessage = {
+        type: 'danger',
+        message: responseJson.message
+      }
+
+      setMessage(newMessage)
+    }
+
+    return () => abortController?.abort()
   }, [])
 
   const inputsHandler = (e) => {
@@ -36,9 +53,12 @@ export default function CreatePoule () {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    const abortController = new AbortController()
+
     const response = await fetch('/api/poules', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      signal: abortController.signal,
       body: JSON.stringify(inputFields)
     })
 
@@ -48,6 +68,8 @@ export default function CreatePoule () {
       const responseJson = await response.json()
       setErrorMessage(responseJson.message)
     }
+
+    return () => abortController?.abort()
   }
 
   return (

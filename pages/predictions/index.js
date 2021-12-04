@@ -14,9 +14,12 @@ export default function Predictions ({ weeks, reqSelectedWeek, reqMessage }) {
   const [selectedWeek, setSelectedWeek] = useState(reqSelectedWeek)
 
   useEffect(async () => {
+    const abortController = new AbortController()
+
     const response = await fetch(`/api/user/predictions?fromDate=${selectedWeek}`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      signal: abortController.signal
     })
 
     if (response.status !== 200) {
@@ -31,6 +34,8 @@ export default function Predictions ({ weeks, reqSelectedWeek, reqMessage }) {
       const responseJson = await response.json()
       setPredictions(responseJson)
     }
+
+    return () => abortController?.abort()
   }, [selectedWeek])
 
   const changeSelectedWeek = (e) => {

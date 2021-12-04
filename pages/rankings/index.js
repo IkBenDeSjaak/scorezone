@@ -14,9 +14,12 @@ export default function Rankings ({ seasons, reqRankings, reqMessage }) {
   const [rankings, setRankings] = useState(reqRankings)
 
   useEffect(async () => {
+    const abortController = new AbortController()
+
     const response = await fetch(`/api/rankings?season=${season}`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      signal: abortController.signal
     })
 
     if (response.status !== 200) {
@@ -31,6 +34,8 @@ export default function Rankings ({ seasons, reqRankings, reqMessage }) {
       const responseJson = await response.json()
       setRankings(responseJson)
     }
+
+    return () => abortController?.abort()
   }, [season])
 
   const onChangeSeasonHandler = (e) => {

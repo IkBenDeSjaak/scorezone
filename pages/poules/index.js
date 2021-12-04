@@ -4,17 +4,36 @@ import { withSessionSsr } from '../../lib/withSession'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
+import Message from '../../components/Message'
 
 export default function Poules ({ user }) {
+  const [message, setMessage] = useState({})
   const [poules, setPoules] = useState([])
 
   useEffect(async () => {
     if (user) {
-      const poules = await fetch('/api/user/poules', {
-        method: 'GET'
-      }).then(res => res.json())
+      const abortController = new AbortController()
 
-      setPoules(poules)
+      const response = await fetch('/api/user/poules', {
+        method: 'GET',
+        signal: abortController.signal
+      })
+
+      if (response.status === 200) {
+        const responseJson = await response.json()
+  
+        setPoules(responseJson)
+      } else {
+        const responseJson = await response.json()
+        const newMessage = {
+          type: 'danger',
+          message: responseJson.message
+        }
+  
+        setMessage(newMessage)
+      }
+
+      return () => abortController?.abort()
     }
   }, [])
 
@@ -22,6 +41,9 @@ export default function Poules ({ user }) {
     <>
       <Layout>
         <div>
+          {(message.type && message.message) && (
+            <Message type={message.type} message={message.message} />
+          )}
           <h1>Poules</h1>
           <h3 className={styles.fontWeightNormal}>Here you can see all the poules you participate in or create a new poule!</h3>
           {user

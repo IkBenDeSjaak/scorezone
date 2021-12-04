@@ -27,7 +27,8 @@
   },
   "standard": {
     "globals": [
-      "fetch"
+      "fetch",
+      "AbortController"
     ]
   }
 }

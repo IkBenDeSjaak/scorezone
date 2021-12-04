@@ -19,9 +19,12 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
   const [rankings, setRankings] = useState([])
 
   useEffect(async () => {
+    const abortController = new AbortController()
+
     const response = await fetch(`/api/leagues/${lid}/ranking?page=${page}&season=${season}`, {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      signal: abortController.signal
     })
 
     if (response.status !== 200) {
@@ -36,6 +39,8 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
       const responseJson = await response.json()
       setRankings(responseJson)
     }
+
+    return () => abortController?.abort()
   }, [page, season])
 
   const onChangeSeasonHandler = (e) => {

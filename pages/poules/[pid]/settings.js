@@ -22,21 +22,42 @@ export default function Settings ({ reqMessage }) {
   const [points, setPoints] = useState([])
 
   useEffect(async () => {
+    const abortController = new AbortController()
+
     const generalPouleInfo = await fetch(`/api/poules/${pid}`, {
-      method: 'GET'
-    }).then((res) => res.json())
-
-    const newParticipants = await fetch(`/api/poules/${pid}/newparticipants`, {
-      method: 'GET'
-    }).then((res) => res.json())
-
-    const points = await fetch(`/api/poules/${pid}/points`, {
-      method: 'GET'
+      method: 'GET',
+      signal: abortController.signal
     }).then((res) => res.json())
 
     setGeneralPouleInfo(generalPouleInfo)
+
+    return () => abortController?.abort()
+  }, [])
+
+  useEffect(async () => {
+    const abortController = new AbortController()
+
+    const newParticipants = await fetch(`/api/poules/${pid}/newparticipants`, {
+      method: 'GET',
+      signal: abortController.signal
+    }).then((res) => res.json())
+
     setNewParticipants(newParticipants)
+
+    return () => abortController?.abort()
+  }, [])
+
+  useEffect(async () => {
+    const abortController = new AbortController()
+
+    const points = await fetch(`/api/poules/${pid}/points`, {
+      method: 'GET',
+      signal: abortController.signal
+    }).then((res) => res.json())
+
     setPoints(points)
+
+    return () => abortController?.abort()
   }, [])
 
   const inputsHandlerPouleInfo = (e) => {
@@ -50,9 +71,12 @@ export default function Settings ({ reqMessage }) {
   const handleSubmitPouleInfo = async (e) => {
     e.preventDefault()
 
+    const abortController = new AbortController()
+
     const response = await fetch(`/api/poules/${pid}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
+      signal: abortController.signal,
       body: JSON.stringify(generalPouleInfo)
     })
 
@@ -72,12 +96,17 @@ export default function Settings ({ reqMessage }) {
 
       setMessage(newMessage)
     }
+
+    return () => abortController?.abort()
   }
 
   const onApproveNewParticipant = async (UserId) => {
+    const abortController = new AbortController()
+
     const response = await fetch(`/api/poules/${pid}/participants/${UserId}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      signal: abortController.signal
     })
 
     if (response.status === 200) {
@@ -93,12 +122,17 @@ export default function Settings ({ reqMessage }) {
 
       setMessage(newMessage)
     }
+
+    return () => abortController?.abort()
   }
 
   const onDisapproveNewParticipant = async (UserId) => {
+    const abortController = new AbortController()
+
     const response = await fetch(`/api/poules/${pid}/participants/${UserId}`, {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      signal: abortController.signal
     })
 
     if (response.status === 200) {
@@ -114,6 +148,8 @@ export default function Settings ({ reqMessage }) {
 
       setMessage(newMessage)
     }
+
+    return () => abortController?.abort()
   }
 
   const inputsHandlerPoints = (e) => {
@@ -136,9 +172,12 @@ export default function Settings ({ reqMessage }) {
   const handleSubmitPoints = async (e) => {
     e.preventDefault()
 
+    const abortController = new AbortController()
+
     const response = await fetch(`/api/poules/${pid}/points`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
+      signal: abortController.signal,
       body: JSON.stringify(points)
     })
 
@@ -158,12 +197,17 @@ export default function Settings ({ reqMessage }) {
 
       setMessage(newMessage)
     }
+
+    return () => abortController?.abort()
   }
 
   const onDeletePoule = async () => {
+    const abortController = new AbortController()
+
     const response = await fetch(`/api/poules/${pid}`, {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      signal: abortController.signal
     })
 
     if (response.status === 200) {
@@ -177,6 +221,8 @@ export default function Settings ({ reqMessage }) {
 
       setMessage(newMessage)
     }
+
+    return () => abortController?.abort()
   }
 
   return (

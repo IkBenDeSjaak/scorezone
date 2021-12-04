@@ -21,11 +21,15 @@ export default function SignUp () {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    const abortController = new AbortController()
+
     const response = await fetch('/api/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
+      signal: abortController.signal,
       body: JSON.stringify(inputFields)
     })
 
@@ -35,6 +39,8 @@ export default function SignUp () {
       const responseJson = await response.json()
       setErrorMessage(responseJson.message)
     }
+
+    return () => abortController?.abort()
   }
 
   return (

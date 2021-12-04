@@ -17,11 +17,28 @@ export default function Profile ({ userId }) {
   })
 
   useEffect(async () => {
-    const userInfo = await fetch(`/api/user/${userId}`, {
-      method: 'GET'
-    }).then((res) => res.json())
+    const abortController = new AbortController()
 
-    setUserInfo(userInfo)
+    const response = await fetch(`/api/user/${userId}`, {
+      method: 'GET',
+      signal: abortController.signal
+    })
+
+    if (response.status === 200) {
+      const responseJson = await response.json()
+
+      setUserInfo(responseJson)
+    } else {
+      const responseJson = await response.json()
+      const newMessage = {
+        type: 'danger',
+        message: responseJson.message
+      }
+
+      setMessage(newMessage)
+    }
+
+    return () => abortController?.abort()
   }, [])
 
   const inputsHandlerUserInfo = (e) => {
@@ -35,9 +52,12 @@ export default function Profile ({ userId }) {
   const handleSubmitUserInfo = async (e) => {
     e.preventDefault()
 
+    const abortController = new AbortController()
+
     const response = await fetch(`/api/user/${userId}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
+      signal: abortController.signal,
       body: JSON.stringify(userInfo)
     })
 
@@ -58,6 +78,8 @@ export default function Profile ({ userId }) {
 
       setMessage(newMessage)
     }
+
+    return () => abortController?.abort()
   }
 
   return (
