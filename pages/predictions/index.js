@@ -238,7 +238,7 @@ export const getServerSideProps = withSessionSsr(async function ({
     }
   } catch (error) {
     message.type = 'danger'
-    message.message = 'Something went wrong while retrieving data'
+    message.message = error.message
 
     return {
       props: {

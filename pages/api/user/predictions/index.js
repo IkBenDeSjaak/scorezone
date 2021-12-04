@@ -7,7 +7,7 @@ async function handler (req, res) {
   switch (req.method) {
     case 'GET':
       try {
-        const uid = req.session.user.id
+        const uid = req.session.user?.id
         const { fromDate } = req.query
 
         const fromDateAsDate = new Date(fromDate)
@@ -24,7 +24,7 @@ async function handler (req, res) {
 
         res.status(200).json(predictions)
       } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: error.message })
       }
   }
 }

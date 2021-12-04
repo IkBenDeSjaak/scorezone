@@ -8,7 +8,7 @@ async function handler (req, res) {
   switch (req.method) {
     case 'DELETE':
       try {
-        const uid = req.session.user.id
+        const uid = req.session.user?.id
         const { pid, ppid } = req.query
 
         if (!uid) {
@@ -39,7 +39,7 @@ async function handler (req, res) {
       break
     case 'PUT':
       try {
-        const uid = req.session.user.id
+        const uid = req.session.user?.id
         const { pid, ppid } = req.query
 
         if (!uid) {

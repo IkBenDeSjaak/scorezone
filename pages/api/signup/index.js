@@ -47,7 +47,7 @@ export default async function handler (req, res) {
 
         res.status(201).json({ message: `${username} succesfully signed up` })
       } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: error.message })
       }
     }
   }

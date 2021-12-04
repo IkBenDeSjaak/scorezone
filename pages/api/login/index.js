@@ -48,7 +48,7 @@ async function handler (req, res) {
           return res.status(401).json({ message: 'Invalid username or password' })
         }
       } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: error.message })
       }
     }
   }

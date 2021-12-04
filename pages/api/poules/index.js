@@ -8,7 +8,7 @@ async function handler (req, res) {
     case 'POST':
       // Create a new poule
       try {
-        const uid = req.session.user.id
+        const uid = req.session.user?.id
         const { pouleName, leagueId, approveParticipants } = req.body
 
         if (!uid) {

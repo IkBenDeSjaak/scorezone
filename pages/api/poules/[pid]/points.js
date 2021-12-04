@@ -32,7 +32,7 @@ async function handler (req, res) {
       break
     case 'PUT':
       try {
-        const uid = req.session.user.id
+        const uid = req.session.user?.id
         const { pid } = req.query
         const points = req.body
 

@@ -7,7 +7,7 @@ async function handler (req, res) {
   switch (req.method) {
     case 'GET':
       try {
-        const uid = req.session.user.id
+        const uid = req.session.user?.id
 
         if (!uid) {
           return res.status(401)
@@ -27,12 +27,12 @@ async function handler (req, res) {
 
         res.status(200).json(leagueIds)
       } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: error.message })
       }
       break
     case 'POST':
       try {
-        const uid = req.session.user.id
+        const uid = req.session.user?.id
         const leagueId = req.body
 
         if (!uid) {
@@ -51,7 +51,7 @@ async function handler (req, res) {
 
         res.status(201).end()
       } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: error.message })
       }
   }
 }

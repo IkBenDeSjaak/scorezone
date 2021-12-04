@@ -8,7 +8,7 @@ async function handler (req, res) {
   switch (req.method) {
     case 'GET':
       try {
-        const uid = req.session.user.id
+        const uid = req.session.user?.id
         const { pid } = req.query
 
         if (!uid) {

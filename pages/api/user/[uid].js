@@ -7,7 +7,7 @@ async function handler (req, res) {
   switch (req.method) {
     case 'GET':
       try {
-        const userId = req.session.user.id
+        const userId = req.session.user?.id
         const { uid } = req.query
 
         if (!uid) {
@@ -27,12 +27,12 @@ async function handler (req, res) {
 
         res.status(200).json(results[0])
       } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: error.message })
       }
       break
     case 'PUT':
       try {
-        const userId = req.session.user.id
+        const userId = req.session.user?.id
         const { uid } = req.query
         const { Email, Username, FirstName, LastName, HidePredictions } = req.body
 
@@ -81,7 +81,7 @@ async function handler (req, res) {
 
         res.status(200).end()
       } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: error.message })
       }
   }
 }
