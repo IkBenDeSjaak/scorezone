@@ -24,7 +24,7 @@ async function handler (req, res) {
 
         res.status(200).json(results[0])
       } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: error.message })
       }
       break
     case 'PUT':
@@ -59,7 +59,7 @@ async function handler (req, res) {
 
         res.status(200).end()
       } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: error.message })
       }
       break
     case 'DELETE':
@@ -80,15 +80,42 @@ async function handler (req, res) {
         await querydb(
           `
           DELETE
+          FROM PouleParticipants
+          WHERE PouleId = ?
+          `,
+          pid
+        )
+
+        await querydb(
+          `
+          DELETE
           FROM Poules
           WHERE PouleId = ? AND Creator = ?
           `,
           [pid, uid]
         )
 
+        await querydb(
+          `
+          DELETE
+          FROM PointsStrategiesOptionPoints
+          WHERE StrategyId = ?
+          `,
+          pouleInfo[0].PointsStrategy
+        )
+
+        await querydb(
+          `
+          DELETE
+          FROM PointsStrategies
+          WHERE StrategyId = ?
+          `,
+          pouleInfo[0].PointsStrategy
+        )
+
         res.status(200).end()
       } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: error.message })
       }
   }
 }
@@ -96,7 +123,7 @@ async function handler (req, res) {
 export async function getPouleInfoData (pouleId) {
   const pouleInfo = await querydb(
     `
-    SELECT PouleName, JoinCode, Creator, ApproveParticipants 
+    SELECT PouleName, JoinCode, Creator, PointsStrategy, ApproveParticipants 
     FROM Poules
     WHERE PouleId = ?
     `,
