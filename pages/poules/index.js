@@ -21,7 +21,7 @@ export default function Poules ({ user }) {
 
       if (response.status === 200) {
         const responseJson = await response.json()
-  
+
         setPoules(responseJson)
       } else {
         const responseJson = await response.json()
@@ -29,7 +29,7 @@ export default function Poules ({ user }) {
           type: 'danger',
           message: responseJson.message
         }
-  
+
         setMessage(newMessage)
       }
 

@@ -21,7 +21,7 @@ export default function Leagues ({ user }) {
 
       if (response.status === 200) {
         const responseJson = await response.json()
-  
+
         setLeagues(responseJson)
       } else {
         const responseJson = await response.json()
@@ -29,7 +29,7 @@ export default function Leagues ({ user }) {
           type: 'danger',
           message: responseJson.message
         }
-  
+
         setMessage(newMessage)
       }
 
@@ -48,7 +48,7 @@ export default function Leagues ({ user }) {
 
       if (response.status === 200) {
         const responseJson = await response.json()
-  
+
         setUserLeagues(responseJson)
       } else {
         const responseJson = await response.json()
@@ -56,7 +56,7 @@ export default function Leagues ({ user }) {
           type: 'danger',
           message: responseJson.message
         }
-  
+
         setMessage(newMessage)
       }
 
@@ -85,7 +85,7 @@ export default function Leagues ({ user }) {
           type: 'danger',
           message: responseJson.message
         }
-  
+
         setMessage(newMessage)
       }
     } else {
@@ -106,7 +106,7 @@ export default function Leagues ({ user }) {
           type: 'danger',
           message: responseJson.message
         }
-  
+
         setMessage(newMessage)
       }
     }
