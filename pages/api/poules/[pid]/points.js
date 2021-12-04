@@ -27,7 +27,7 @@ async function handler (req, res) {
 
         res.status(200).json(results)
       } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: error.message })
       }
       break
     case 'PUT':
@@ -73,7 +73,7 @@ async function handler (req, res) {
 
         res.status(200).end()
       } catch (error) {
-        res.status(500).json({ message: 'Internal Server Error' })
+        res.status(500).json({ message: error.message })
       }
   }
 }
