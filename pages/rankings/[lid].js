@@ -12,9 +12,8 @@ import Message from '../../components/Message'
 
 export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, leagueSeasons }) {
   const router = useRouter()
-  const { lid, page } = router.query
+  const { lid, page, season } = router.query
 
-  const [season, setSeason] = useState(leagueSeasons[0]?.SeasonId ? leagueSeasons[0]?.SeasonId : '')
   const [message, setMessage] = useState(reqMessage)
   const [rankings, setRankings] = useState([])
 
@@ -47,7 +46,13 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
     const target = e.target
     const value = target.value
 
-    setSeason(value)
+    router.push({
+      pathname: `/rankings/${lid}`,
+      query: {
+        page: 1,
+        season: value
+      }
+    })
   }
 
   return (
@@ -109,7 +114,7 @@ export const getServerSideProps = withSessionSsr(async function ({
   res
 }) {
   const lid = params.lid
-  const page = Number(query.page)
+  const { page, season } = query
   let leagueName = ''
   const message = {
     type: '',
@@ -128,6 +133,15 @@ export const getServerSideProps = withSessionSsr(async function ({
       leagueName = leagueInfo.LeagueName
     }
 
+    if (!page || !season) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: `/rankings/${lid}?page=${!page ? 1 : page}&season=${!season ? leagueSeasons[0]?.SeasonId : season}`
+        }
+      }
+    }
+
     const itemsPerPage = 25
     const amountOfPages = Math.ceil(leagueInfo.Participants / itemsPerPage)
 
@@ -136,14 +150,14 @@ export const getServerSideProps = withSessionSsr(async function ({
         return {
           redirect: {
             permanent: false,
-            destination: `?page=${amountOfPages}`
+            destination: `/rankings/${lid}?page=${amountOfPages}&season=${leagueSeasons[0]?.SeasonId}`
           }
         }
       } else if (page < 1 || isNaN(page)) {
         return {
           redirect: {
             permanent: false,
-            destination: `?page=${1}`
+            destination: `/rankings/${lid}?page=${1}&season=${leagueSeasons[0]?.SeasonId}`
           }
         }
       }

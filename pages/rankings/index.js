@@ -7,10 +7,13 @@ import Layout from '../../components/Layout'
 import { getRankingsData } from '../api/rankings'
 import { useEffect, useState } from 'react'
 import Message from '../../components/Message'
+import { useRouter } from 'next/router'
 
 export default function Rankings ({ seasons, reqRankings, reqMessage }) {
+  const router = useRouter()
+  const { season } = router.query
+
   const [message, setMessage] = useState(reqMessage)
-  const [season, setSeason] = useState(seasons[0]?.SeasonId ? seasons[0]?.SeasonId : '')
   const [rankings, setRankings] = useState(reqRankings)
 
   useEffect(async () => {
@@ -42,7 +45,10 @@ export default function Rankings ({ seasons, reqRankings, reqMessage }) {
     const target = e.target
     const value = target.value
 
-    setSeason(value)
+    router.push({
+      pathname: '/rankings',
+      query: { season: value }
+    })
   }
 
   return (
@@ -79,7 +85,7 @@ export default function Rankings ({ seasons, reqRankings, reqMessage }) {
                   {
                     rankings.map((league) => (
                       <tr key={league.LeagueId.toString()}>
-                        <td><Link href={`/rankings/${league.LeagueId}?page=1`}><a className={styles.leagueText}>{league.LeagueName}</a></Link></td>
+                        <td><Link href={`/rankings/${league.LeagueId}?page=1&season=${season}`}><a className={styles.leagueText}>{league.LeagueName}</a></Link></td>
                         <td className={styles.rankingsParticipants}>{league.Participants}</td>
                         <td className={styles.rankingsPositionData}>{league.Position}</td>
                         <td className={styles.rankingsPointsData}>{league.Points}</td>
@@ -97,6 +103,7 @@ export default function Rankings ({ seasons, reqRankings, reqMessage }) {
 }
 
 export const getServerSideProps = withSessionSsr(async function ({
+  query,
   req,
   res
 }) {
@@ -107,10 +114,20 @@ export const getServerSideProps = withSessionSsr(async function ({
 
   try {
     const uid = req.session.user?.id
+    const { season } = query
 
     const seasons = await getAllSeasonsData()
 
-    const rankingsData = await getRankingsData(uid, seasons[0].SeasonId)
+    if (!season) {
+      return {
+        redirect: {
+          destination: `/rankings?season=${seasons[0].SeasonId}`,
+          permanent: false
+        }
+      }
+    }
+
+    const rankingsData = await getRankingsData(uid, season || seasons[0].SeasonId)
 
     return {
       props: {
