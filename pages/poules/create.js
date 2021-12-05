@@ -36,7 +36,7 @@ export default function CreatePoule () {
         message: responseJson.message
       }
 
-      setMessage(newMessage)
+      setErrorMessage(newMessage)
     }
 
     return () => abortController?.abort()
