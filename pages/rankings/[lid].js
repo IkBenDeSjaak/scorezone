@@ -13,7 +13,7 @@ import { FaSort } from 'react-icons/fa'
 
 export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, leagueSeasons }) {
   const router = useRouter()
-  const { lid, page, season, sort_col } = router.query
+  const { lid, page, season, sortCol } = router.query
 
   const [message, setMessage] = useState(reqMessage)
   const [rankings, setRankings] = useState([])
@@ -21,7 +21,7 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
   useEffect(async () => {
     const abortController = new AbortController()
 
-    const response = await fetch(`/api/leagues/${lid}/ranking?page=${page}&season=${season}&sort_col=${sort_col}`, {
+    const response = await fetch(`/api/leagues/${lid}/ranking?page=${page}&season=${season}&sortCol=${sortCol}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
       signal: abortController.signal
@@ -41,7 +41,7 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
     }
 
     return () => abortController?.abort()
-  }, [page, season, sort_col])
+  }, [page, season, sortCol])
 
   const handleCloseMessage = () => {
     setMessage({})
@@ -66,7 +66,7 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
       query: {
         page: 1,
         season: season,
-        sort_col: col,
+        sortCol: col
       }
     })
   }
@@ -103,8 +103,8 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
               <tr>
                 <th className={styles.rankingsPosition} scope='col'>Pos</th>
                 <th scope='col'>User</th>
-                <th className={styles.sortableColumn} scope='col' onClick={() => onChangeSortHandler('Points')}>Points <FaSort className={styles.sortIcon}/></th>
-                <th className={styles.sortableColumn} scope='col' onClick={() => onChangeSortHandler('WinnerCorrect')}>Times winner correct <FaSort className={styles.sortIcon}/></th>
+                <th className={styles.sortableColumn} scope='col' onClick={() => onChangeSortHandler('Points')}>Points <FaSort className={styles.sortIcon} /></th>
+                <th className={styles.sortableColumn} scope='col' onClick={() => onChangeSortHandler('WinnerCorrect')}>Times winner correct <FaSort className={styles.sortIcon} /></th>
               </tr>
             </thead>
             <tbody>

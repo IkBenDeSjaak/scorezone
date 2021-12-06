@@ -76,7 +76,7 @@ export async function getRankingsData (uid = undefined, season) {
         `,
         [l.LeagueId, season, l.LeagueId, season]
       )
-  
+
       const usersWithHigherPoints = allUsersFromLeague.filter((user) => user.Points > l.Points).length
       l.Position = usersWithHigherPoints + 1
     }

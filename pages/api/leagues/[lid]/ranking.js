@@ -8,7 +8,7 @@ async function handler (req, res) {
     case 'GET':
       // Get rankings from a specific league
       try {
-        const { lid, page, season, sort_col } = req.query
+        const { lid, page, season, sortCol } = req.query
 
         if (!lid) {
           return res.status(400).json({ message: 'Missing LeagueId in request' })
@@ -58,7 +58,7 @@ async function handler (req, res) {
           ORDER BY ?? DESC, Username ASC
           LIMIT 25 OFFSET ?
           `,
-          [lid, season, lid, lid, season, lid, lid, season, lid, (sort_col !== 'undefined') ? sort_col : 'Points', offset]
+          [lid, season, lid, lid, season, lid, lid, season, lid, (sortCol !== 'undefined') ? sortCol : 'Points', offset]
         )
 
         res.status(200).json(results)
