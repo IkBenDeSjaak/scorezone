@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Layout from '../../../components/Layout'
 import { FaCheck, FaTimes } from 'react-icons/fa'
+import SweetAlert from 'react-bootstrap-sweetalert'
 import Message from '../../../components/Message'
 import { getPouleInfoData } from '../../api/poules/[pid]'
 
@@ -20,6 +21,7 @@ export default function Settings ({ reqMessage }) {
   })
   const [newParticipants, setNewParticipants] = useState([])
   const [points, setPoints] = useState([])
+  const [dialogVisible, setDialogVisible] = useState(false)
 
   useEffect(async () => {
     const abortController = new AbortController()
@@ -59,6 +61,10 @@ export default function Settings ({ reqMessage }) {
 
     return () => abortController?.abort()
   }, [])
+
+  const handleCloseMessage = () => {
+    setMessage({})
+  }
 
   const inputsHandlerPouleInfo = (e) => {
     const target = e.target
@@ -225,6 +231,14 @@ export default function Settings ({ reqMessage }) {
     return () => abortController?.abort()
   }
 
+  const showDialog = () => {
+    setDialogVisible(true)
+  }
+
+  const closeDialog = () => {
+    setDialogVisible(false)
+  }
+
   return (
     <>
       <Layout>
@@ -235,7 +249,20 @@ export default function Settings ({ reqMessage }) {
         </p>
         <h1>Settings</h1>
         {(message.type && message.message) && (
-          <Message type={message.type} message={message.message} />
+          <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
+        )}
+        {(dialogVisible) && (
+          <SweetAlert
+            custom
+            customButtons={
+              <>
+                <button className={`${styles.dialogButton}`} onClick={closeDialog}>Cancel</button>
+                <button className={`${styles.dialogButton} ${styles.deleteConfirm}`} onClick={onDeletePoule}>Yes</button>
+              </>
+          }
+          >
+            Are you sure you want to delete this poule?
+          </SweetAlert>
         )}
         <h2>General</h2>
         <form className={styles.pouleInfoForm} onSubmit={handleSubmitPouleInfo}>
@@ -300,7 +327,7 @@ export default function Settings ({ reqMessage }) {
         </form>
         <h2>Delete poule</h2>
         <p>If you wish to delete the poule you created press the button below.</p>
-        <button className={styles.deleteButton} onClick={onDeletePoule}>Delete poule</button>
+        <button className={styles.deleteButton} onClick={showDialog}>Delete poule</button>
       </Layout>
     </>
   )

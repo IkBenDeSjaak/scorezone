@@ -2,6 +2,21 @@
     font-weight: bold;
 }
 
+.dialogButton {
+    padding: 0.5rem;
+    font-size: 1.25rem;
+    border-radius: 0.4rem;
+    margin: 0 0.5rem;
+}
+
+.dialogButton:hover {
+    cursor: pointer;
+}
+
+.deleteConfirm {
+    background-color: var(--red-positive);
+}
+
 .pouleInfoForm {
     display: flex;
     flex-direction: column;
