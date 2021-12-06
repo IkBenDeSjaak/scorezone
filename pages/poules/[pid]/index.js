@@ -7,10 +7,43 @@ import { useRouter } from 'next/router'
 import Layout from '../../../components/Layout'
 import Message from '../../../components/Message'
 import { getPouleInfoData } from '../../api/poules/[pid]'
+import useUser from '../../../lib/useUser'
+import { useState } from 'react'
 
-export default function Poule ({ pouleInfo, poulePositions, isCreator, message }) {
+export default function Poule ({ pouleInfo, poulePositions, isCreator, isParticipant, reqMessage }) {
   const router = useRouter()
   const { pid } = router.query
+
+  const { user } = useUser()
+  const [message, setMessage] = useState(reqMessage)
+
+  const handleCloseMessage = () => {
+    setMessage({})
+  }
+
+  const onLeavePoule = async () => {
+    const abortController = new AbortController()
+
+    const response = await fetch(`/api/poules/${pid}/participants/${user.id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      signal: abortController.signal
+    })
+
+    if (response.status === 200) {
+      router.push('/poules')
+    } else {
+      const responseJson = await response.json()
+      const newMessage = {
+        type: 'danger',
+        message: responseJson.message
+      }
+
+      setMessage(newMessage)
+    }
+
+    return () => abortController?.abort()
+  }
 
   return (
     <>
@@ -22,7 +55,7 @@ export default function Poule ({ pouleInfo, poulePositions, isCreator, message }
         </p>
         <h1 className={styles.pouleName}>{pouleInfo.PouleName}</h1>
         {(message.type && message.message) && (
-          <Message type={message.type} message={message.message} />
+          <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
         {isCreator && (
           <p className={styles.inviteText}>Invite people for this poule with the following link: <span>https://scorezone.nl/poules/{pid}?joincode={pouleInfo.JoinCode}</span></p>
@@ -55,6 +88,9 @@ export default function Poule ({ pouleInfo, poulePositions, isCreator, message }
         {isCreator && (
           <p className={styles.button}><Link href={`/poules/${pid}/settings`}><a>Settings</a></Link></p>
         )}
+        {isParticipant && (
+          <button className={styles.leaveButton} onClick={onLeavePoule}>Leave poule</button>
+        )}
       </Layout>
     </>
   )
@@ -86,19 +122,19 @@ export const getServerSideProps = withSessionSsr(async function ({
   try {
     const pouleInfo = await getPouleInfoData(pid)
 
+    const participants = await querydb(
+      `
+      SELECT U.UserId
+      FROM Users U
+      INNER JOIN PouleParticipants PP ON U.UserId = PP.UserId
+      WHERE PP.PouleId = ?
+      `,
+      pid
+    )
+
+    const participantIds = participants.map((p) => p.UserId)
+
     if (joincode) {
-      const participants = await querydb(
-        `
-        SELECT U.UserId
-        FROM Users U
-        INNER JOIN PouleParticipants PP ON U.UserId = PP.UserId
-        WHERE PP.PouleId = ?
-        `,
-        pid
-      )
-
-      const participantIds = participants.map((p) => p.UserId)
-
       if (uid) {
         if (!participantIds.includes(uid) && pouleInfo[0].Creator !== uid) {
           if (joincode === pouleInfo[0].JoinCode) {
@@ -179,7 +215,8 @@ export const getServerSideProps = withSessionSsr(async function ({
         pouleInfo: JSON.parse(JSON.stringify(pouleInfo[0])),
         poulePositions: JSON.parse(JSON.stringify(poulePositions)),
         isCreator: pouleInfo[0].Creator === uid,
-        message: message
+        isParticipant: participantIds.includes(uid),
+        reqMessage: message
       }
     }
   } catch (error) {
@@ -188,7 +225,7 @@ export const getServerSideProps = withSessionSsr(async function ({
 
     return {
       props: {
-        message: message
+        reqMessage: message
       }
     }
   }

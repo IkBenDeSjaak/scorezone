@@ -19,20 +19,20 @@ async function handler (req, res) {
 
         const pouleInfo = await getPouleInfoData(pid)
 
-        if (pouleInfo[0].Creator !== uid) {
+        if ((uid === parseInt(ppid)) || (pouleInfo[0].Creator === uid)) {
+          await querydb(
+            `
+            DELETE
+            FROM PouleParticipants
+            WHERE PouleId = ? AND UserId = ?
+            `,
+            [pid, ppid]
+          )
+
+          return res.status(200).end()
+        } else {
           return res.status(403).end()
         }
-
-        await querydb(
-          `
-          DELETE
-          FROM PouleParticipants
-          WHERE PouleId = ? AND UserId = ?
-          `,
-          [pid, ppid]
-        )
-
-        res.status(200).end()
       } catch (error) {
         res.status(500).json({ message: error.message })
       }

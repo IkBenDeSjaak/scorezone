@@ -78,6 +78,16 @@
     border: 2px solid var(--black);
 }
 
+.leaveButton {
+    margin-top: 1.5rem;
+    background-color: var(--red-positive);
+    padding: 0.4rem;
+    color: var(--black);
+    border-radius: 0.2rem;
+    border: 0.1rem solid var(--black);
+    cursor: pointer;
+}
+
 /* Tablet menu */
 @media all and (min-width: 700px) {
     .standingsName {
