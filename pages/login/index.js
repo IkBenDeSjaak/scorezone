@@ -16,7 +16,11 @@ export default function Login () {
     password: ''
     // rememberme: false
   })
-  const [errorMessage, setErrorMessage] = useState('')
+  const [message, setMessage] = useState({})
+
+  const handleCloseMessage = () => {
+    setMessage({})
+  }
 
   const inputsHandler = (e) => {
     const target = e.target
@@ -38,9 +42,17 @@ export default function Login () {
       )
     } catch (error) {
       if (error instanceof FetchError) {
-        setErrorMessage(error.data.message)
+        const newMessage = {
+          type: 'danger',
+          message: error.data.message
+        }
+        setMessage(newMessage)
       } else {
-        setErrorMessage(error)
+        const newMessage = {
+          type: 'danger',
+          message: error.message
+        }
+        setMessage(newMessage)
       }
     }
   }
@@ -50,7 +62,9 @@ export default function Login () {
       <Layout>
         <h2>Login</h2>
         <p>Login with your username and password.</p>
-        {errorMessage ? <Message type='danger' message={errorMessage} /> : ''}
+        {(message.type && message.message) && (
+          <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
+        )}
         <form className={styles.form} onSubmit={handleSubmit}>
           <label className={styles.label} htmlFor='username'>Username<input className={styles.input} required name='username' id='username' type='text' value={inputFields.username} onChange={inputsHandler} /></label>
           <label className={styles.label} htmlFor='password'>Password<input className={styles.input} required name='password' id='password' type='password' value={inputFields.password} onChange={inputsHandler} /></label>

@@ -37,12 +37,16 @@ export default function Poules ({ user }) {
     }
   }, [])
 
+  const handleCloseMessage = () => {
+    setMessage({})
+  }
+
   return (
     <>
       <Layout>
         <div>
           {(message.type && message.message) && (
-            <Message type={message.type} message={message.message} />
+            <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
           )}
           <h1>Poules</h1>
           <h3 className={styles.fontWeightNormal}>Here you can see all the poules you participate in or create a new poule!</h3>

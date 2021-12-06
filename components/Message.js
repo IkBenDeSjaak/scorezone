@@ -1,17 +1,24 @@
 import styles from './Message.module.css'
 
-export default function Message ({ type, message }) {
+import { FaTimes } from 'react-icons/fa'
+
+export default function Message ({ type, message, handleCloseMessage }) {
   const getMessageTypeStyle = () => {
     if (type === 'danger') {
       return styles.danger
     } else if (type === 'success') {
       return styles.success
+    } else if (type === 'warning') {
+      return styles.warning
     }
   }
 
   return (
     <>
-      <p className={`${styles.message} ${getMessageTypeStyle()}`}>{message}</p>
+      <div className={`${styles.message} ${getMessageTypeStyle()}`}>
+        <p>{message}</p>
+        <FaTimes className={`${styles.closeButton}`} onClick={handleCloseMessage} />
+      </div>
     </>
   )
 }

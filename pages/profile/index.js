@@ -41,6 +41,10 @@ export default function Profile ({ userId }) {
     return () => abortController?.abort()
   }, [])
 
+  const handleCloseMessage = () => {
+    setMessage({})
+  }
+
   const inputsHandlerUserInfo = (e) => {
     const target = e.target
     const value = target.type === 'checkbox' ? target.checked : target.value
@@ -96,7 +100,7 @@ export default function Profile ({ userId }) {
             : ''
         }
         {(message.type && message.message) && (
-          <Message type={message.type} message={message.message} />
+          <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
         <form className={styles.userInfoForm} onSubmit={handleSubmitUserInfo}>
           <label className={styles.label} htmlFor='Email'>

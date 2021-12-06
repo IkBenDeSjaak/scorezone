@@ -41,6 +41,10 @@ export default function Rankings ({ seasons, reqRankings, reqMessage }) {
     return () => abortController?.abort()
   }, [season])
 
+  const handleCloseMessage = () => {
+    setMessage({})
+  }
+
   const onChangeSeasonHandler = (e) => {
     const target = e.target
     const value = target.value
@@ -55,7 +59,7 @@ export default function Rankings ({ seasons, reqRankings, reqMessage }) {
     <>
       <Layout>
         {(message.type && message.message) && (
-          <Message type={message.type} message={message.message} />
+          <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
         <h1>Rankings</h1>
         {

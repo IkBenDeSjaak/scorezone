@@ -64,6 +64,10 @@ export default function Leagues ({ user }) {
     }
   }, [])
 
+  const handleCloseMessage = () => {
+    setMessage({})
+  }
+
   const handleSubmit = async (leagueId) => {
     const abortController = new AbortController()
 
@@ -119,7 +123,7 @@ export default function Leagues ({ user }) {
       <Layout>
         <div>
           {(message.type && message.message) && (
-            <Message type={message.type} message={message.message} />
+            <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
           )}
           <h1>Leagues</h1>
           <h3 className={styles.fontWeightNormal}>Select all leagues from which you want to predict matches!</h3>

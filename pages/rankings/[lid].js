@@ -42,6 +42,10 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
     return () => abortController?.abort()
   }, [page, season])
 
+  const handleCloseMessage = () => {
+    setMessage({})
+  }
+
   const onChangeSeasonHandler = (e) => {
     const target = e.target
     const value = target.value
@@ -59,7 +63,7 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
     <>
       <Layout>
         {(message.type && message.message) && (
-          <Message type={message.type} message={message.message} />
+          <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
         <p className={styles.backButton}>
           <Link href='/rankings'>

@@ -14,7 +14,7 @@ export default function CreatePoule () {
     leagueId: '',
     approveParticipants: true
   })
-  const [errorMessage, setErrorMessage] = useState('')
+  const [message, setMessage] = useState({})
 
   useEffect(async () => {
     const abortController = new AbortController()
@@ -36,11 +36,15 @@ export default function CreatePoule () {
         message: responseJson.message
       }
 
-      setErrorMessage(newMessage)
+      setMessage(newMessage)
     }
 
     return () => abortController?.abort()
   }, [])
+
+  const handleCloseMessage = () => {
+    setMessage({})
+  }
 
   const inputsHandler = (e) => {
     const target = e.target
@@ -66,7 +70,12 @@ export default function CreatePoule () {
       router.push('/poules')
     } else {
       const responseJson = await response.json()
-      setErrorMessage(responseJson.message)
+      const newMessage = {
+        type: 'danger',
+        message: responseJson.message
+      }
+
+      setMessage(newMessage)
     }
 
     return () => abortController?.abort()
@@ -76,7 +85,9 @@ export default function CreatePoule () {
     <>
       <Layout>
         <h1>Create a new poule!</h1>
-        {errorMessage ? <Message type='danger' message={errorMessage} /> : ''}
+        {(message.type && message.message) && (
+          <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
+        )}
         <form className={styles.form} onSubmit={handleSubmit}>
           <label className={styles.label} htmlFor='pouleName'>Name of the poule
             <input className={styles.input} required maxLength='25' id='pouleName' name='pouleName' type='text' onChange={inputsHandler} />

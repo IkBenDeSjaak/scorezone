@@ -13,7 +13,11 @@ export default function SignUp () {
     username: '',
     password: ''
   })
-  const [errorMessage, setErrorMessage] = useState('')
+  const [message, setMessage] = useState({})
+
+  const handleCloseMessage = () => {
+    setMessage({})
+  }
 
   const inputsHandler = (e) => {
     setInputFields({ ...inputFields, [e.target.name]: e.target.value })
@@ -37,7 +41,12 @@ export default function SignUp () {
       router.push('/login')
     } else {
       const responseJson = await response.json()
-      setErrorMessage(responseJson.message)
+      const newMessage = {
+        type: 'danger',
+        message: responseJson.message
+      }
+
+      setMessage(newMessage)
     }
 
     return () => abortController?.abort()
@@ -48,7 +57,9 @@ export default function SignUp () {
       <Layout>
         <h2>Sign up</h2>
         <p>Create your own account and start predicting!</p>
-        {errorMessage ? <Message type='danger' message={errorMessage} /> : ''}
+        {(message.type && message.message) && (
+          <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
+        )}
         <form className={styles.form} onSubmit={handleSubmit}>
           <label className={styles.label} htmlFor='email'>Email<input className={styles.input} required maxLength='64' name='email' id='email' type='email' value={inputFields.email} onChange={inputsHandler} /></label>
           <label className={styles.label} htmlFor='username'>Username<input className={styles.input} required minLength='6' maxLength='20' name='username' id='username' type='text' value={inputFields.username} onChange={inputsHandler} /></label>

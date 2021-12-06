@@ -38,6 +38,10 @@ export default function Predictions ({ weeks, reqSelectedWeek, reqMessage }) {
     return () => abortController?.abort()
   }, [selectedWeek])
 
+  const handleCloseMessage = () => {
+    setMessage({})
+  }
+
   const changeSelectedWeek = (e) => {
     setSelectedWeek(e.target.value)
   }
@@ -92,7 +96,7 @@ export default function Predictions ({ weeks, reqSelectedWeek, reqMessage }) {
       <Layout>
         <div>
           {(message.type && message.message) && (
-            <Message type={message.type} message={message.message} />
+            <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
           )}
           {weeks.length > 0
             ? (
