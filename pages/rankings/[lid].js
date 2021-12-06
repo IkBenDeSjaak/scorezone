@@ -9,10 +9,11 @@ import Layout from '../../components/Layout'
 import Pagination from '../../components/Pagination'
 import { useEffect, useState } from 'react'
 import Message from '../../components/Message'
+import { FaSort } from 'react-icons/fa'
 
 export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, leagueSeasons }) {
   const router = useRouter()
-  const { lid, page, season } = router.query
+  const { lid, page, season, sort_col } = router.query
 
   const [message, setMessage] = useState(reqMessage)
   const [rankings, setRankings] = useState([])
@@ -20,7 +21,7 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
   useEffect(async () => {
     const abortController = new AbortController()
 
-    const response = await fetch(`/api/leagues/${lid}/ranking?page=${page}&season=${season}`, {
+    const response = await fetch(`/api/leagues/${lid}/ranking?page=${page}&season=${season}&sort_col=${sort_col}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
       signal: abortController.signal
@@ -40,7 +41,7 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
     }
 
     return () => abortController?.abort()
-  }, [page, season])
+  }, [page, season, sort_col])
 
   const handleCloseMessage = () => {
     setMessage({})
@@ -55,6 +56,17 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
       query: {
         page: 1,
         season: value
+      }
+    })
+  }
+
+  const onChangeSortHandler = (col) => {
+    router.push({
+      pathname: `/rankings/${lid}`,
+      query: {
+        page: 1,
+        season: season,
+        sort_col: col,
       }
     })
   }
@@ -91,7 +103,8 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
               <tr>
                 <th className={styles.rankingsPosition} scope='col'>Pos</th>
                 <th scope='col'>User</th>
-                <th scope='col'>Points</th>
+                <th className={styles.sortableColumn} scope='col' onClick={() => onChangeSortHandler('Points')}>Points <FaSort className={styles.sortIcon}/></th>
+                <th className={styles.sortableColumn} scope='col' onClick={() => onChangeSortHandler('WinnerCorrect')}>Times winner correct <FaSort className={styles.sortIcon}/></th>
               </tr>
             </thead>
             <tbody>
@@ -99,7 +112,8 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
                 <tr key={user.UserId}>
                   <td className={styles.rankingsPosition}>{user.Points === rankings[index - 1]?.Points ? '' : index + 1}</td>
                   <td>{user.Username}</td>
-                  <td className={styles.rankingsPointsData}>{user.Points ? user.Points : '-'}</td>
+                  <td className={`${styles.rankingsPointsData} ${styles.dataBold}`}>{user.Points ? user.Points : '-'}</td>
+                  <td className={styles.dataBold}>{user.WinnerCorrect ? user.WinnerCorrect : '-'}</td>
                 </tr>
               ))}
             </tbody>

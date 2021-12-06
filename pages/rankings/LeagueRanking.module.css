@@ -49,11 +49,20 @@
     white-space: nowrap;
 }
 
+.sortableColumn:hover {
+    cursor: pointer;
+}
+
+.sortIcon {
+    width: 0.8rem;
+    height: 0.8rem;
+}
+
 .rankingsPosition {
     width: 4rem;
 }
 
-.rankingsPointsData {
+.dataBold {
     font-weight: bold;
 }
 
