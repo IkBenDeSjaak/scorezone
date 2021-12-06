@@ -25,6 +25,7 @@ async function handler (req, res) {
 
 export async function getRankingsData (uid = undefined, season) {
   if (uid) {
+    // Select poule info including points for this user
     const leagues = await querydb(
       `
       SELECT DISTINCT L.LeagueId, L.LeagueName, (SELECT COUNT(UserId) AS UserAmount FROM Users WHERE UserId IN (SELECT UserId FROM UserLeagues WHERE LeagueId = L.LeagueId)) AS Participants, (SELECT COALESCE(SUM(CASE
@@ -48,6 +49,7 @@ export async function getRankingsData (uid = undefined, season) {
       [uid, season, season]
     )
 
+    // Calculate position of logged in user by selecting points for other users and check how many have higher points
     for await (const l of leagues) {
       const allUsersFromLeague = await querydb(
         `
@@ -74,6 +76,7 @@ export async function getRankingsData (uid = undefined, season) {
         `,
         [l.LeagueId, season, l.LeagueId, season]
       )
+  
       const usersWithHigherPoints = allUsersFromLeague.filter((user) => user.Points > l.Points).length
       l.Position = usersWithHigherPoints + 1
     }
