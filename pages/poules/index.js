@@ -71,7 +71,7 @@ export default function Poules ({ user }) {
                       ))}
                     </div>
                     )
-                  : (<p>You didn't join or create any poule yet.</p>)}
+                  : (<p>You did not join or create any poule yet.</p>)}
               </>
               )
             : (<p>You can join and create poules when you are logged in.</p>)}
@@ -82,8 +82,7 @@ export default function Poules ({ user }) {
 }
 
 export const getServerSideProps = withSessionSsr(async function ({
-  req,
-  res
+  req
 }) {
   const user = req.session.user
 

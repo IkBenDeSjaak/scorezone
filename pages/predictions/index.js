@@ -111,7 +111,7 @@ export default function Predictions ({ weeks, reqSelectedWeek, reqMessage }) {
                 </label>
               </div>
               )
-            : <p className={styles.alignCenter}>You didn't select any leagues to predict yet. Go to <Link href='/leagues'><a className={styles.inlineClickable}>leagues</a></Link> to select leagues you want to predict matches from.</p>}
+            : <p className={styles.alignCenter}>You did not select any leagues to predict yet. Go to <Link href='/leagues'><a className={styles.inlineClickable}>leagues</a></Link> to select leagues you want to predict matches from.</p>}
           {
             Object.keys(predictions).length > 0
               ? (
@@ -183,8 +183,7 @@ export default function Predictions ({ weeks, reqSelectedWeek, reqMessage }) {
 }
 
 export const getServerSideProps = withSessionSsr(async function ({
-  req,
-  res
+  req
 }) {
   const uid = req.session.user?.id
   const message = {

@@ -108,8 +108,7 @@ export default function Rankings ({ seasons, reqRankings, reqMessage }) {
 
 export const getServerSideProps = withSessionSsr(async function ({
   query,
-  req,
-  res
+  req
 }) {
   const message = {
     type: '',

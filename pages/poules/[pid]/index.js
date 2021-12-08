@@ -160,8 +160,7 @@ export default function Poule ({ pouleInfo, poulePositions, isCreator, isPartici
 export const getServerSideProps = withSessionSsr(async function ({
   params,
   query,
-  req,
-  res
+  req
 }) {
   const uid = req.session.user?.id
   const pid = params.pid

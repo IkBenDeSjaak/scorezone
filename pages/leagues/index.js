@@ -142,7 +142,7 @@ export default function Leagues ({ user }) {
                 </div>
               </div>
               )
-            : (<p>You can select leagues to predict when you're logged in.</p>)}
+            : (<p>You can select leagues to predict when you are logged in.</p>)}
         </div>
       </Layout>
     </>
@@ -150,8 +150,7 @@ export default function Leagues ({ user }) {
 }
 
 export const getServerSideProps = withSessionSsr(async function ({
-  req,
-  res
+  req
 }) {
   const user = req.session.user
 

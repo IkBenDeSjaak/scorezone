@@ -114,8 +114,7 @@ export default function CreatePoule () {
 }
 
 export const getServerSideProps = withSessionSsr(async function ({
-  req,
-  res
+  req
 }) {
   const user = req.session.user
 

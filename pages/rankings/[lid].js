@@ -127,9 +127,7 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
 
 export const getServerSideProps = withSessionSsr(async function ({
   query,
-  params,
-  req,
-  res
+  params
 }) {
   const lid = params.lid
   const { page, season } = query

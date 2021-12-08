@@ -15,7 +15,7 @@ export default function Rules () {
         </p>
         <p>Match weeks are calculated from Tuesday till Monday, because a lot of leagues play matches on Monday and those matches are usually part of the matches from the whole weekend.</p>
         <h2>Points system</h2>
-        <p>This points system is used by default in poules. However you can customize the points used in your poule in your poule's settings.
+        <p>This points system is used by default in poules. However you can customize the points used in your poule in the settings of your poule.
           The system below is also used to calculate points in the ScoreZone rankings.
         </p>
         <div className={styles.pointsTable}>
@@ -67,7 +67,7 @@ export default function Rules () {
         <ul>
           <li>The result of the game is the result after 90 minutes (including injury time). Goals scored during extra time are not counted.</li>
           <li>If a match is suspended and continued or replayed on a later date the result of that game counts.</li>
-          <li>If a match is suspended and the game won't continue or replayed on a later date points will not be awarded for that game.</li>
+          <li>If a match is suspended and the game will not continue or replayed on a later date points will not be awarded for that game.</li>
           <li>If a match has been played, but later gets an official result, the initial result will count.</li>
         </ul>
       </Layout>

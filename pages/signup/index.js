@@ -72,8 +72,7 @@ export default function SignUp () {
 }
 
 export const getServerSideProps = withSessionSsr(async function ({
-  req,
-  res
+  req
 }) {
   const user = req.session.user
 

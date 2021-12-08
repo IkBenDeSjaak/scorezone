@@ -146,8 +146,7 @@ export default function Profile ({ userId }) {
 }
 
 export const getServerSideProps = withSessionSsr(async function ({
-  req,
-  res
+  req
 }) {
   const uid = req.session.user?.id
 

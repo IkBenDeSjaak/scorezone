@@ -315,7 +315,7 @@ export default function Settings ({ reqMessage }) {
             )
           : (<p>There are no new participants to approve or disapprove.</p>)}
         <h2>Custom points</h2>
-        <p>By default your poule uses ScoreZone's points system that can be found in the <Link href='/rules'><a className={styles.inlineClickable}>rules</a></Link> section.
+        <p>By default your poule uses the point system of ScoreZone that can be found in the <Link href='/rules'><a className={styles.inlineClickable}>rules</a></Link> section.
           You can customize points that will be awarded after every match by changing and saving the values below.
         </p>
         <form className={styles.pointsStrategyForm} onSubmit={handleSubmitPoints}>
@@ -339,8 +339,7 @@ export default function Settings ({ reqMessage }) {
 
 export const getServerSideProps = withSessionSsr(async function ({
   params,
-  req,
-  res
+  req
 }) {
   const uid = req.session.user?.id
   const pid = params.pid
