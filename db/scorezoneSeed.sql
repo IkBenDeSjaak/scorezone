@@ -28,9 +28,9 @@ INSERT INTO Roles (RoleName) VALUES
 ('User');
 
 INSERT INTO Users (Email, Username, Password, FirstName, LastName, Role, HidePredictions) VALUES
-('test@email.com', 'sjaak123', '$2a$12$dHc1UpCs8D8ogZEEbTtAI.n7MVkr5EIU0je0rFkRZxKHjNJ6Mra1S', 'Sjaak', 'Kok', 'Admin', 1),
-('test123@email.com', 'bertje3', '$2a$12$pNmAppB02W2hpcuxXU5eae0ShpN5J4r6TYF5DykqeHOvlyLtenjVS', 'Bert', 'de Knaap', 'User', 1),
-('test12332423@email.com', 'bertje33333', '$2a$12$pNmAppB02W2hpcuxXU5eae0ShpN5J4r6TYF5DykqeHOvlyLtenjVS', NULL, NULL, 'User', 0);
+('testadmin@email.com', 'testadmin', '$2a$12$UVJoUm.YS7GW4S95N0AEC.4yWxKnVI1VsVMBqCj5KUOHC4DEFf3pe', 'Admin', 'Test', 'Admin', 1),
+('testuser@email.com', 'testuser', '$2a$12$7wjLZZWvbaotGczvvD9ibeSqrtr9sRUJ0D0TVYBxNxVGFYxejusB.', 'User', 'Test', 'User', 1),
+('testuser2@email.com', 'testuser2', '$2a$12$IAapBW3bN1Y6X3Kl1XsLW./hAO9e7R3imZS/lSMFUM2JNuqju2Eie', NULL, NULL, 'User', 0);
 
 INSERT INTO Countries (CountryName) VALUES
 ('Netherlands'),
@@ -38,32 +38,36 @@ INSERT INTO Countries (CountryName) VALUES
 ('International');
 
 INSERT INTO Seasons (SeasonName, StartDate, EndDate) VALUES
-('2020-2021', '2020-08-31', '2021-06-30'),
-('2021-2022', '2021-08-31', '2022-07-01');
+('2020-2021', '2020-07-01', '2021-06-30'),
+('2021-2022', '2021-07-01', '2022-06-30');
 
 INSERT INTO Associations (AssociationName, CountryId) VALUES
 ('UEFA', (SELECT CountryId FROM Countries WHERE CountryName = 'International')),
+('FA', (SELECT CountryId FROM Countries WHERE CountryName = 'England')),
 ('KNVB', (SELECT CountryId FROM Countries WHERE CountryName = 'Netherlands'));
 
 INSERT INTO Leagues (LeagueName, AssociationId, LeagueImage) VALUES
 ('Eredivisie', (SELECT AssociationId FROM Associations WHERE AssociationName = 'KNVB'), NULL),
 ('Champions League', (SELECT AssociationId FROM Associations WHERE AssociationName = 'UEFA'), NULL),
-('Europa League', (SELECT AssociationId FROM Associations WHERE AssociationName = 'UEFA'), NULL);
+('Premier League', (SELECT AssociationId FROM Associations WHERE AssociationName = 'FA'), NULL);
 
 INSERT INTO LeagueSeasons (LeagueId, SeasonId) VALUES
 ((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021')),
 ((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021')),
-((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2021-2022'));
+((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2021-2022')),
+((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2021-2022')),
+((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Premier League'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2021-2022'));
 
 INSERT INTO UserLeagues (UserId, LeagueId) VALUES
-((SELECT UserId FROM Users WHERE Username = 'sjaak123'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie')),
-((SELECT UserId FROM Users WHERE Username = 'sjaak123'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'));
+((SELECT UserId FROM Users WHERE Username = 'testadmin'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie')),
+((SELECT UserId FROM Users WHERE Username = 'testadmin'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'));
 
 INSERT INTO Teams (TeamName, TeamImage) VALUES
 ('Ajax', NULL),
 ('Heracles', NULL),
 ('FC Twente', NULL),
 ('Manchester City', NULL),
+('Manchester United', NULL),
 ('PSG', NULL);
 
 INSERT INTO TeamsInLeagues (LeagueId, SeasonId, TeamId) VALUES
@@ -71,21 +75,27 @@ INSERT INTO TeamsInLeagues (LeagueId, SeasonId, TeamId) VALUES
 ((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT TeamId FROM Teams WHERE TeamName = 'FC Twente')),
 ((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT TeamId FROM Teams WHERE TeamName = 'Heracles')),
 ((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT TeamId FROM Teams WHERE TeamName = 'Manchester City')),
-((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT TeamId FROM Teams WHERE TeamName = 'PSG'));
+((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT TeamId FROM Teams WHERE TeamName = 'PSG')),
+((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2021-2022'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax')),
+((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2021-2022'), (SELECT TeamId FROM Teams WHERE TeamName = 'FC Twente')),
+((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2021-2022'), (SELECT TeamId FROM Teams WHERE TeamName = 'Heracles'));
 
 INSERT INTO Matches (SeasonId, LeagueId, HomeTeam, AwayTeam, MatchDay, StartTime) VALUES
 ((SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax'), (SELECT TeamId FROM Teams WHERE TeamName = 'Heracles'), 1, '2020-11-19 18:00:00'),
 ((SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax'), (SELECT TeamId FROM Teams WHERE TeamName = 'FC Twente'), 2, '2020-11-19 19:00:00'),
 ((SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT TeamId FROM Teams WHERE TeamName = 'FC Twente'), (SELECT TeamId FROM Teams WHERE TeamName = 'Heracles'), 3, '2020-11-19 20:00:00'),
-((SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT TeamId FROM Teams WHERE TeamName = 'Manchester City'), (SELECT TeamId FROM Teams WHERE TeamName = 'PSG'), 1, '2020-11-20 20:45:00');
+((SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT TeamId FROM Teams WHERE TeamName = 'Manchester City'), (SELECT TeamId FROM Teams WHERE TeamName = 'PSG'), 1, '2020-11-20 20:45:00'),
+((SELECT SeasonId FROM SEASONS WHERE SeasonName = '2021-2022'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax'), (SELECT TeamId FROM Teams WHERE TeamName = 'Heracles'), 1, '2021-12-23 18:00:00'),
+((SELECT SeasonId FROM SEASONS WHERE SeasonName = '2021-2022'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax'), (SELECT TeamId FROM Teams WHERE TeamName = 'FC Twente'), 2, '2022-01-19 19:00:00');
 
 INSERT INTO MatchPredictions (UserId, MatchId, GoalsHomeTeam, GoalsAwayTeam) VALUES
-((SELECT UserId FROM Users WHERE Username = 'sjaak123'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 18:00:00'), 1, 3),
-((SELECT UserId FROM Users WHERE Username = 'sjaak123'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 19:00:00'), 1, 3),
-((SELECT UserId FROM Users WHERE Username = 'bertje3'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 18:00:00'), 1, 4),
-((SELECT UserId FROM Users WHERE Username = 'bertje3'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 19:00:00'), 1, 2),
-((SELECT UserId FROM Users WHERE Username = 'sjaak123'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-20 20:45:00'), 1, 3),
-((SELECT UserId FROM Users WHERE Username = 'sjaak123'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 20:00:00'), 1, 3);
+((SELECT UserId FROM Users WHERE Username = 'testadmin'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 18:00:00'), 1, 3),
+((SELECT UserId FROM Users WHERE Username = 'testadmin'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 19:00:00'), 1, 3),
+((SELECT UserId FROM Users WHERE Username = 'testadmin'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 20:00:00'), 1, 3),
+((SELECT UserId FROM Users WHERE Username = 'testuser'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 18:00:00'), 1, 4),
+((SELECT UserId FROM Users WHERE Username = 'testuser'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 19:00:00'), 1, 2),
+((SELECT UserId FROM Users WHERE Username = 'testadmin'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-20 20:45:00'), 1, 3),
+((SELECT UserId FROM Users WHERE Username = 'testadmin'), (SELECT MatchId FROM Matches WHERE StartTime = '2021-12-23 18:00:00'), 1, 3);
 
 INSERT INTO MatchResults (MatchId, GoalsHomeTeam, GoalsAwayTeam) VALUES
 ((SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 18:00:00'), 1, 3),
@@ -95,53 +105,34 @@ INSERT INTO MatchResults (MatchId, GoalsHomeTeam, GoalsAwayTeam) VALUES
 
 INSERT INTO Groups (GroupName) VALUES
 ('A'),
-('B');
+('B'),
+('C'),
+('D'),
+('E'),
+('F'),
+('G'),
+('H');
 
 INSERT INTO TeamsInGroupsInLeagues (LeagueId, SeasonId, GroupId, TeamId) VALUES
 ((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT GroupId FROM Groups WHERE GroupName = 'A'), (SELECT TeamId FROM Teams WHERE TeamName = 'Manchester City')),
 ((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT GroupId FROM Groups WHERE GroupName = 'A'), (SELECT TeamId FROM Teams WHERE TeamName = 'PSG'));
 
 INSERT INTO PointsStrategies (Creator) VALUES
-((SELECT UserId FROM Users WHERE Username = 'sjaak123'));
+((SELECT UserId FROM Users WHERE Username = 'testadmin'));
 
 INSERT INTO PointsOptions (OptionName) VALUES
-('Fully correct'),
+('Total score correct'),
 ('Draw correct'),
 ('Winner correct'),
-('Goals hometeam correct'),
-('Goals awayteam correct');
+('Number of home goals correct'),
+('Number of away goals correct');
 
 INSERT INTO PointsStrategiesOptionPoints (StrategyId, OptionId, Points) VALUES
-((SELECT StrategyId FROM PointsStrategies LIMIT 1), (SELECT OptionId FROM PointsOptions WHERE OptionName = 'Fully correct'), 10),
+((SELECT StrategyId FROM PointsStrategies LIMIT 1), (SELECT OptionId FROM PointsOptions WHERE OptionName = 'Total score correct'), 10),
 ((SELECT StrategyId FROM PointsStrategies LIMIT 1), (SELECT OptionId FROM PointsOptions WHERE OptionName = 'Draw correct'), 7),
 ((SELECT StrategyId FROM PointsStrategies LIMIT 1), (SELECT OptionId FROM PointsOptions WHERE OptionName = 'Winner correct'), 6),
-((SELECT StrategyId FROM PointsStrategies LIMIT 1), (SELECT OptionId FROM PointsOptions WHERE OptionName = 'Goals hometeam correct'), 1),
-((SELECT StrategyId FROM PointsStrategies LIMIT 1), (SELECT OptionId FROM PointsOptions WHERE OptionName = 'Goals awayteam correct'), 1);
-
-INSERT INTO Poules (PouleName, PouleLeague, PouleSeason, Creator, PointsStrategy, ApproveParticipants) VALUES
-('Very nice poule', (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT UserId FROM Users WHERE Username = 'sjaak123'), (SELECT StrategyId FROM PointsStrategies LIMIT 1), 1),
-('Collegapoule', (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT UserId FROM Users WHERE Username = 'bertje3'), (SELECT StrategyId FROM PointsStrategies LIMIT 1), 0);
-
-INSERT INTO PouleParticipants (PouleId, UserId, Approved) VALUES
-((SELECT PouleId FROM Poules WHERE PouleName = 'Very nice poule'), (SELECT UserId FROM Users WHERE Username = 'bertje3'), 1),
-((SELECT PouleId FROM Poules WHERE PouleName = 'Very nice poule'), (SELECT UserId FROM Users WHERE Username = 'bertje33333'), 0);
-
-INSERT INTO LeagueStandings (LeagueId, SeasonId, TeamId, Position) VALUES
-((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax'), 1),
-((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT TeamId FROM Teams WHERE TeamName = 'Heracles'), 2),
-((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT TeamId FROM Teams WHERE TeamName = 'FC Twente'), 3);
-
-INSERT INTO LeagueStandingsPredictions (UserId, LeagueId, SeasonId, TeamId, Position) VALUES
-((SELECT UserId FROM Users WHERE Username = 'sjaak123'),(SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax'), 1),
-((SELECT UserId FROM Users WHERE Username = 'sjaak123'),(SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT TeamId FROM Teams WHERE TeamName = 'FC Twente'), 2);
-
-INSERT INTO GroupStandings (LeagueId, SeasonId, GroupId, TeamId, Position) VALUES
-((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT GroupId FROM Groups WHERE GroupName = 'A'), (SELECT TeamId FROM Teams WHERE TeamName = 'Manchester City'), 1),
-((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT GroupId FROM Groups WHERE GroupName = 'A'), (SELECT TeamId FROM Teams WHERE TeamName = 'PSG'), 2);
-
-INSERT INTO GroupStandingsPredictions (UserId, LeagueId, SeasonId, GroupId, TeamId, Position) VALUES
-((SELECT UserId FROM Users WHERE Username = 'sjaak123'),(SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT GroupId FROM Groups WHERE GroupName = 'A'), (SELECT TeamId FROM Teams WHERE TeamName = 'Manchester City'), 1),
-((SELECT UserId FROM Users WHERE Username = 'sjaak123'),(SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT SeasonId FROM SEASONS WHERE SeasonName = '2020-2021'), (SELECT GroupId FROM Groups WHERE GroupName = 'A'), (SELECT TeamId FROM Teams WHERE TeamName = 'PSG'), 2);
+((SELECT StrategyId FROM PointsStrategies LIMIT 1), (SELECT OptionId FROM PointsOptions WHERE OptionName = 'Number of home goals correct'), 1),
+((SELECT StrategyId FROM PointsStrategies LIMIT 1), (SELECT OptionId FROM PointsOptions WHERE OptionName = 'Number of away goals correct'), 1);
 
 SELECT * FROM GroupStandingsPredictions;
 SELECT * FROM GroupStandings;
