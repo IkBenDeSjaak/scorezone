@@ -6,6 +6,21 @@
     word-wrap: break-word;
 }
 
+.dialogButton {
+    padding: 0.5rem;
+    font-size: 1.25rem;
+    border-radius: 0.4rem;
+    margin: 0 0.5rem;
+}
+
+.dialogButton:hover {
+    cursor: pointer;
+}
+
+.deleteConfirm {
+    background-color: var(--red-positive);
+}
+
 .inviteText {
     padding: 0.3rem 0.3rem 0.3rem 0;
     width: fit-content;
@@ -58,6 +73,14 @@
 
 .standingsPoints {
     width: 4.5rem;
+}
+
+.deleteUserButton {
+    vertical-align: -0.15rem;
+}
+
+.deleteUserButton:hover {
+    cursor: pointer;
 }
 
 .button {

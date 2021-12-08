@@ -9,6 +9,8 @@ import Message from '../../../components/Message'
 import { getPouleInfoData } from '../../api/poules/[pid]'
 import useUser from '../../../lib/useUser'
 import { useState } from 'react'
+import { FaRegTimesCircle } from 'react-icons/fa'
+import SweetAlert from 'react-bootstrap-sweetalert'
 
 export default function Poule ({ pouleInfo, poulePositions, isCreator, isParticipant, reqMessage }) {
   const router = useRouter()
@@ -16,6 +18,8 @@ export default function Poule ({ pouleInfo, poulePositions, isCreator, isPartici
 
   const { user } = useUser()
   const [message, setMessage] = useState(reqMessage)
+  const [dialogVisible, setDialogVisible] = useState(false)
+  const [selectedUser, setSelectedUser] = useState(null)
 
   const handleCloseMessage = () => {
     setMessage({})
@@ -45,6 +49,38 @@ export default function Poule ({ pouleInfo, poulePositions, isCreator, isPartici
     return () => abortController?.abort()
   }
 
+  const onKickUser = async () => {
+    const abortController = new AbortController()
+
+    const response = await fetch(`/api/poules/${pid}/participants/${selectedUser}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      signal: abortController.signal
+    })
+
+    if (response.status === 200) {
+      router.push('/poules')
+    } else {
+      const responseJson = await response.json()
+      const newMessage = {
+        type: 'danger',
+        message: responseJson.message
+      }
+
+      setMessage(newMessage)
+    }
+
+    return () => abortController?.abort()
+  }
+
+  const showDialog = () => {
+    setDialogVisible(true)
+  }
+
+  const closeDialog = () => {
+    setDialogVisible(false)
+  }
+
   return (
     <>
       <Layout>
@@ -56,6 +92,23 @@ export default function Poule ({ pouleInfo, poulePositions, isCreator, isPartici
         <h1 className={styles.pouleName}>{pouleInfo.PouleName}</h1>
         {(message.type && message.message) && (
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
+        )}
+        {(dialogVisible) && (
+          <SweetAlert
+            custom
+            title='Kick user'
+            onCancel={closeDialog}
+            onConfirm={onKickUser}
+            closeOnClickOutside
+            customButtons={
+              <>
+                <button className={`${styles.dialogButton}`} onClick={closeDialog}>Cancel</button>
+                <button className={`${styles.dialogButton} ${styles.deleteConfirm}`} onClick={onKickUser}>Yes</button>
+              </>
+            }
+          >
+            Are you sure you want to kick this user from your poule?
+          </SweetAlert>
         )}
         {isCreator && (
           <p className={styles.inviteText}>Invite people for this poule with the following link: <span>https://scorezone.nl/poules/{pid}?joincode={pouleInfo.JoinCode}</span></p>
@@ -73,12 +126,20 @@ export default function Poule ({ pouleInfo, poulePositions, isCreator, isPartici
             </thead>
             <tbody>
               {
-                poulePositions.map((user, index) => (
-                  <tr key={user.UserId.toString()}>
-                    <td>{user.Points === poulePositions[index - 1]?.Points ? '' : index + 1}</td>
-                    <td>{user.Username}</td>
-                    <td className={styles.standingsName}>{`${user.FirstName ? user.FirstName : ''} ${user.LastName ? user.LastName : ''}`}</td>
-                    <td>{user.Points}</td>
+                poulePositions.map((u, index) => (
+                  <tr key={u.UserId.toString()}>
+                    <td>{u.Points === poulePositions[index - 1]?.Points ? '' : index + 1}</td>
+                    <td>{u.Username} {(isCreator && user.id !== u.UserId)
+                      ? <FaRegTimesCircle
+                          className={styles.deleteUserButton} onClick={() => {
+                            setSelectedUser(u.UserId)
+                            showDialog()
+                          }}
+                        />
+                      : ''}
+                    </td>
+                    <td className={styles.standingsName}>{`${u.FirstName ? u.FirstName : ''} ${u.LastName ? u.LastName : ''}`}</td>
+                    <td>{u.Points}</td>
                   </tr>
                 ))
               }

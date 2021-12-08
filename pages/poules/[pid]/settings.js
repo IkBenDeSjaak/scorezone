@@ -254,12 +254,16 @@ export default function Settings ({ reqMessage }) {
         {(dialogVisible) && (
           <SweetAlert
             custom
+            title='Delete poule'
+            onCancel={closeDialog}
+            onConfirm={onDeletePoule}
+            closeOnClickOutside
             customButtons={
               <>
                 <button className={`${styles.dialogButton}`} onClick={closeDialog}>Cancel</button>
                 <button className={`${styles.dialogButton} ${styles.deleteConfirm}`} onClick={onDeletePoule}>Yes</button>
               </>
-          }
+            }
           >
             Are you sure you want to delete this poule?
           </SweetAlert>
