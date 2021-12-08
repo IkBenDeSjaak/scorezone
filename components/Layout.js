@@ -9,7 +9,7 @@ export default function Layout ({ children }) {
     <div className={styles.container}>
       <Head>
         <title>ScoreZone</title>
-        <meta name='description' content='ScoreZone makes it possible to predict football matches.' />
+        <meta name='description' content='ScoreZone makes it possible to predict football matches and compete with your friends!' />
         <link rel='icon' href='/favicon.ico' />
         <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png' />
         <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png' />
