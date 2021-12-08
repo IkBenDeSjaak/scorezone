@@ -1,9 +1,12 @@
 import styles from './Footer.module.css'
 
 import { FaEnvelope } from 'react-icons/fa'
-import { convertDateTimeToDate } from '../lib/dates'
+import { useState } from 'react'
+import { convertDateTimeToAmericanDate, convertDateTimeToDate } from '../lib/dates'
 
 export default function Footer () {
+  const [date] = useState(new Date())
+
   return (
     <>
       <footer className={styles.footer}>
@@ -15,7 +18,7 @@ export default function Footer () {
               <FaEnvelope className={styles.icon} />
             </a>
           </p>
-          <p><time dateTime={convertDateTimeToDate(new Date())}>{convertDateTimeToDate(new Date())}</time></p>
+          <p><time dateTime={convertDateTimeToAmericanDate(date)}>{convertDateTimeToDate(date)}</time></p>
         </div>
       </footer>
     </>
