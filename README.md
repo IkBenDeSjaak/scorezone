@@ -9,7 +9,7 @@ Scorezone is a website on which you can predict football matches.
 1. Clone this repository
 2. Create a MySQL database called `ScoreZone`
 3. Run the DDL script in `/db/scorezoneDDL.sql`
-4. Run the seed script in `db/scorezoneSeed.sql`
+4. Run the seed script in `/db/scorezoneSeed.sql`
 
 #### Step 2: Set up environment variables
 
