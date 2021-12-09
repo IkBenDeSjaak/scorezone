@@ -7,33 +7,38 @@ import Layout from '../../components/Layout'
 import { useEffect, useState } from 'react'
 import Message from '../../components/Message'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Predictions ({ weeks, reqSelectedWeek, reqMessage }) {
   const [message, setMessage] = useState(reqMessage)
   const [predictions, setPredictions] = useState({})
   const [selectedWeek, setSelectedWeek] = useState(reqSelectedWeek)
 
-  useEffect(async () => {
+  useEffect(() => {
     const abortController = new AbortController()
 
-    const response = await fetch(`/api/user/predictions?fromDate=${selectedWeek}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      signal: abortController.signal
-    })
+    const fetchData = async () => {
+      const response = await fetch(`/api/user/predictions?fromDate=${selectedWeek}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        signal: abortController.signal
+      })
 
-    if (response.status !== 200) {
-      const responseJson = await response.json()
-      const newMessage = {
-        type: 'danger',
-        message: responseJson.message
+      if (response.status !== 200) {
+        const responseJson = await response.json()
+        const newMessage = {
+          type: 'danger',
+          message: responseJson.message
+        }
+
+        setMessage(newMessage)
+      } else {
+        const responseJson = await response.json()
+        setPredictions(responseJson)
       }
-
-      setMessage(newMessage)
-    } else {
-      const responseJson = await response.json()
-      setPredictions(responseJson)
     }
+
+    fetchData()
 
     return () => abortController?.abort()
   }, [selectedWeek])
@@ -130,7 +135,14 @@ export default function Predictions ({ weeks, reqSelectedWeek, reqMessage }) {
                                   </div>
                                   <div className={styles.teams}>
                                     <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
-                                      <img className={`${styles.teamImage} ${styles.teamImageLeft}`} src={p.HomeTeamImage ? p.HomeTeamImage : 'https://via.placeholder.com/150'} alt={`${p.HomeTeam} logo`} />
+                                      <div className={`${styles.teamImage} ${styles.teamImageLeft}`}>
+                                        <Image
+                                          src={p.HomeTeamImage ? p.HomeTeamImage : 'https://via.placeholder.com/150'}
+                                          alt={`${p.HomeTeam} logo`}
+                                          width={20}
+                                          height={20}
+                                        />
+                                      </div>
                                       <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>{p.HomeTeam}</label>
                                     </div>
                                     <div className={styles.scoreBlock}>
@@ -158,7 +170,14 @@ export default function Predictions ({ weeks, reqSelectedWeek, reqMessage }) {
                                       </div>
                                     </div>
                                     <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
-                                      <img className={`${styles.teamImage} ${styles.teamImageRight}`} src={p.AwayTeamImage ? p.AwayTeamImage : 'https://via.placeholder.com/150'} alt={`${p.AwayTeam} logo`} />
+                                      <div className={`${styles.teamImage} ${styles.teamImageRight}`}>
+                                        <Image
+                                          src={p.AwayTeamImage ? p.AwayTeamImage : 'https://via.placeholder.com/150'}
+                                          alt={`${p.AwayTeam} logo`}
+                                          width={20}
+                                          height={20}
+                                        />
+                                      </div>
                                       <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>{p.AwayTeam}</label>
                                     </div>
                                   </div>

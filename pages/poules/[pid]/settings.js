@@ -23,44 +23,56 @@ export default function Settings ({ reqMessage }) {
   const [points, setPoints] = useState([])
   const [dialogVisible, setDialogVisible] = useState(false)
 
-  useEffect(async () => {
+  useEffect(() => {
     const abortController = new AbortController()
 
-    const generalPouleInfo = await fetch(`/api/poules/${pid}`, {
-      method: 'GET',
-      signal: abortController.signal
-    }).then((res) => res.json())
+    const fetchData = async () => {
+      const generalPouleInfo = await fetch(`/api/poules/${pid}`, {
+        method: 'GET',
+        signal: abortController.signal
+      }).then((res) => res.json())
 
-    setGeneralPouleInfo(generalPouleInfo)
+      setGeneralPouleInfo(generalPouleInfo)
+    }
+
+    fetchData()
 
     return () => abortController?.abort()
-  }, [])
+  }, [pid])
 
-  useEffect(async () => {
+  useEffect(() => {
     const abortController = new AbortController()
 
-    const newParticipants = await fetch(`/api/poules/${pid}/newparticipants`, {
-      method: 'GET',
-      signal: abortController.signal
-    }).then((res) => res.json())
+    const fetchData = async () => {
+      const newParticipants = await fetch(`/api/poules/${pid}/newparticipants`, {
+        method: 'GET',
+        signal: abortController.signal
+      }).then((res) => res.json())
 
-    setNewParticipants(newParticipants)
+      setNewParticipants(newParticipants)
+    }
+
+    fetchData()
 
     return () => abortController?.abort()
-  }, [])
+  }, [pid])
 
-  useEffect(async () => {
+  useEffect(() => {
     const abortController = new AbortController()
 
-    const points = await fetch(`/api/poules/${pid}/points`, {
-      method: 'GET',
-      signal: abortController.signal
-    }).then((res) => res.json())
+    const fetchData = async () => {
+      const points = await fetch(`/api/poules/${pid}/points`, {
+        method: 'GET',
+        signal: abortController.signal
+      }).then((res) => res.json())
 
-    setPoints(points)
+      setPoints(points)
+    }
+
+    fetchData()
 
     return () => abortController?.abort()
-  }, [])
+  }, [pid])
 
   const handleCloseMessage = () => {
     setMessage({})

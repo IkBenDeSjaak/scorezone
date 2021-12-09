@@ -18,30 +18,34 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
   const [message, setMessage] = useState(reqMessage)
   const [rankings, setRankings] = useState([])
 
-  useEffect(async () => {
+  useEffect(() => {
     const abortController = new AbortController()
 
-    const response = await fetch(`/api/leagues/${lid}/ranking?page=${page}&season=${season}&sortCol=${sortCol}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      signal: abortController.signal
-    })
+    const fetchData = async () => {
+      const response = await fetch(`/api/leagues/${lid}/ranking?page=${page}&season=${season}&sortCol=${sortCol}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        signal: abortController.signal
+      })
 
-    if (response.status !== 200) {
-      const responseJson = await response.json()
-      const newMessage = {
-        type: 'danger',
-        message: responseJson.message
+      if (response.status !== 200) {
+        const responseJson = await response.json()
+        const newMessage = {
+          type: 'danger',
+          message: responseJson.message
+        }
+
+        setMessage(newMessage)
+      } else {
+        const responseJson = await response.json()
+        setRankings(responseJson)
       }
-
-      setMessage(newMessage)
-    } else {
-      const responseJson = await response.json()
-      setRankings(responseJson)
     }
 
+    fetchData()
+
     return () => abortController?.abort()
-  }, [page, season, sortCol])
+  }, [lid, page, season, sortCol])
 
   const handleCloseMessage = () => {
     setMessage({})

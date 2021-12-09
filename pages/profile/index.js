@@ -16,30 +16,34 @@ export default function Profile ({ userId }) {
     HidePredictions: undefined
   })
 
-  useEffect(async () => {
+  useEffect(() => {
     const abortController = new AbortController()
 
-    const response = await fetch(`/api/user/${userId}`, {
-      method: 'GET',
-      signal: abortController.signal
-    })
+    const fetchData = async () => {
+      const response = await fetch(`/api/user/${userId}`, {
+        method: 'GET',
+        signal: abortController.signal
+      })
 
-    if (response.status === 200) {
-      const responseJson = await response.json()
+      if (response.status === 200) {
+        const responseJson = await response.json()
 
-      setUserInfo(responseJson)
-    } else {
-      const responseJson = await response.json()
-      const newMessage = {
-        type: 'danger',
-        message: responseJson.message
+        setUserInfo(responseJson)
+      } else {
+        const responseJson = await response.json()
+        const newMessage = {
+          type: 'danger',
+          message: responseJson.message
+        }
+
+        setMessage(newMessage)
       }
-
-      setMessage(newMessage)
     }
 
+    fetchData()
+
     return () => abortController?.abort()
-  }, [])
+  }, [userId])
 
   const handleCloseMessage = () => {
     setMessage({})

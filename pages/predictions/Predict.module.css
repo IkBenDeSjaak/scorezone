@@ -74,9 +74,8 @@
 }
 
 .teamImage {
-    height: 1.3rem;
-    margin-right: auto;
-    margin-left: auto;
+    display: flex;
+    align-items: center;
 }
 
 .teamLabel {
@@ -189,11 +188,6 @@
         display: inline-flex;
         flex-direction: row;
         width: 100%;
-    }
-
-    .teamImage {
-        margin-left: 0;
-        margin-right: 0;
     }
 
     .teamImageLeft {

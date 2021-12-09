@@ -10,59 +10,67 @@ export default function Leagues ({ user }) {
   const [leagues, setLeagues] = useState([])
   const [userLeagues, setUserLeagues] = useState([])
 
-  useEffect(async () => {
+  useEffect(() => {
     if (user) {
       const abortController = new AbortController()
 
-      const response = await fetch('/api/leagues', {
-        method: 'GET',
-        signal: abortController.signal
-      })
+      const fetchData = async () => {
+        const response = await fetch('/api/leagues', {
+          method: 'GET',
+          signal: abortController.signal
+        })
 
-      if (response.status === 200) {
-        const responseJson = await response.json()
+        if (response.status === 200) {
+          const responseJson = await response.json()
 
-        setLeagues(responseJson)
-      } else {
-        const responseJson = await response.json()
-        const newMessage = {
-          type: 'danger',
-          message: responseJson.message
+          setLeagues(responseJson)
+        } else {
+          const responseJson = await response.json()
+          const newMessage = {
+            type: 'danger',
+            message: responseJson.message
+          }
+
+          setMessage(newMessage)
         }
-
-        setMessage(newMessage)
       }
+
+      fetchData()
 
       return () => abortController?.abort()
     }
-  }, [])
+  }, [user])
 
-  useEffect(async () => {
+  useEffect(() => {
     if (user) {
       const abortController = new AbortController()
 
-      const response = await fetch('/api/user/leagues', {
-        method: 'GET',
-        signal: abortController.signal
-      })
+      const fetchData = async () => {
+        const response = await fetch('/api/user/leagues', {
+          method: 'GET',
+          signal: abortController.signal
+        })
 
-      if (response.status === 200) {
-        const responseJson = await response.json()
+        if (response.status === 200) {
+          const responseJson = await response.json()
 
-        setUserLeagues(responseJson)
-      } else {
-        const responseJson = await response.json()
-        const newMessage = {
-          type: 'danger',
-          message: responseJson.message
+          setUserLeagues(responseJson)
+        } else {
+          const responseJson = await response.json()
+          const newMessage = {
+            type: 'danger',
+            message: responseJson.message
+          }
+
+          setMessage(newMessage)
         }
-
-        setMessage(newMessage)
       }
+
+      fetchData()
 
       return () => abortController?.abort()
     }
-  }, [])
+  }, [user])
 
   const handleCloseMessage = () => {
     setMessage({})
