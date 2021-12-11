@@ -24,7 +24,7 @@ export default function Header () {
     e.preventDefault()
     mutateUser(await fetcher('/api/logout', {
       method: 'POST'
-    }), false)
+    }), true)
     router.push('/logout')
   }
 
