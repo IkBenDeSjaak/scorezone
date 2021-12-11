@@ -3,12 +3,9 @@ import styles from './Header.module.css'
 import Link from 'next/link'
 import { FaBars, FaTimes } from 'react-icons/fa'
 import { useState } from 'react'
-import { useRouter } from 'next/router'
 import useUser from '../lib/useUser'
-// import fetcher from '../lib/fetcher'
 
 export default function Header () {
-  const router = useRouter()
   const [menuActive, setMenuActive] = useState(false)
   const { user } = useUser()
 
@@ -18,14 +15,6 @@ export default function Header () {
     } else {
       setMenuActive(true)
     }
-  }
-
-  const handleLogout = async (e) => {
-    e.preventDefault()
-    // await mutateUser(await fetcher('/api/logout', {
-    //   method: 'POST'
-    // }), true)
-    router.push('/logout')
   }
 
   return (
@@ -42,7 +31,7 @@ export default function Header () {
             {user?.isLoggedIn === true && (
               <>
                 <li className={`${styles.item} ${styles.userNameItem}`}><Link href='/profile'><a className={styles.userName}>{user.username}</a></Link></li>
-                <li className={`${styles.item} ${styles.logout}`}><Link href='/logout'><a onClick={handleLogout}>Logout</a></Link></li>
+                <li className={`${styles.item} ${styles.logout}`}><Link href='/logout'><a>Logout</a></Link></li>
               </>
             )}
             {user?.isLoggedIn === false && (
