@@ -5,11 +5,12 @@ import { FaBars, FaTimes } from 'react-icons/fa'
 import { useState } from 'react'
 import useUser from '../lib/useUser'
 import { useRouter } from 'next/router'
+import fetcher from '../lib/fetcher'
 
 export default function Header () {
   const router = useRouter()
   const [menuActive, setMenuActive] = useState(false)
-  const { user } = useUser()
+  const { user, mutateUser } = useUser()
 
   const toggleMenu = () => {
     if (menuActive) {
@@ -25,7 +26,7 @@ export default function Header () {
     mutateUser(await fetcher('/api/logout', {
       method: 'POST'
     }), false)
-    
+
     router.push('/logout')
   }
 
