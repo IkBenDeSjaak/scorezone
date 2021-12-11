@@ -22,9 +22,9 @@ export default function Header () {
 
   const handleLogout = async (e) => {
     e.preventDefault()
-    await mutateUser(await fetcher('/api/logout', {
-      method: 'POST'
-    }), true)
+    // await mutateUser(await fetcher('/api/logout', {
+    //   method: 'POST'
+    // }), true)
     router.push('/logout')
   }
 
