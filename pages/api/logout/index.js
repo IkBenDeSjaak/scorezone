@@ -7,9 +7,7 @@ async function handler (req, res) {
     // Log the user out
     case 'POST':
       req.session.destroy()
-
-      process.stdout._write("i come here")
-      process.stdout._write(req)
+      
       res.status(200).json({
         isLoggedIn: false
       })
