@@ -10,7 +10,7 @@ import fetcher from '../lib/fetcher'
 export default function Header () {
   const router = useRouter()
   const [menuActive, setMenuActive] = useState(false)
-  const { user, mutateUser } = useUser()
+  const { user, isLoading, mutateUser } = useUser()
 
   const toggleMenu = () => {
     if (menuActive) {
@@ -47,7 +47,7 @@ export default function Header () {
                 <li className={`${styles.item} ${styles.logout}`}><Link href='/logout'><a onClick={handleLogout}>Logout</a></Link></li>
               </>
             )}
-            {user?.isLoggedIn === false && (
+            {(user?.isLoggedIn === false || isLoading) && (
               <>
                 <li className={`${styles.item} ${styles.button}`}><Link href='/login'><a>Log In</a></Link></li>
                 <li className={`${styles.item} ${styles.button} ${styles.secondary}`}><Link href='/signup'><a>Sign Up</a></Link></li>
