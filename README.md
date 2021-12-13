@@ -8,8 +8,8 @@ Scorezone is a website on which you can predict football matches.
 
 1. Clone this repository
 2. Create a MySQL database called `ScoreZone`
-3. Run the DDL script in `/db/scorezoneDDL.sql`
-4. Run the seed script in `/db/scorezoneSeed.sql`
+3. Run the DDL script in `/db/scorezone_dll.sql`
+4. Run the seed script in `/db/scorezone_seed.sql`
 
 #### Step 2: Set up environment variables
 
@@ -33,5 +33,5 @@ npm run dev
 
 You can now navigate to [localhost:3000](localhost:3000) and login on the website using the following credentials:
 
-- **Admin**: `username = testadmin`, `password = testadmin`
-- **User**: `username = testuser`, `password = testuser`
+-   **Admin**: `username = testadmin`, `password = testadmin`
+-   **User**: `username = testuser`, `password = testuser`
