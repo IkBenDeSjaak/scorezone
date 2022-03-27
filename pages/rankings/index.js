@@ -4,17 +4,16 @@ import { getAllSeasonsData } from '../api/seasons'
 import { withSessionSsr } from '../../lib/withSession'
 import Link from 'next/link'
 import Layout from '../../components/Layout'
-import { getRankingsData } from '../api/rankings'
 import { useEffect, useState } from 'react'
 import Message from '../../components/Message'
 import { useRouter } from 'next/router'
 
-export default function Rankings ({ seasons, reqRankings, reqMessage }) {
+export default function Rankings ({ seasons, reqMessage }) {
   const router = useRouter()
   const { season } = router.query
 
   const [message, setMessage] = useState(reqMessage)
-  const [rankings, setRankings] = useState(reqRankings)
+  const [rankings, setRankings] = useState([])
 
   useEffect(() => {
     const abortController = new AbortController()
@@ -111,8 +110,7 @@ export default function Rankings ({ seasons, reqRankings, reqMessage }) {
 }
 
 export const getServerSideProps = withSessionSsr(async function ({
-  query,
-  req
+  query
 }) {
   const message = {
     type: '',
@@ -120,26 +118,22 @@ export const getServerSideProps = withSessionSsr(async function ({
   }
 
   try {
-    const uid = req.session.user?.id
     const { season } = query
-
-    const seasons = await getAllSeasonsData()
 
     if (!season) {
       return {
         redirect: {
-          destination: `/rankings?season=${seasons[0].SeasonId}`,
+          destination: `/rankings?season=${1}`,
           permanent: false
         }
       }
     }
 
-    const rankingsData = await getRankingsData(uid, season || seasons[0].SeasonId)
+    const seasons = await getAllSeasonsData()
 
     return {
       props: {
         reqMessage: message,
-        reqRankings: JSON.parse(JSON.stringify(rankingsData)),
         seasons: JSON.parse(JSON.stringify(seasons))
       }
     }
@@ -150,8 +144,7 @@ export const getServerSideProps = withSessionSsr(async function ({
     return {
       props: {
         reqMessage: message,
-        reqRankings: [],
-        seasons: ''
+        seasons: []
       }
     }
   }
