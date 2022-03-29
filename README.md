@@ -39,7 +39,9 @@ You can now navigate to [localhost:3000](localhost:3000) and login on the websit
 ## Development styles
 
 **JavaScript Standard Style**
+
 Run `npm run style` in the terminal to format the code before committing.
 
 **Next Lint**
+
 Run `npm run lint` in the terminal to see errors that need to be fixed before committing.
