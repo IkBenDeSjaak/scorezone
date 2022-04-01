@@ -82,7 +82,7 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
         <p className={styles.backButton}>
-          <Link href='/rankings'>
+          <Link href={`/rankings?season=${season}`}>
             <a>← Back to ranking overview</a>
           </Link>
         </p>
@@ -141,6 +141,15 @@ export const getServerSideProps = withSessionSsr(async function ({
     message: ''
   }
 
+  if (!page || !season) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `/rankings/${lid}?page=${1}&season=${1}`
+      }
+    }
+  }
+
   try {
     const leagueSeasons = await getLeagueSeasonsData(lid)
 
@@ -151,15 +160,6 @@ export const getServerSideProps = withSessionSsr(async function ({
       message.message = 'There is no league with this id'
     } else {
       leagueName = leagueInfo.LeagueName
-    }
-
-    if (!page || !season) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: `/rankings/${lid}?page=${!page ? 1 : page}&season=${!season ? leagueSeasons[0]?.SeasonId : season}`
-        }
-      }
     }
 
     const itemsPerPage = 25
@@ -186,7 +186,6 @@ export const getServerSideProps = withSessionSsr(async function ({
     return {
       props: {
         reqMessage: message,
-        page: page,
         amountOfPages: amountOfPages,
         leagueName: leagueName,
         leagueSeasons: JSON.parse(JSON.stringify(leagueSeasons))
@@ -199,7 +198,6 @@ export const getServerSideProps = withSessionSsr(async function ({
     return {
       props: {
         reqMessage: message,
-        page: 1,
         amountOfPages: 1,
         leagueName: leagueName,
         leagueSeasons: []
