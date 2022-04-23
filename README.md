@@ -33,7 +33,6 @@ npm run dev
 
 You can now navigate to [localhost:3000](localhost:3000) and login on the website using the following credentials:
 
--   **Admin**: `username = testadmin`, `password = testadmin`
 -   **User**: `username = testuser`, `password = testuser`
 
 ## Development styles
