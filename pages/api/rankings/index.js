@@ -65,20 +65,25 @@ export async function getRankingsData (uid = undefined, season) {
         INNER JOIN MatchPredictions MP ON U.UserId =  MP.UserId
         INNER JOIN MatchResults MR ON MP.MatchId = MR.MatchId
         INNER JOIN Matches M ON MP.MatchId = M.MatchId
-        WHERE M.LeagueId = ? AND M.SeasonId = ?
+        WHERE M.LeagueId = ? AND M.SeasonId = ? AND U.UserId IN (SELECT UserId FROM UserLeagues WHERE LeagueId = ?)
         GROUP BY U.UserId
         UNION
         SELECT U.UserId, 0 AS Points
         FROM Users U
-        WHERE U.UserId NOT IN (SELECT MP.UserId FROM MatchPredictions MP INNER JOIN Matches M ON MP.MatchId = M.MatchId WHERE M.LeagueId = ? AND M.SeasonId = ?)
+        WHERE U.UserId NOT IN (SELECT MP.UserId FROM MatchPredictions MP INNER JOIN Matches M ON MP.MatchId = M.MatchId WHERE M.LeagueId = ? AND M.SeasonId = ?) AND U.UserId IN (SELECT UserId FROM UserLeagues WHERE LeagueId = ?)
         GROUP BY U.UserId
         ORDER BY Points DESC
         `,
-        [l.LeagueId, season, l.LeagueId, season]
+        [l.LeagueId, season, l.LeagueId, season, l.LeagueId, l.LeagueId]
       )
 
-      const usersWithHigherPoints = allUsersFromLeague.filter((user) => user.Points > l.Points).length
-      l.Position = usersWithHigherPoints + 1
+      // Check if user is present in users from league to count position
+      if (allUsersFromLeague.filter((user) => user.UserId === uid).length > 0) {
+        const usersWithHigherPoints = allUsersFromLeague.filter((user) => user.Points > l.Points).length
+        l.Position = usersWithHigherPoints + 1
+      } else {
+        l.Position = '-'
+      }
     }
 
     return leagues
