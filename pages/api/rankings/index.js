@@ -72,9 +72,16 @@ export async function getRankingsData (uid = undefined, season) {
         FROM Users U
         WHERE U.UserId NOT IN (SELECT MP.UserId FROM MatchPredictions MP INNER JOIN Matches M ON MP.MatchId = M.MatchId WHERE M.LeagueId = ? AND M.SeasonId = ?) AND U.UserId IN (SELECT UserId FROM UserLeagues WHERE LeagueId = ?)
         GROUP BY U.UserId
+        UNION
+        SELECT U.UserId, 0 AS Points
+        FROM Users U
+        INNER JOIN MatchPredictions MP ON U.UserId = MP.UserId
+        INNER JOIN Matches M ON MP.MatchId = M.MatchId
+        WHERE M.LeagueId = ? AND M.SeasonId = ? AND U.UserId IN (SELECT UserId FROM UserLeagues WHERE LeagueId = ?) AND M.MatchId NOT IN (SELECT DISTINCT MatchId FROM MatchResults)
+        GROUP BY U.UserId
         ORDER BY Points DESC
         `,
-        [l.LeagueId, season, l.LeagueId, season, l.LeagueId, l.LeagueId]
+        [l.LeagueId, season, l.LeagueId, season, l.LeagueId, l.LeagueId, l.LeagueId, season, l.LeagueId]
       )
 
       // Check if user is present in users from league to count position
