@@ -1,14 +1,14 @@
 import styles from './Matches.module.css'
 
 import { withSessionSsr } from '../../../../../../lib/withSession'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Message from '../../../../../../components/Message'
 import Layout from '../../../../../../components/Layout'
 import { getTeamsFromLeagueSeason } from '../../../../../api/leagues/[lid]/seasons/[sid]/teams'
 import { convertDateTimeToLocalDateTime } from '../../../../../../lib/dates'
 
-export default function AdminMatchesFromLeagueSeason ({ reqMessage, teams }) {
+export default function AdminMatchesFromLeagueSeason({ reqMessage, teams }) {
   const router = useRouter()
   const { lid, sid } = router.query
 
@@ -21,7 +21,7 @@ export default function AdminMatchesFromLeagueSeason ({ reqMessage, teams }) {
   })
   const [message, setMessage] = useState(reqMessage)
 
-  const fetchMatches = useCallback(() => async () => {
+  const fetchMatches = async () => {
     const abortController = new AbortController()
 
     const fetchData = async () => {
@@ -48,11 +48,11 @@ export default function AdminMatchesFromLeagueSeason ({ reqMessage, teams }) {
     fetchData()
 
     return () => abortController?.abort()
-  }, [lid, sid])
+  }
 
   useEffect(() => {
     fetchMatches()
-  }, [fetchMatches])
+  }, [])
 
   const handleCloseMessage = () => {
     setMessage({})
@@ -128,7 +128,7 @@ export default function AdminMatchesFromLeagueSeason ({ reqMessage, teams }) {
                   }
                 </tbody>
               </table>
-              )
+            )
             : <p>No matches found.</p>}
         </div>
         <h2 className={styles.h2}>Add new match</h2>

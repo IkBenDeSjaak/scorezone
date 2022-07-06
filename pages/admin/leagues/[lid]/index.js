@@ -2,13 +2,13 @@ import styles from './LeagueSeasons.module.css'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { withSessionSsr } from '../../../../lib/withSession'
 import Layout from '../../../../components/Layout'
 import Message from '../../../../components/Message'
 import { getAllSeasonsData } from '../../../api/seasons'
 
-export default function AdminLeagueSeasons ({ reqMessage, allSeasons }) {
+export default function AdminLeagueSeasons({ reqMessage, allSeasons }) {
   const router = useRouter()
   const { lid } = router.query
 
@@ -18,7 +18,7 @@ export default function AdminLeagueSeasons ({ reqMessage, allSeasons }) {
   })
   const [message, setMessage] = useState(reqMessage)
 
-  const fetchSeasons = useCallback(() => async () => {
+  const fetchSeasons = async () => {
     const abortController = new AbortController()
 
     const fetchData = async () => {
@@ -45,11 +45,11 @@ export default function AdminLeagueSeasons ({ reqMessage, allSeasons }) {
     fetchData()
 
     return () => abortController?.abort()
-  }, [lid])
+  }
 
   useEffect(() => {
     fetchSeasons()
-  }, [fetchSeasons])
+  }, [])
 
   const handleCloseMessage = () => {
     setMessage({})
