@@ -119,79 +119,78 @@ export default function Predictions ({ weeks, reqSelectedWeek, reqMessage }) {
             : <p className={styles.alignCenter}>You did not select any leagues to predict yet. Go to <Link href='/leagues'><a className={styles.inlineClickable}>leagues</a></Link> to select leagues you want to predict matches from.</p>}
           {
             Object.keys(predictions).length > 0
-              ? (
-                  Object.keys(predictions).map((league) => (
-                    <div key={league}>
-                      {predictions[league].length > 0
-                        ? (
-                          <>
-                            <div className={styles.leagueContainer}>
-                              <div className={styles.leagueName}>{league}</div>
-                              {predictions[league].map((p) => (
-                                <div key={p.MatchId} className={`${styles.gameRow}`}>
-                                  <div className={styles.dateTime}>
-                                    <p className={styles.day}>{convertDateToShortDateString(p.StartDateTime)}</p>
-                                    <p className={styles.time}>{convertDateToTimeString(p.StartDateTime)}</p>
+              ? (Object.keys(predictions).map((league) => (
+                <div key={league}>
+                  {predictions[league].length > 0
+                    ? (
+                      <>
+                        <div className={styles.leagueContainer}>
+                          <div className={styles.leagueName}>{league}</div>
+                          {predictions[league].map((p) => (
+                            <div key={p.MatchId} className={`${styles.gameRow}`}>
+                              <div className={styles.dateTime}>
+                                <p className={styles.day}>{convertDateToShortDateString(p.StartDateTime)}</p>
+                                <p className={styles.time}>{convertDateToTimeString(p.StartDateTime)}</p>
+                              </div>
+                              <div className={styles.teams}>
+                                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
+                                  <div className={`${styles.teamImage} ${styles.teamImageLeft}`}>
+                                    <Image
+                                      src={p.HomeTeamImage ? p.HomeTeamImage : 'https://via.placeholder.com/150'}
+                                      alt={`${p.HomeTeam} logo`}
+                                      width={20}
+                                      height={20}
+                                    />
                                   </div>
-                                  <div className={styles.teams}>
-                                    <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignRight}`}>
-                                      <div className={`${styles.teamImage} ${styles.teamImageLeft}`}>
-                                        <Image
-                                          src={p.HomeTeamImage ? p.HomeTeamImage : 'https://via.placeholder.com/150'}
-                                          alt={`${p.HomeTeam} logo`}
-                                          width={20}
-                                          height={20}
-                                        />
-                                      </div>
-                                      <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>{p.HomeTeam}</label>
-                                    </div>
-                                    <div className={styles.scoreBlock}>
-                                      <div>
-                                        {(p.GoalsHomeTeam && p.GoalsAwayTeam)
-                                          ? <p className={styles.actualScoreText}>{`${p.GoalsHomeTeam} - ${p.GoalsAwayTeam}`}</p>
-                                          : ''}
-                                      </div>
-                                      <div className={styles.scoreInputs}>
-                                        {Date.now() > Date.parse(p.StartDateTime)
-                                          ? (
-                                            <>
-                                              <p className={`${styles.scoreInput} ${styles.scoreInputDisabled}`}>{p.GoalsHomeTeamPrediction}</p>
-                                              <p className={styles.teamDivider}>-</p>
-                                              <p className={`${styles.scoreInput} ${styles.scoreInputDisabled}`}>{p.GoalsAwayTeamPrediction}</p>
-                                            </>
-                                            )
-                                          : (
-                                            <>
-                                              <input className={styles.scoreInput} min='0' max='20' type='number' value={p.GoalsHomeTeamPrediction !== null ? p.GoalsHomeTeamPrediction : ''} onChange={(e) => inputChangeHandler(league, p.MatchId, 'GoalsHomeTeamPrediction', e.target.value)} />
-                                              <p className={styles.teamDivider}>-</p>
-                                              <input className={styles.scoreInput} min='0' max='20' type='number' value={p.GoalsAwayTeamPrediction !== null ? p.GoalsAwayTeamPrediction : ''} onChange={(e) => inputChangeHandler(league, p.MatchId, 'GoalsAwayTeamPrediction', e.target.value)} />
-                                            </>
-                                            )}
-                                      </div>
-                                    </div>
-                                    <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
-                                      <div className={`${styles.teamImage} ${styles.teamImageRight}`}>
-                                        <Image
-                                          src={p.AwayTeamImage ? p.AwayTeamImage : 'https://via.placeholder.com/150'}
-                                          alt={`${p.AwayTeam} logo`}
-                                          width={20}
-                                          height={20}
-                                        />
-                                      </div>
-                                      <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>{p.AwayTeam}</label>
-                                    </div>
+                                  <label className={`${styles.teamLabel} ${styles.teamLabelLeft}`}>{p.HomeTeam}</label>
+                                </div>
+                                <div className={styles.scoreBlock}>
+                                  <div>
+                                    {(p.GoalsHomeTeam && p.GoalsAwayTeam)
+                                      ? <p className={styles.actualScoreText}>{`${p.GoalsHomeTeam} - ${p.GoalsAwayTeam}`}</p>
+                                      : ''}
                                   </div>
-                                  <div className={styles.score}>
-                                    <p>{p.Points}</p>
+                                  <div className={styles.scoreInputs}>
+                                    {Date.now() > Date.parse(p.StartDateTime)
+                                      ? (
+                                        <>
+                                          <p className={`${styles.scoreInput} ${styles.scoreInputDisabled}`}>{p.GoalsHomeTeamPrediction}</p>
+                                          <p className={styles.teamDivider}>-</p>
+                                          <p className={`${styles.scoreInput} ${styles.scoreInputDisabled}`}>{p.GoalsAwayTeamPrediction}</p>
+                                        </>
+                                        )
+                                      : (
+                                        <>
+                                          <input className={styles.scoreInput} min='0' max='20' type='number' value={p.GoalsHomeTeamPrediction !== null ? p.GoalsHomeTeamPrediction : ''} onChange={(e) => inputChangeHandler(league, p.MatchId, 'GoalsHomeTeamPrediction', e.target.value)} />
+                                          <p className={styles.teamDivider}>-</p>
+                                          <input className={styles.scoreInput} min='0' max='20' type='number' value={p.GoalsAwayTeamPrediction !== null ? p.GoalsAwayTeamPrediction : ''} onChange={(e) => inputChangeHandler(league, p.MatchId, 'GoalsAwayTeamPrediction', e.target.value)} />
+                                        </>
+                                        )}
                                   </div>
                                 </div>
-                              ))}
+                                <div className={`${styles.teamAndImage} ${styles.teamAndImageAlignLeft}`}>
+                                  <div className={`${styles.teamImage} ${styles.teamImageRight}`}>
+                                    <Image
+                                      src={p.AwayTeamImage ? p.AwayTeamImage : 'https://via.placeholder.com/150'}
+                                      alt={`${p.AwayTeam} logo`}
+                                      width={20}
+                                      height={20}
+                                    />
+                                  </div>
+                                  <label className={`${styles.teamLabel} ${styles.teamLabelRight}`}>{p.AwayTeam}</label>
+                                </div>
+                              </div>
+                              <div className={styles.score}>
+                                <p>{p.Points}</p>
+                              </div>
                             </div>
-                          </>
-                          )
-                        : ''}
-                    </div>
-                  ))
+                          ))}
+                        </div>
+                      </>
+                      )
+                    : ''}
+                </div>
+                ))
                 )
               : ''
           }
