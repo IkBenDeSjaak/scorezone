@@ -3,7 +3,7 @@ import { withSessionRoute } from '../../../lib/withSession'
 
 export default withSessionRoute(handler)
 
-async function handler (req, res) {
+async function handler(req, res) {
   switch (req.method) {
     case 'GET':
       // Get all available leagues
@@ -40,7 +40,7 @@ async function handler (req, res) {
   }
 }
 
-export async function getLeagues () {
+export async function getLeagues() {
   const results = await querydb(
     `
     SELECT L.LeagueId, L.LeagueName, (SELECT COUNT(UserId) AS UserAmount FROM Users WHERE UserId IN (SELECT UserId FROM UserLeagues WHERE LeagueId = L.LeagueId)) AS Participants

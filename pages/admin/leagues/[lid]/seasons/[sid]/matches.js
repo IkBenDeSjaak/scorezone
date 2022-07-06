@@ -3,6 +3,7 @@ import styles from './Matches.module.css'
 import { withSessionSsr } from '../../../../../../lib/withSession'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import Message from '../../../../../../components/Message'
 import Layout from '../../../../../../components/Layout'
 import { getTeamsFromLeagueSeason } from '../../../../../api/leagues/[lid]/seasons/[sid]/teams'
@@ -52,6 +53,8 @@ export default function AdminMatchesFromLeagueSeason({ reqMessage, teams }) {
 
   useEffect(() => {
     fetchMatches()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleCloseMessage = () => {
@@ -95,12 +98,19 @@ export default function AdminMatchesFromLeagueSeason({ reqMessage, teams }) {
     return () => abortController?.abort()
   }
 
+  console.log(matches)
+
   return (
     <>
       <Layout>
         {(message.type && message.message) && (
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
+        <p className={styles.backButton}>
+          <Link href={`/admin/leagues/${lid}`}>
+            <a>← Back to season choice page</a>
+          </Link>
+        </p>
         <h1>Admin</h1>
         <h2>Available matches</h2>
         <div className={styles.rankings}>
@@ -136,7 +146,7 @@ export default function AdminMatchesFromLeagueSeason({ reqMessage, teams }) {
           <label className={styles.label} htmlFor='homeTeam'>
             Home Team
             <select className={styles.select} required name='homeTeam' id='homeTeam' value={inputFields.homeTeam} onChange={inputsHandler}>
-              <option value='' disabled hidden>Choose an team...</option>
+              <option value='' disabled hidden>Choose a team...</option>
               {teams?.map((team) => (
                 <option key={team.TeamId.toString()} value={team.TeamId}>{team.TeamName}</option>
               ))}
@@ -145,7 +155,7 @@ export default function AdminMatchesFromLeagueSeason({ reqMessage, teams }) {
           <label className={styles.label} htmlFor='awayTeam'>
             Away Team
             <select className={styles.select} required name='awayTeam' id='awayTeam' value={inputFields.awayTeam} onChange={inputsHandler}>
-              <option value='' disabled hidden>Choose an team...</option>
+              <option value='' disabled hidden>Choose a team...</option>
               {teams?.map((team) => (
                 <option key={team.TeamId.toString()} value={team.TeamId}>{team.TeamName}</option>
               ))}
