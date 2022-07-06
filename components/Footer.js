@@ -4,7 +4,7 @@ import { FaEnvelope } from 'react-icons/fa'
 import { useState } from 'react'
 import { convertDateTimeToAmericanDate, convertDateTimeToDate } from '../lib/dates'
 
-export default function Footer () {
+export default function Footer() {
   const [date] = useState(new Date())
 
   return (

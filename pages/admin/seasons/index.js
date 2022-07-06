@@ -3,10 +3,11 @@ import styles from './Seasons.module.css'
 import { convertDateTimeToDate } from '../../../lib/dates'
 import { withSessionSsr } from '../../../lib/withSession'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import Message from '../../../components/Message'
 import Layout from '../../../components/Layout'
 
-export default function AdminSeasons () {
+export default function AdminSeasons() {
   const [seasons, setSeasons] = useState([])
   const [inputFields, setInputFields] = useState({
     seasonName: '',
@@ -95,6 +96,11 @@ export default function AdminSeasons () {
         {(message.type && message.message) && (
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
+        <p className={styles.backButton}>
+          <Link href={`/admin`}>
+            <a>← Back to admin main page</a>
+          </Link>
+        </p>
         <h1>Admin</h1>
         <h2>Available seasons</h2>
         <ul>

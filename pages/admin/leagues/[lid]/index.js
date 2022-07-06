@@ -100,6 +100,11 @@ export default function AdminLeagueSeasons({ reqMessage, allSeasons }) {
         {(message.type && message.message) && (
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
+        <p className={styles.backButton}>
+          <Link href={`/admin/matchleagues`}>
+            <a>← Back to match leagues page</a>
+          </Link>
+        </p>
         <h1>Admin</h1>
         <h2>Add another season to this league</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
