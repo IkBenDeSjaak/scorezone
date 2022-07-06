@@ -41,6 +41,11 @@ export default function Header () {
             <li className={styles.item}><Link href='/leagues'><a>Leagues</a></Link></li>
             <li className={styles.item}><Link href='/rankings'><a>Rankings</a></Link></li>
             <li className={styles.item}><Link href='/rules'><a>Rules</a></Link></li>
+            {(user?.isLoggedIn === true && user?.role === 'Admin') && (
+              <>
+                <li className={styles.item}><Link href='/admin'><a>Admin</a></Link></li>
+              </>
+            )}
             {user?.isLoggedIn === true && (
               <>
                 <li className={`${styles.item} ${styles.userNameItem}`}><Link href='/profile'><a className={styles.userName}>{user.username}</a></Link></li>

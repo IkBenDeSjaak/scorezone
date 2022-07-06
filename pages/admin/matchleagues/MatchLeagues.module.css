@@ -1,0 +1,14 @@
+.actions {
+    display: flex;
+    flex-direction: column;
+}
+
+.actionCard {
+    border: 1px solid black;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1.3rem;
+    background-color: var(--tertiary-color);
+    font-weight: 700;
+    margin: 0.5rem 0 0.5rem 0;
+}

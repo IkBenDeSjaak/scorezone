@@ -17,7 +17,7 @@ async function handler (req, res) {
 
         const results = await querydb(
           `
-          SELECT UserId, Password
+          SELECT UserId, Password, Role
           FROM Users
           WHERE Username = ?
           `,
@@ -34,7 +34,8 @@ async function handler (req, res) {
           if (match) {
             const user = {
               id: results[0].UserId,
-              username: username
+              username: username,
+              role: results[0].Role
             }
 
             req.session.user = user

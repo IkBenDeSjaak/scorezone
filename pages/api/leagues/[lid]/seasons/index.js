@@ -1,5 +1,5 @@
-import { withSessionRoute } from '../../../../lib/withSession'
-import { querydb } from '../../../../lib/db'
+import { withSessionRoute } from '../../../../../lib/withSession'
+import { isAdmin, querydb } from '../../../../../lib/db'
 
 export default withSessionRoute(handler)
 
@@ -17,6 +17,34 @@ async function handler (req, res) {
         const results = await getLeagueSeasonsData(lid)
 
         res.status(200).json(results)
+      } catch (error) {
+        res.status(500).json({ message: error.message })
+      }
+      break
+    case 'POST':
+      // Add season to a league
+      try {
+        const { lid } = req.query
+        const { seasonId } = req.body
+        const uid = req.session.user?.id
+
+        if (!lid || !seasonId) {
+          return res.status(400).json({ message: 'Missing parameter in request' })
+        }
+
+        if (!await isAdmin(uid)) {
+          return res.status(403).end()
+        }
+
+        await querydb(
+          `
+          INSERT INTO LeagueSeasons (LeagueId, SeasonId)
+          VALUES (?, ?)
+          `,
+          [lid, seasonId]
+        )
+
+        res.status(201).end()
       } catch (error) {
         res.status(500).json({ message: error.message })
       }
