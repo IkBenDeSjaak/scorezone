@@ -1,7 +1,3 @@
-.backButton {
-    font-weight: bold;
-}
-
 .rankings table,
 .rankings th,
 .rankings td {
@@ -31,6 +27,18 @@
 
 .rankings td {
     padding: 0.4rem;
+}
+
+.iconEdit:hover {
+    cursor: pointer;
+}
+
+.tableDataCentered {
+    text-align: center;
+}
+
+.matchDayColumn {
+    display: none;
 }
 
 .h2 {
@@ -89,6 +97,10 @@
 
 /* Tablet menu */
 @media all and (min-width: 700px) {
+    .matchDayColumn {
+        display: table-cell;
+    }
+
     .form .label {
         width: fit-content;
     }

@@ -3,11 +3,12 @@ import styles from './MatchLeagues.module.css'
 import Link from 'next/link'
 import { useState } from 'react'
 import { withSessionSsr } from '../../../lib/withSession'
+import BackButton from '../../../components/BackButton'
 import Layout from '../../../components/Layout'
 import Message from '../../../components/Message'
 import { getLeagues } from '../../api/leagues'
 
-export default function AdminMatchLeagues({ reqMessage, leagues }) {
+export default function AdminMatchLeagues ({ reqMessage, leagues }) {
   const [message, setMessage] = useState(reqMessage)
 
   const handleCloseMessage = () => {
@@ -20,11 +21,7 @@ export default function AdminMatchLeagues({ reqMessage, leagues }) {
         {(message.type && message.message) && (
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
-        <p className={styles.backButton}>
-          <Link href={`/admin`}>
-            <a>← Back to admin main page</a>
-          </Link>
-        </p>
+        <BackButton href='/admin' backTo='admin main page' />
         <h1>Admin</h1>
         <p>Select a league to manage the matches from.</p>
         <div className={styles.actions}>

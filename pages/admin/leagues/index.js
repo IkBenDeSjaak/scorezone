@@ -2,13 +2,13 @@ import styles from './Leagues.module.css'
 
 import { withSessionSsr } from '../../../lib/withSession'
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import Message from '../../../components/Message'
 import Layout from '../../../components/Layout'
+import BackButton from '../../../components/BackButton'
 
 import { getAssociations } from '../../api/associations'
 
-export default function AdminLeagues({ reqMessage, associations }) {
+export default function AdminLeagues ({ reqMessage, associations }) {
   const [leagues, setLeagues] = useState([])
   const [inputFields, setInputFields] = useState({
     leagueName: '',
@@ -98,11 +98,7 @@ export default function AdminLeagues({ reqMessage, associations }) {
         {(message.type && message.message) && (
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
-        <p className={styles.backButton}>
-          <Link href={`/admin`}>
-            <a>← Back to admin main page</a>
-          </Link>
-        </p>
+        <BackButton href='/admin' backTo='admin main page' />
         <h1>Admin</h1>
         <h2>Available leagues</h2>
         <ul>

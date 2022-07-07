@@ -1,7 +1,3 @@
-.backButton {
-    font-weight: bold;
-}
-
 .actions {
     display: flex;
     flex-direction: column;

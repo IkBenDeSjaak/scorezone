@@ -2,7 +2,7 @@ import styles from './LeagueRanking.module.css'
 
 import { getLeagueSeasonsData } from '../api/leagues/[lid]/seasons'
 import { getLeagueData } from '../api/leagues/[lid]'
-import Link from 'next/link'
+import BackButton from '../../components/BackButton'
 import { withSessionSsr } from '../../lib/withSession'
 import { useRouter } from 'next/router'
 import Layout from '../../components/Layout'
@@ -81,11 +81,7 @@ export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, 
         {(message.type && message.message) && (
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
-        <p className={styles.backButton}>
-          <Link href={`/rankings?season=${season}`}>
-            <a>← Back to ranking overview</a>
-          </Link>
-        </p>
+        <BackButton href={`/rankings?season=${season}`} backTo='ranking overview' />
         <h1>Ranking</h1>
         <div className={styles.rankingInfo}>
           <h2>{leagueName}</h2>

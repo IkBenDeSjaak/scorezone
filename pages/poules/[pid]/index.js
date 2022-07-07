@@ -4,6 +4,7 @@ import { querydb } from '../../../lib/db'
 import Link from 'next/link'
 import { withSessionSsr } from '../../../lib/withSession'
 import { useRouter } from 'next/router'
+import BackButton from '../../../components/BackButton'
 import Layout from '../../../components/Layout'
 import Message from '../../../components/Message'
 import { getPouleInfoData } from '../../api/poules/[pid]'
@@ -84,11 +85,7 @@ export default function Poule ({ pouleInfo, poulePositions, isCreator, isPartici
   return (
     <>
       <Layout>
-        <p className={styles.backButton}>
-          <Link href='/poules'>
-            <a>← Back to poules</a>
-          </Link>
-        </p>
+        <BackButton href='/poules' backTo='poules' />
         <h1 className={styles.pouleName}>{pouleInfo.PouleName}</h1>
         {(message.type && message.message) && (
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />

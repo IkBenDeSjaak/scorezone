@@ -1,7 +1,3 @@
-.backButton {
-    font-weight: bold;
-}
-
 .rankingInfo {
     display: flex;
     flex-direction: column;
