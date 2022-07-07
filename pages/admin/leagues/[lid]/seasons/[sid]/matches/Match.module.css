@@ -1,46 +1,3 @@
-.rankings table,
-.rankings th,
-.rankings td {
-    border: 0.05rem solid var(--black);
-    border-collapse: collapse;
-}
-
-.rankings table {
-    table-layout: fixed;
-    width: 100%;
-}
-
-.rankings th {
-    background-color: var(--primary-color);
-    color: var(--white);
-    padding: 0.4rem;
-    text-align: left;
-}
-
-.rankings tr {
-    background-color: var(--table-row-uneven-color);
-}
-
-.rankings tr:nth-child(even) {
-    background-color: var(--table-row-even-color);
-}
-
-.rankings td {
-    padding: 0.4rem;
-}
-
-.iconEdit:hover {
-    cursor: pointer;
-}
-
-.tableDataCentered {
-    text-align: center;
-}
-
-.matchDayColumn {
-    display: none;
-}
-
 .h2 {
     margin-bottom: 0.5rem;
 }
@@ -97,10 +54,6 @@
 
 /* Tablet menu */
 @media all and (min-width: 700px) {
-    .matchDayColumn {
-        display: table-cell;
-    }
-
     .form .label {
         width: fit-content;
     }
