@@ -4,6 +4,7 @@ import { querydb } from '../../../lib/db'
 import Link from 'next/link'
 import { withSessionSsr } from '../../../lib/withSession'
 import { useRouter } from 'next/router'
+import BackButton from '../../../components/BackButton'
 import Layout from '../../../components/Layout'
 import Message from '../../../components/Message'
 import { getPouleInfoData } from '../../api/poules/[pid]'
@@ -12,7 +13,7 @@ import { useState } from 'react'
 import { FaRegTimesCircle } from 'react-icons/fa'
 import SweetAlert from 'react-bootstrap-sweetalert'
 
-export default function Poule ({ pouleInfo, poulePositions, isCreator, isParticipant, reqMessage }) {
+export default function Poule({ pouleInfo, poulePositions, isCreator, isParticipant, reqMessage }) {
   const router = useRouter()
   const { pid } = router.query
 
@@ -84,11 +85,7 @@ export default function Poule ({ pouleInfo, poulePositions, isCreator, isPartici
   return (
     <>
       <Layout>
-        <p className={styles.backButton}>
-          <Link href='/poules'>
-            <a>← Back to poules</a>
-          </Link>
-        </p>
+        <BackButton href={`/poules`} backTo='poules' />
         <h1 className={styles.pouleName}>{pouleInfo.PouleName}</h1>
         {(message.type && message.message) && (
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
@@ -131,11 +128,11 @@ export default function Poule ({ pouleInfo, poulePositions, isCreator, isPartici
                     <td>{u.Points === poulePositions[index - 1]?.Points ? '' : index + 1}</td>
                     <td>{u.Username} {(isCreator && user.id !== u.UserId)
                       ? <FaRegTimesCircle
-                          className={styles.deleteUserButton} onClick={() => {
-                            setSelectedUser(u.UserId)
-                            showDialog()
-                          }}
-                        />
+                        className={styles.deleteUserButton} onClick={() => {
+                          setSelectedUser(u.UserId)
+                          showDialog()
+                        }}
+                      />
                       : ''}
                     </td>
                     <td className={styles.standingsName}>{`${u.FirstName ? u.FirstName : ''} ${u.LastName ? u.LastName : ''}`}</td>

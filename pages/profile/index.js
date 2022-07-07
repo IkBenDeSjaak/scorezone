@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
 import Message from '../../components/Message'
 
-export default function Profile ({ userId }) {
+export default function Profile({ userId }) {
   const [message, setMessage] = useState({})
   const [isEditMode, setIsEditMode] = useState(false)
   const [userInfo, setUserInfo] = useState({
@@ -100,7 +100,7 @@ export default function Profile ({ userId }) {
               <p className={styles.backButton} onClick={() => setIsEditMode(false)}>
                 ← Back to profile
               </p>
-              )
+            )
             : ''
         }
         {(message.type && message.message) && (
@@ -130,7 +130,7 @@ export default function Profile ({ userId }) {
           {isEditMode
             ? (
               <label className={`${styles.label} ${styles.labelSubmitUserInfo}`}><input className={`${styles.submitbutton} ${styles.input}`} id='submitButtonUserInfo' type='submit' value='Save' /></label>
-              )
+            )
             : ''}
         </form>
         {!isEditMode
@@ -142,7 +142,7 @@ export default function Profile ({ userId }) {
               }}
             >Edit
             </button>
-            )
+          )
           : ''}
       </Layout>
     </>

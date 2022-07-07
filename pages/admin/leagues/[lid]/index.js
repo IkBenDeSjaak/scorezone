@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 import { withSessionSsr } from '../../../../lib/withSession'
 import Layout from '../../../../components/Layout'
 import Message from '../../../../components/Message'
+import BackButton from '../../../../components/BackButton'
 import { getAllSeasonsData } from '../../../api/seasons'
 
 export default function AdminLeagueSeasons({ reqMessage, allSeasons }) {
@@ -100,11 +101,7 @@ export default function AdminLeagueSeasons({ reqMessage, allSeasons }) {
         {(message.type && message.message) && (
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
-        <p className={styles.backButton}>
-          <Link href={`/admin/matchleagues`}>
-            <a>← Back to match leagues page</a>
-          </Link>
-        </p>
+        <BackButton href={`/admin/matchleagues`} backTo='match leagues page' />
         <h1>Admin</h1>
         <h2>Add another season to this league</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
