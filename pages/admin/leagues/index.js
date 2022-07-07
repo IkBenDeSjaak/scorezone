@@ -8,7 +8,7 @@ import BackButton from '../../../components/BackButton'
 
 import { getAssociations } from '../../api/associations'
 
-export default function AdminLeagues({ reqMessage, associations }) {
+export default function AdminLeagues ({ reqMessage, associations }) {
   const [leagues, setLeagues] = useState([])
   const [inputFields, setInputFields] = useState({
     leagueName: '',
@@ -98,7 +98,7 @@ export default function AdminLeagues({ reqMessage, associations }) {
         {(message.type && message.message) && (
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
-        <BackButton href={`/admin`} backTo='admin main page' />
+        <BackButton href='/admin' backTo='admin main page' />
         <h1>Admin</h1>
         <h2>Available leagues</h2>
         <ul>

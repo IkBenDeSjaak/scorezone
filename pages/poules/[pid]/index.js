@@ -13,7 +13,7 @@ import { useState } from 'react'
 import { FaRegTimesCircle } from 'react-icons/fa'
 import SweetAlert from 'react-bootstrap-sweetalert'
 
-export default function Poule({ pouleInfo, poulePositions, isCreator, isParticipant, reqMessage }) {
+export default function Poule ({ pouleInfo, poulePositions, isCreator, isParticipant, reqMessage }) {
   const router = useRouter()
   const { pid } = router.query
 
@@ -85,7 +85,7 @@ export default function Poule({ pouleInfo, poulePositions, isCreator, isParticip
   return (
     <>
       <Layout>
-        <BackButton href={`/poules`} backTo='poules' />
+        <BackButton href='/poules' backTo='poules' />
         <h1 className={styles.pouleName}>{pouleInfo.PouleName}</h1>
         {(message.type && message.message) && (
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
@@ -128,11 +128,11 @@ export default function Poule({ pouleInfo, poulePositions, isCreator, isParticip
                     <td>{u.Points === poulePositions[index - 1]?.Points ? '' : index + 1}</td>
                     <td>{u.Username} {(isCreator && user.id !== u.UserId)
                       ? <FaRegTimesCircle
-                        className={styles.deleteUserButton} onClick={() => {
-                          setSelectedUser(u.UserId)
-                          showDialog()
-                        }}
-                      />
+                          className={styles.deleteUserButton} onClick={() => {
+                            setSelectedUser(u.UserId)
+                            showDialog()
+                          }}
+                        />
                       : ''}
                     </td>
                     <td className={styles.standingsName}>{`${u.FirstName ? u.FirstName : ''} ${u.LastName ? u.LastName : ''}`}</td>

@@ -29,6 +29,18 @@
     padding: 0.4rem;
 }
 
+.iconEdit:hover {
+    cursor: pointer;
+}
+
+.tableDataCentered {
+    text-align: center;
+}
+
+.matchDayColumn {
+    display: none;
+}
+
 .h2 {
     margin-bottom: 0.5rem;
 }
@@ -85,6 +97,10 @@
 
 /* Tablet menu */
 @media all and (min-width: 700px) {
+    .matchDayColumn {
+        display: table-cell;
+    }
+
     .form .label {
         width: fit-content;
     }

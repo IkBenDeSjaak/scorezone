@@ -11,7 +11,7 @@ import Message from '../../../components/Message'
 import BackButton from '../../../components/BackButton'
 import { getPouleInfoData } from '../../api/poules/[pid]'
 
-export default function Settings({ reqMessage }) {
+export default function Settings ({ reqMessage }) {
   const router = useRouter()
   const { pid } = router.query
 
@@ -321,7 +321,7 @@ export default function Settings({ reqMessage }) {
                 </table>
               </div>
             </>
-          )
+            )
           : (<p>There are no new participants to approve or disapprove.</p>)}
         <h2>Custom points</h2>
         <p>By default your poule uses the point system of ScoreZone that can be found in the <Link href='/rules'><a className={styles.inlineClickable}>rules</a></Link> section.

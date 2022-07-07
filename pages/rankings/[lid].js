@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react'
 import Message from '../../components/Message'
 import { FaSort } from 'react-icons/fa'
 
-export default function LeagueRanking({ reqMessage, amountOfPages, leagueName, leagueSeasons }) {
+export default function LeagueRanking ({ reqMessage, amountOfPages, leagueName, leagueSeasons }) {
   const router = useRouter()
   const { lid, page, season, sortCol } = router.query
 
@@ -93,7 +93,7 @@ export default function LeagueRanking({ reqMessage, amountOfPages, leagueName, l
                     <option key={season.SeasonId.toString()} value={season.SeasonId}>{season.SeasonName}</option>
                   ))}
                 </select>
-              )
+                )
               : ('')
           }
         </div>

@@ -2,7 +2,7 @@ import styles from './BackButton.module.css'
 
 import Link from 'next/link'
 
-export default function BackButton({ href, backTo }) {
+export default function BackButton ({ href, backTo }) {
   return (
     <>
       <p className={styles.backButton}>

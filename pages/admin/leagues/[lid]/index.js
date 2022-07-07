@@ -9,7 +9,7 @@ import Message from '../../../../components/Message'
 import BackButton from '../../../../components/BackButton'
 import { getAllSeasonsData } from '../../../api/seasons'
 
-export default function AdminLeagueSeasons({ reqMessage, allSeasons }) {
+export default function AdminLeagueSeasons ({ reqMessage, allSeasons }) {
   const router = useRouter()
   const { lid } = router.query
 
@@ -50,6 +50,8 @@ export default function AdminLeagueSeasons({ reqMessage, allSeasons }) {
 
   useEffect(() => {
     fetchSeasons()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleCloseMessage = () => {
@@ -63,8 +65,6 @@ export default function AdminLeagueSeasons({ reqMessage, allSeasons }) {
 
     setInputFields({ ...inputFields, [name]: value })
   }
-
-  console.log(inputFields)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -101,7 +101,7 @@ export default function AdminLeagueSeasons({ reqMessage, allSeasons }) {
         {(message.type && message.message) && (
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
-        <BackButton href={`/admin/matchleagues`} backTo='match leagues page' />
+        <BackButton href='/admin/matchleagues' backTo='match leagues page' />
         <h1>Admin</h1>
         <h2>Add another season to this league</h2>
         <form className={styles.form} onSubmit={handleSubmit}>

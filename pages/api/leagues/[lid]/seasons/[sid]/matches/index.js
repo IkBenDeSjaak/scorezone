@@ -1,5 +1,5 @@
-import { isAdmin, querydb } from '../../../../../../lib/db'
-import { withSessionRoute } from '../../../../../../lib/withSession'
+import { isAdmin, querydb } from '../../../../../../../lib/db'
+import { withSessionRoute } from '../../../../../../../lib/withSession'
 
 export default withSessionRoute(handler)
 

@@ -7,7 +7,7 @@ import BackButton from '../../../components/BackButton'
 import Message from '../../../components/Message'
 import Layout from '../../../components/Layout'
 
-export default function AdminSeasons() {
+export default function AdminSeasons () {
   const [seasons, setSeasons] = useState([])
   const [inputFields, setInputFields] = useState({
     seasonName: '',
@@ -96,7 +96,7 @@ export default function AdminSeasons() {
         {(message.type && message.message) && (
           <Message type={message.type} message={message.message} handleCloseMessage={handleCloseMessage} />
         )}
-        <BackButton href={`/admin`} backTo='admin main page' />
+        <BackButton href='/admin' backTo='admin main page' />
         <h1>Admin</h1>
         <h2>Available seasons</h2>
         <ul>
