@@ -236,7 +236,6 @@ export const getServerSideProps = withSessionSsr(async function ({
     // Create week option for every match starting date
     for (const startTime of matchStartTimes) {
       const fromDate = calculateFromDate(startTime.StartTime)
-
       const tillDate = calculateTillDate(fromDate)
 
       const weekOption = {

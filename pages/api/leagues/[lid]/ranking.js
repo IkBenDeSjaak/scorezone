@@ -55,7 +55,7 @@ async function handler (req, res) {
           INNER JOIN Matches M ON MP.MatchId = M.MatchId
           WHERE M.LeagueId = ? AND M.SeasonId = ? AND U.UserId IN (SELECT UserId FROM UserLeagues WHERE LeagueId = ?) AND M.MatchId NOT IN (SELECT DISTINCT MatchId FROM MatchResults)
           GROUP BY U.UserId
-          ORDER BY ?? DESC, Username ASC
+          ORDER BY ? DESC, Username ASC
           LIMIT 25 OFFSET ?
           `,
           [lid, season, lid, lid, season, lid, lid, season, lid, (sortCol !== 'undefined') ? sortCol : 'Points', offset]
