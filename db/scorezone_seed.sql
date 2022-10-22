@@ -39,7 +39,8 @@ INSERT INTO Countries (CountryName) VALUES
 
 INSERT INTO Seasons (SeasonName, StartDate, EndDate) VALUES
 ('2020-2021', '2020-07-01', '2021-06-30'),
-('2021-2022', '2021-07-01', '2022-06-30');
+('2021-2022', '2021-07-01', '2022-06-30'),
+('2022-2023', '2022-07-01', '2023-06-30');
 
 INSERT INTO Associations (AssociationName, CountryId) VALUES
 ('UEFA', (SELECT CountryId FROM Countries WHERE CountryName = 'International')),
@@ -56,7 +57,8 @@ INSERT INTO LeagueSeasons (LeagueId, SeasonId) VALUES
 ((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT SeasonId FROM Seasons WHERE SeasonName = '2020-2021')),
 ((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM Seasons WHERE SeasonName = '2021-2022')),
 ((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT SeasonId FROM Seasons WHERE SeasonName = '2021-2022')),
-((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Premier League'), (SELECT SeasonId FROM Seasons WHERE SeasonName = '2021-2022'));
+((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Premier League'), (SELECT SeasonId FROM Seasons WHERE SeasonName = '2021-2022')),
+((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM Seasons WHERE SeasonName = '2022-2023'));
 
 INSERT INTO UserLeagues (UserId, LeagueId) VALUES
 ((SELECT UserId FROM Users WHERE Username = 'testadmin'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie')),
@@ -78,7 +80,9 @@ INSERT INTO TeamsInLeagues (LeagueId, SeasonId, TeamId) VALUES
 ((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT SeasonId FROM Seasons WHERE SeasonName = '2020-2021'), (SELECT TeamId FROM Teams WHERE TeamName = 'PSG')),
 ((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM Seasons WHERE SeasonName = '2021-2022'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax')),
 ((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM Seasons WHERE SeasonName = '2021-2022'), (SELECT TeamId FROM Teams WHERE TeamName = 'FC Twente')),
-((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM Seasons WHERE SeasonName = '2021-2022'), (SELECT TeamId FROM Teams WHERE TeamName = 'Heracles'));
+((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM Seasons WHERE SeasonName = '2021-2022'), (SELECT TeamId FROM Teams WHERE TeamName = 'Heracles')),
+((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM Seasons WHERE SeasonName = '2022-2023'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax')),
+((SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT SeasonId FROM Seasons WHERE SeasonName = '2022-2023'), (SELECT TeamId FROM Teams WHERE TeamName = 'FC Twente'));
 
 INSERT INTO Matches (SeasonId, LeagueId, HomeTeam, AwayTeam, MatchDay, StartTime) VALUES
 ((SELECT SeasonId FROM Seasons WHERE SeasonName = '2020-2021'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax'), (SELECT TeamId FROM Teams WHERE TeamName = 'Heracles'), 1, '2020-11-19 18:00:00'),
@@ -86,7 +90,9 @@ INSERT INTO Matches (SeasonId, LeagueId, HomeTeam, AwayTeam, MatchDay, StartTime
 ((SELECT SeasonId FROM Seasons WHERE SeasonName = '2020-2021'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT TeamId FROM Teams WHERE TeamName = 'FC Twente'), (SELECT TeamId FROM Teams WHERE TeamName = 'Heracles'), 3, '2020-11-19 20:00:00'),
 ((SELECT SeasonId FROM Seasons WHERE SeasonName = '2020-2021'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Champions League'), (SELECT TeamId FROM Teams WHERE TeamName = 'Manchester City'), (SELECT TeamId FROM Teams WHERE TeamName = 'PSG'), 1, '2020-11-20 20:45:00'),
 ((SELECT SeasonId FROM Seasons WHERE SeasonName = '2021-2022'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax'), (SELECT TeamId FROM Teams WHERE TeamName = 'Heracles'), 1, '2021-12-23 18:00:00'),
-((SELECT SeasonId FROM Seasons WHERE SeasonName = '2021-2022'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax'), (SELECT TeamId FROM Teams WHERE TeamName = 'FC Twente'), 2, '2022-01-19 19:00:00');
+((SELECT SeasonId FROM Seasons WHERE SeasonName = '2021-2022'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax'), (SELECT TeamId FROM Teams WHERE TeamName = 'FC Twente'), 2, '2022-01-19 19:00:00'),
+((SELECT SeasonId FROM Seasons WHERE SeasonName = '2022-2023'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax'), (SELECT TeamId FROM Teams WHERE TeamName = 'FC Twente'), 2, '2022-11-20 19:00:00'),
+((SELECT SeasonId FROM Seasons WHERE SeasonName = '2022-2023'), (SELECT LeagueId FROM Leagues WHERE LeagueName = 'Eredivisie'), (SELECT TeamId FROM Teams WHERE TeamName = 'FC Twente'), (SELECT TeamId FROM Teams WHERE TeamName = 'Ajax'), 4, '2023-01-20 20:00:00');
 
 INSERT INTO MatchPredictions (UserId, MatchId, GoalsHomeTeam, GoalsAwayTeam) VALUES
 ((SELECT UserId FROM Users WHERE Username = 'testadmin'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 18:00:00'), 1, 3),
@@ -95,7 +101,8 @@ INSERT INTO MatchPredictions (UserId, MatchId, GoalsHomeTeam, GoalsAwayTeam) VAL
 ((SELECT UserId FROM Users WHERE Username = 'testuser'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 18:00:00'), 1, 4),
 ((SELECT UserId FROM Users WHERE Username = 'testuser'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 19:00:00'), 1, 2),
 ((SELECT UserId FROM Users WHERE Username = 'testadmin'), (SELECT MatchId FROM Matches WHERE StartTime = '2020-11-20 20:45:00'), 1, 3),
-((SELECT UserId FROM Users WHERE Username = 'testadmin'), (SELECT MatchId FROM Matches WHERE StartTime = '2021-12-23 18:00:00'), 1, 3);
+((SELECT UserId FROM Users WHERE Username = 'testadmin'), (SELECT MatchId FROM Matches WHERE StartTime = '2021-12-23 18:00:00'), 1, 3),
+((SELECT UserId FROM Users WHERE Username = 'testadmin'), (SELECT MatchId FROM Matches WHERE StartTime = '2022-11-20 19:00:00'), 2, 1);
 
 INSERT INTO MatchResults (MatchId, GoalsHomeTeam, GoalsAwayTeam) VALUES
 ((SELECT MatchId FROM Matches WHERE StartTime = '2020-11-19 18:00:00'), 1, 3),
